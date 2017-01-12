@@ -7,15 +7,42 @@
     </head>
     <body>
         <form>
-            <input type="text">
-            </form>
+            Name (e.g. John Doe)
+            <br>
+            <input type="text" placeholder="Your Name" required>
+            <br><br>
+
+            Address (e.g. #### Street Name)
+            <br>
+            <input type="text" placeholder="#### Street Name" pattern="\d+\s[A-Za-z\s]+" required>
+            <br><br>
+
+            Phone Number (e.g. 123-123-1234)
+            <br>
+            <input type="text" placeholder="123-123-1234" pattern="\d\d\d-\d\d\d-\d\d\d\d" required>
+            <br><br>
+
+            Pizza Size
+            <br>
+            <input type="radio" name="size" value="large" required> Large
+            <input type="radio" name="size" value="medium" > Medium
+            <input type="radio" name="size" value="small" > Small
+            <br><br>
+
+            Pizza Toppings
+            <br>
+            <input type="checkbox" name="topping" value="sausage" > Sausage
+            <input type="checkbox" name="topping" value="pepperoni" > Pepperoni
+            <input type="checkbox" name="topping" value="olives" > Olives
+            <input type="checkbox" name="topping" value="anchovies" > Anchovies
+            <input type="checkbox" name="topping" value="onions" > Onions
+            <br><br>
 
 
+            <button type="submit" value="place-order">Place Order</button>
+            <button type="reset" value="clear">Clear</button>
 
-
-
-
-
+        </form>
 
 
 
