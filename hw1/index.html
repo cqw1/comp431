@@ -17,14 +17,12 @@
                 }
 
                 // Check if older than 18 years as of form submission time
-                console.log(document.getElementById('date-of-birth-input').value);
-
-                /*
-                if (document.getElementById('date-of-birth-input').value != document.getElementById('password-confirmation-input').value) {
-                    alert("Passwords do not match");
+                var eighteenYearsMillis = 18 * 365 * 24 * 3600 * 1000;
+                var age = new Date(document.getElementById('date-of-birth-input').value);
+                if (Date.now() - age < eighteenYearsMillis) {
+                    alert("You must be 18 years or older to continue.");
                     return false;
                 }
-                */
 
                 return true;
             }
