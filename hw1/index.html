@@ -16,6 +16,16 @@
                     return false;
                 }
 
+                // Check if older than 18 years as of form submission time
+                console.log(document.getElementById('date-of-birth-input').value);
+
+                /*
+                if (document.getElementById('date-of-birth-input').value != document.getElementById('password-confirmation-input').value) {
+                    alert("Passwords do not match");
+                    return false;
+                }
+                */
+
                 return true;
             }
 
@@ -43,26 +53,22 @@
 
             E-mail Address 
             <br>
-            <!-- <input type="text" name="email" placeholder="john.doe123@email.com" oninvalid="this.setCustomValidity('Email can contain uppercase letters, lowercase letters, periods, and numbers. Address must end with __.__ (e.g. gmail.com')" pattern="[a-zA-Z0-9\.]+@[a-zA-Z]+\.[a-zA-Z]+" required>-->
-            <input type="email" name="email" required>
+            <input type="email" name="email" placeholder="e.g. john.doe123@gmail.com" required>
             <br><br>
 
             Phone Number 
             <br>
-            <!--<input type="text" name="phone" placeholder="123-123-1234" pattern="\d{3}-\d{3}-\d{4}" required> -->
-            <input type="tel" name="phone" required>
+            <input type="tel" name="phone" placeholder="e.g. 123-123-1234" pattern="\d{3}-\d{3}-\d{4}" required>
             <br><br>
 
-            <!-- TODO -->
             Date of Birth 
             <br>
-            <!-- <input type="text" name="dateOfBirth" placeholder="MM/DD/YYYY" pattern="\d\d\/\d\d\/\d\d\d\d" required> -->
-            <input type="date" name="dateOfBirth" required>
+            <input type="date" id="date-of-birth-input" name="dateOfBirth" required>
             <br><br>
 
             Zipcode
             <br>
-            <input type="text" name="zipcode" placeholder="77005" pattern="\d{5}(-\d{4})?" required>
+            <input type="text" name="zipcode" placeholder="e.g. 77005" pattern="\d{5}(-\d{4})?" required>
             <br><br>
 
             <!-- Hidden Timestamp -->
