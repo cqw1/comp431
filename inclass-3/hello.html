@@ -26,8 +26,8 @@
             alert("Page will redirect when the counter reaches zero.");
         }, 5000);
 
-        setInterval(function(){
-            if (!paused) {
+        setInterval(function() {
+            //if (!paused) {
                 counter -= 1;
 
                 if (counter == 0) {
@@ -37,7 +37,7 @@
                 var indicator = document.getElementById("indicator");
                 indicator.innerHTML = counter;
 
-            }
+            //}
 
         }, 1000);
 
