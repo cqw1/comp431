@@ -17,7 +17,7 @@
                 }
 
                 // Check if older than 18 years as of form submission time
-                var eighteenYearsMillis = 18 * 365 * 24 * 3600 * 1000;
+                var eighteenYearsMillis = (18 * 365 + 4) * (24 * 3600 * 1000) // + 4 for 4 leap year days
                 var age = new Date(document.getElementById('date-of-birth-input').value);
                 if (Date.now() - age < eighteenYearsMillis) {
                     alert("You must be 18 years or older to continue.");
