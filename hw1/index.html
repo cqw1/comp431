@@ -26,9 +26,12 @@
                     if (now.getMonth() < age.getMonth()) {
                         alert("Must be 18 years or older to continue.");
                         return false;
-                    } else if ((now.getDate() < age.getDate())) {
-                        alert("Must be 18 years or older to continue.");
-                        return false;
+                    } else if (now.getMonth() == age.getMonth()) {
+                        if ((now.getdate() < age.getdate())) {
+                            alert("Must be 18 years or older to continue.");
+                            return false;
+                        }
+
                     }
 
                 }
