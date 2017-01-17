@@ -17,6 +17,7 @@
 
         function pauseCountdown() {
             paused = true;
+        }
 
         function resumeCountdown() {
             paused = false;
@@ -27,7 +28,7 @@
         }, 5000);
 
         setInterval(function() {
-            //if (!paused) {
+            if (!paused) {
                 counter -= 1;
 
                 if (counter == 0) {
@@ -37,7 +38,7 @@
                 var indicator = document.getElementById("indicator");
                 indicator.innerHTML = counter;
 
-            //}
+            }
 
         }, 1000);
 
