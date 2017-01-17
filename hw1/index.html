@@ -20,14 +20,22 @@
                 var now = new Date();
                 // Year
                 if ((now.getYear() - age.getYear()) < 18) {
+                    console.log("now.getYear() - age.getYear() < 18");
                     alert("Must be 18 years or older to continue.");
                     return false;
                 } else if (now.getYear() - age.getYear() == 18) {
+                    console.log("now.getYear() - age.getYear() == 18");
+
                     if (now.getMonth() < age.getMonth()) {
+                        console.log("now.getMonth() < age.getMonth()");
+
                         alert("Must be 18 years or older to continue.");
                         return false;
                     } else if (now.getMonth() == age.getMonth()) {
-                        if ((now.getdate() < age.getdate())) {
+                        console.log("now.getMonth() == age.getMonth()");
+
+                        if ((now.getDate() < age.getDate())) {
+                            console.log("now.getDate() < age.getDate()");
                             alert("Must be 18 years or older to continue.");
                             return false;
                         }
@@ -36,7 +44,7 @@
 
                 }
 
-                return true;
+                return false;
             }
 
         </script>
