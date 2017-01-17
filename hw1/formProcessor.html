@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang-"en-us">
+    <head>
+        <title>Form Processor</title>
+        <meta charset="utf-8">
+        <meta name="author" content="Cassie Wang">
+    </head>
+
+    <body>
+
+        <table>
+            <tr>
+                <td><b>Account Name</b></td>
+                <td id="accountNameValue"></td>
+            </tr>
+            <tr>
+                <td><b>Display Name</b></td>
+                <td id="displayNameValue"></td>
+            </tr>
+            <tr>
+                <td><b>Password</b></td>
+                <td id="passwordValue"></td>
+            </tr>
+            <tr>
+                <td><b>Email</b></td>
+                <td id="emailValue"></td>
+            </tr>
+            <tr>
+                <td><b>Phone Number</b></td>
+                <td id="phoneValue"></td>
+            </tr>
+            <tr>
+                <td><b>Date of Birth</b></td>
+                <td id="dateOfBirthValue"></td>
+            </tr>
+            <tr>
+                <td><b>Zipcode</b></td>
+                <td id="zipcodeValue"></td>
+            </tr>
+            <tr>
+                <td><b>Timestamp</b></td>
+                <td id="timestampValue"></td>
+            </tr>
+
+        </table>
+
+        <script>
+            var parameters = window.location.search.substring(1).split("&");
+            for (var p = 0; p < parameters.length; p++) {
+                var keyValue = parameters[p].split("=");
+                var element = document.getElementById(keyValue[0] + "Value");
+
+                if (element) {
+                    if (keyValue[0] == "timestamp") {
+                        var d = new Date(Number(keyValue[1]));
+                        element.innerHTML = d.toDateString() + " " + d.toTimeString();
+                    } else {
+                        element.innerHTML = decodeURIComponent(keyValue[1]);
+                    }
+                }
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang-"en-us">
+    <head>
+        <title>Registration</title>
+        <meta charset="utf-8">
+        <meta name="author" content="Cassie Wang">
+    </head>
+    <body>
+        <script>
+            function onSubmit() {
+                document.getElementById('timestamp-input').value = Date.now();
+
+                // Validate passwords match
+                if (document.getElementById('password-input').value != document.getElementById('password-confirmation-input').value) {
+                    alert("Passwords do not match");
+                    return false;
+                }
+
+                return true;
+            }
+
+        </script>
+        <form action="formProcessor.html" method="get">
+            Account Name 
+            <br>
+            <input type="text" name="accountName" placeholder="e.g. JohnDoe123" required>
+            <br><br>
+
+            Display Name (optional)
+            <br>
+            <input type="text" name="displayName" placeholder="e.g. Johnny">
+            <br><br>
+
+            Password 
+            <br>
+            <input type="password" id="password-input" name="password" required>
+            <br><br>
+
+            Password Confirmation
+            <br>
+            <input type="password" id="password-confirmation-input" name="passwordConfirmation" required>
+            <br><br>
+
+            E-mail Address 
+            <br>
+            <!-- <input type="text" name="email" placeholder="john.doe123@email.com" oninvalid="this.setCustomValidity('Email can contain uppercase letters, lowercase letters, periods, and numbers. Address must end with __.__ (e.g. gmail.com')" pattern="[a-zA-Z0-9\.]+@[a-zA-Z]+\.[a-zA-Z]+" required>-->
+            <input type="email" name="email" required>
+            <br><br>
+
+            Phone Number 
+            <br>
+            <!--<input type="text" name="phone" placeholder="123-123-1234" pattern="\d{3}-\d{3}-\d{4}" required> -->
+            <input type="tel" name="phone" required>
+            <br><br>
+
+            <!-- TODO -->
+            Date of Birth 
+            <br>
+            <!-- <input type="text" name="dateOfBirth" placeholder="MM/DD/YYYY" pattern="\d\d\/\d\d\/\d\d\d\d" required> -->
+            <input type="date" name="dateOfBirth" required>
+            <br><br>
+
+            Zipcode
+            <br>
+            <input type="text" name="zipcode" placeholder="77005" pattern="\d{5}(-\d{4})?" required>
+            <br><br>
+
+            <!-- Hidden Timestamp -->
+            <br>
+            <input type="hidden" name="timestamp" id="timestamp-input">
+            <br><br>
+
+
+            <button type="submit" onclick="return onSubmit()">Submit</button>
+            <button type="reset" value="clear">Clear</button>
+
+        </form>
+
+
+
+    </body>
+</html>
