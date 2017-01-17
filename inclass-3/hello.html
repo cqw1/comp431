@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang-"en-us">
+<head>
+    <title>inclass-3</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Cassie Wang">
+</head>
+<body>
+
+    <script>
+        function clearTextArea() {
+            document.getElementById("text-area").value = "";
+        }
+
+
+        var counter = 15;
+        setTimeout(function(){
+            alert("Page will redirect when the counter reaches zero.");
+        }, 5000);
+
+        setInterval(function(){
+
+            counter -= 1;
+
+            if (counter == 0) {
+                window.location.href = "http://www.clear.rice.edu/comp431/sample/hello.html";
+            }
+
+            var indicator = document.getElementById("indicator");
+            indicator.innerHTML = counter;
+        }, 1000);
+
+
+   </script>
+
+   <span id="indicator"></span>
+   <br><br>
+
+   <b>Name:</b> Cassie Wang
+   <br>
+   <b>Image:</b><img src="lemondemon.jpg" alt="How to Summon a Lemon" width=511 height=400>
+   <br>
+   <b>Text:</b> I went to the grand opening of ShareTea in Sugar Land and drank 3 bobas that day. It was a good day.
+   <br>
+   <b>Links:</b> 
+   <a href="http://www.neopets.com">Neopets</a>
+   <a href="http://www.tetrisfriends.com">TetrisFriends</a>
+   <br>
+   <b>Textarea:</b> 
+   <br>
+   <textarea id="text-area" rows="4" cols="50">Leave a comment or question.</textarea> 
+   <br>
+   <button type="button">Submit</button> 
+   <button type="button" onclick="clearTextArea()">Clear</button> 
+
+</body>
+</html>

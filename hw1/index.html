@@ -18,24 +18,19 @@
 
                 var age = new Date(document.getElementById('date-of-birth-input').value);
                 var now = new Date();
-                // Year
+
                 if ((now.getUTCFullYear() - age.getUTCFullYear()) < 18) {
-                    console.log("now.getYear() - age.getYear() < 18");
                     alert("Must be 18 years or older to continue.");
                     return false;
                 } else if (now.getUTCFullYear() - age.getUTCFullYear() == 18) {
-                    console.log("now.getYear() - age.getYear() == 18");
 
                     if (now.getUTCMonth() < age.getUTCMonth()) {
-                        console.log("now.getMonth() < age.getMonth()");
 
                         alert("Must be 18 years or older to continue.");
                         return false;
                     } else if (now.getUTCMonth() == age.getUTCMonth()) {
-                        console.log("now.getMonth() == age.getMonth()");
 
                         if (now.getUTCDate() < age.getUTCDate()) {
-                            console.log("now.getDate() < age.getDate()");
                             alert("Must be 18 years or older to continue.");
                             return false;
                         }
@@ -69,12 +64,12 @@
             <input type="password" id="password-confirmation-input" name="passwordConfirmation" required>
             <br><br>
 
-            E-mail Address 
+            E-mail Address (e.g. john.doe123@gmail.com)
             <br>
             <input type="email" name="email" placeholder="e.g. john.doe123@gmail.com" required>
             <br><br>
 
-            Phone Number 
+            Phone Number  (e.g. 123-123-1234)
             <br>
             <input type="tel" name="phone" placeholder="e.g. 123-123-1234" pattern="\d{3}-\d{3}-\d{4}" required>
             <br><br>
@@ -84,7 +79,7 @@
             <input type="date" id="date-of-birth-input" name="dateOfBirth" required>
             <br><br>
 
-            Zipcode
+            Zipcode (e.g. 77005)
             <br>
             <input type="text" name="zipcode" placeholder="e.g. 77005" pattern="\d{5}(-\d{4})?" required>
             <br><br>
