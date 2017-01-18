@@ -1,101 +1,97 @@
 <!DOCTYPE html>
-<html lang-"en-us">
-    <head>
-        <title>Registration</title>
-        <meta charset="utf-8">
-        <meta name="author" content="Cassie Wang">
-    </head>
-    <body>
-        <script>
-            function onSubmit() {
-                document.getElementById('timestamp-input').value = Date.now();
+<html lang="en-us">
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Cassie Wang">
+</head>
+<body>
+    <script>
+        function onSubmit() {
+            document.getElementById('timestamp-input').value = Date.now();
 
-                // Validate passwords match
-                if (document.getElementById('password-input').value != document.getElementById('password-confirmation-input').value) {
-                    alert("Passwords do not match");
-                    return false;
-                }
+            // Validate passwords match
+            if (document.getElementById('password-input').value != document.getElementById('password-confirmation-input').value) {
+                alert("Passwords do not match");
+                return false;
+            }
 
-                var age = new Date(document.getElementById('date-of-birth-input').value);
-                var now = new Date();
+            var age = new Date(document.getElementById('date-of-birth-input').value);
+            var now = new Date();
 
-                if ((now.getUTCFullYear() - age.getUTCFullYear()) < 18) {
+            if ((now.getUTCFullYear() - age.getUTCFullYear()) < 18) {
+                alert("Must be 18 years or older to continue.");
+                return false;
+            } else if (now.getUTCFullYear() - age.getUTCFullYear() == 18) {
+
+                if (now.getUTCMonth() < age.getUTCMonth()) {
+
                     alert("Must be 18 years or older to continue.");
                     return false;
-                } else if (now.getUTCFullYear() - age.getUTCFullYear() == 18) {
+                } else if (now.getUTCMonth() == age.getUTCMonth()) {
 
-                    if (now.getUTCMonth() < age.getUTCMonth()) {
-
+                    if (now.getUTCDate() < age.getUTCDate()) {
                         alert("Must be 18 years or older to continue.");
                         return false;
-                    } else if (now.getUTCMonth() == age.getUTCMonth()) {
-
-                        if (now.getUTCDate() < age.getUTCDate()) {
-                            alert("Must be 18 years or older to continue.");
-                            return false;
-                        }
-
                     }
 
                 }
 
-                return true;
             }
 
-        </script>
-        <form action="formProcessor.html" method="get">
-            Account Name 
-            <br>
-            <input type="text" name="accountName" placeholder="e.g. JohnDoe123" required>
-            <br><br>
+            return true;
+        }
 
-            Display Name (optional)
-            <br>
-            <input type="text" name="displayName" placeholder="e.g. Johnny">
-            <br><br>
+    </script>
+    <form action="formProcessor.html" method="get">
+        Account Name (Can only contain uppercase letters, lowercase letters, and numbers; but may not start with a number.)
+        <br>
+        <input type="text" name="accountName" placeholder="Account Name" pattern="[a-zA-Z]+[a-zA-Z0-9]*" required>
+        <br><br>
 
-            Password 
-            <br>
-            <input type="password" id="password-input" name="password" required>
-            <br><br>
+        Display Name (optional)
+        <br>
+        <input type="text" name="displayName" placeholder="Display Name">
+        <br><br>
 
-            Password Confirmation
-            <br>
-            <input type="password" id="password-confirmation-input" name="passwordConfirmation" required>
-            <br><br>
+        Password 
+        <br>
+        <input type="password" id="password-input" name="password" required>
+        <br><br>
 
-            E-mail Address (e.g. john.doe123@gmail.com)
-            <br>
-            <input type="email" name="email" placeholder="e.g. john.doe123@gmail.com" required>
-            <br><br>
+        Password Confirmation
+        <br>
+        <input type="password" id="password-confirmation-input" name="passwordConfirmation" required>
+        <br><br>
 
-            Phone Number  (e.g. 123-123-1234)
-            <br>
-            <input type="tel" name="phone" placeholder="e.g. 123-123-1234" pattern="\d{3}-\d{3}-\d{4}" required>
-            <br><br>
+        E-mail Address (e.g. john.doe123@gmail.com)
+        <br>
+        <input type="email" name="email" placeholder="E-mail Address" required>
+        <br><br>
 
-            Date of Birth 
-            <br>
-            <input type="date" id="date-of-birth-input" name="dateOfBirth" required>
-            <br><br>
+        Phone Number  (e.g. 123-123-1234)
+        <br>
+        <input type="tel" name="phone" placeholder="Phone Number" pattern="\d{3}-\d{3}-\d{4}" required>
+        <br><br>
 
-            Zipcode (e.g. 77005)
-            <br>
-            <input type="text" name="zipcode" placeholder="e.g. 77005" pattern="\d{5}(-\d{4})?" required>
-            <br><br>
+        Date of Birth 
+        <br>
+        <input type="date" id="date-of-birth-input" name="dateOfBirth" required>
+        <br><br>
 
-            <!-- Hidden Timestamp -->
-            <br>
-            <input type="hidden" name="timestamp" id="timestamp-input">
-            <br><br>
+        Zipcode (e.g. 77005)
+        <br>
+        <input type="text" name="zipcode" placeholder="Zipcode" pattern="\d{5}(-\d{4})?" required>
+        <br><br>
 
-
-            <button type="submit" onclick="return onSubmit()">Submit</button>
-            <button type="reset" value="clear">Clear</button>
-
-        </form>
+        <!-- Hidden Timestamp -->
+        <input type="hidden" name="timestamp" id="timestamp-input">
 
 
+        <button type="submit" onclick="return onSubmit()">Submit</button>
+        <button type="reset" value="clear">Clear</button>
 
-    </body>
+    </form>
+
+</body>
 </html>
