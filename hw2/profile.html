@@ -18,53 +18,109 @@
         <script src="profile.js"></script>
     </head>
     <body>
-        Account Name (Can only contain uppercase letters, lowercase letters, and numbers; but may not start with a number.)
-        <br>
-        <input type="text" name="accountName" placeholder="Account Name" pattern="[a-zA-Z]+[a-zA-Z0-9]*" required>
-        <br><br>
+      <a href="main.html">Go to main page.</a>
+      <div id="alerts-div">
+        <div id="display-name-alert" class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Invalid Display Name</strong> Display name can only contain letters and numbers, and may not start with a number.
+        </div>
+        <div id="email-alert" class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Invalid Email Address</strong> Email address must follow format of sampleemail@gmail.com.
+        </div>
+        <div id="phone-alert" class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Invalid Phone Number</strong> Phone number must follow format of ###-###-####.
+        </div>
+        <div id="zipcode-alert" class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Invalid Zipcode</strong> Zipcode must follow format of #####.
+        </div>
+        <div id="password-alert" class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Invalid Password</strong> Password and password confirmation must match.
+        </div>
+        <div id="display-name-changed" class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Changes saved. </strong><span class="text"></span>
+        </div>
+        <div id="email-changed" class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Changes saved. </strong><span class="text"></span>
+        </div>
+        <div id="phone-changed" class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Changes saved. </strong><span class="text"></span>
+        </div>
+        <div id="zipcode-changed" class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Changes saved. </strong><span class="text"></span>
+        </div>
+        <div id="password-changed" class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Changes saved. </strong><span class="text"></span>
+        </div>
+      </div>
+      
+      <table id="profile-table" align="center">
 
-        Display Name (optional)
-        <br>
-        <input type="text" name="displayName" placeholder="Display Name">
-        <br><br>
+        <tr id="display-name">
+          <td class="field-col">Display Name</td>
+          <td class="input-col">
+            <input type="text" id="display-name-input" class="form-control" placeholder="Display Name" aria-describedby="basic-addon1">
+          </td>
+          <td>
+            <span id="display-name-field"></span>
+          </td>
+        </tr>
 
-        Password
-        <br>
-        <input type="password" id="password-input" name="password" required>
-        <br><br>
+        <tr id="email">
+          <td class="field-col">Email Address</td>
+          <td class="input-col">
+            <input type="email" id="email-input" class="form-control" placeholder="Email Address" aria-describedby="basic-addon1">
+          </td>
+          <td>
+            <span id="email-field"></span>
+          </td>
+        </tr>
 
-        Password Confirmation
-        <br>
-        <input type="password" id="password-confirmation-input" name="passwordConfirmation" required>
-        <br><br>
+        <tr id="phone">
+          <td class="field-col">Phone Number</td>
+          <td class="input-col">
+            <input type="text" id="phone-input" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+          </td>
+          <td>
+            <span id="phone-field"></span>
+          </td>
+        </tr>
 
-        E-mail Address (e.g. john.doe123@gmail.com)
-        <br>
-        <input type="email" name="email" placeholder="E-mail Address" required>
-        <br><br>
+        <tr id="zipcode">
+          <td class="field-col">Zipcode</td>
+          <td class="input-col">
+            <input type="text" id="zipcode-input" class="form-control" placeholder="Zipcode" aria-describedby="basic-addon1">
+          </td>
+          <td>
+            <span id="zipcode-field"></span>
+          </td>
+        </tr>
 
-        Phone Number  (e.g. 123-123-1234)
-        <br>
-        <input type="tel" name="phone" placeholder="Phone Number" pattern="\d{3}-\d{3}-\d{4}" required>
-        <br><br>
+        <tr id="password">
+          <td class="field-col">Password</td>
+          <td class="input-col">
+            <input type="password" id="password-input" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+          </td>
+        </tr>
 
-        Date of Birth
-        <br>
-        <input type="date" id="date-of-birth-input" name="dateOfBirth" required>
-        <br><br>
-
-        Zipcode (e.g. 77005)
-        <br>
-        <input type="text" name="zipcode" placeholder="Zipcode" pattern="\d{5}(-\d{4})?" required>
-        <br><br>
-
-        <!-- Hidden Timestamp -->
-        <input type="hidden" name="timestamp" id="timestamp-input">
-
-
-        <button type="submit" onclick="return onSubmit()">Submit</button>
-        <button type="reset" value="clear">Clear</button>
-
-
+        <tr id="password-confirmation">
+          <td class="field-col">Password Confirmation</td>
+          <td class="input-col">
+            <input type="password" id="password-confirmation-input" class="form-control" placeholder="Password Confirmation" aria-describedby="basic-addon1">
+          </td>
+        </tr>
+      </table>
+      <div id="submit-button-div">
+        <button type="button" id="submit-button" class="btn btn-primary">Submit</button>
+      </div>
+      
     </body>
 </html>
