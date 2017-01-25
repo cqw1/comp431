@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Avoid the Mouse</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Cassie Wang">
+    
+    <style>
+      #congrats-out-div {
+        background: red;
+        border-radius: 15px;
+        padding: 5px;
+        width: 175px;
+      }
+      #congrats-in-div {
+        background: #66FF00;
+        border-radius: 10px;
+        padding: 2px 30px 2px 30px;
+        color: slateblue;
+        text-align: center;
+        font-family: calibri;
+      }
+      
+      #click-button {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+      }
+    </style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="avoid.js"></script>
+      
+  </head>
+  <body>
+    <div id="congrats-out-div">
+      <div id="congrats-in-div">
+        Congratulations!
+        <br>
+        You won!
+      </div>
+    </div>
+    <button id="click-button" type="button">Click Me</button>
+
+  </body>
+</html>

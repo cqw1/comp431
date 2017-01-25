@@ -1,0 +1,21 @@
+.img-thumbnail {
+  height: 315px;
+  margin-bottom: 10px;
+}
+
+.button-div {
+  text-align: center;
+}
+
+table {
+  margin-top: 20px;
+}
+
+td {
+  padding-top: 15px;
+}
+
+.panel-default:hover {
+  border-color: #666;
+}
+
