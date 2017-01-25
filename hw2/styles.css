@@ -39,6 +39,9 @@ td {
   margin-top: 5px;
   display: none;
 }
+.container {
+    margin-top: 20px;
+}
 
 #submit-button-div {
   text-align: center;

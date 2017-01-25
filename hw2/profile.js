@@ -1,25 +1,50 @@
 
 $(function() {
 
-    var displayNameInput = $('#display-name-input');
-    var emailInput = $('#email-input');
-    var phoneInput = $('#phone-input');
-    var zipcodeInput = $('#zipcode-input');
-    var passwordInput = $('#password-input');
-    var passwordConfirmationInput = $('#password-confirmation-input');
+    // Input fields.
+    var displayNameInput = $('#display-name').find('input');
+    var emailInput = $('#email').find('input');
+    var phoneInput = $('#phone').find('input');
+    var zipcodeInput = $('#zipcode').find('input');
+    var passwordInput = $('#password').find('input');
+    var passwordConfirmationInput = $('#password-confirmation').find('input');
 
+    // Displayed fields.
+    var displayNameField = $('#display-name').find('span');
+    var emailField = $('#email').find('span');
+    var phoneField = $('#phone').find('span');
+    var zipcodeField = $('#zipcode').find('span');
+
+    var submitButton = $('#submit-button');
+
+    // Error alerts.
     var displayNameAlert = $('#display-name-alert');
     var emailAlert = $('#email-alert');
     var phoneAlert = $('#phone-alert');
     var zipcodeAlert = $('#zipcode-alert');
     var passwordAlert = $('#password-alert');
 
+    // Success alerts.
     var displayNameChanged = $('#display-name-changed');
     var emailChanged = $('#email-changed');
     var phoneChanged = $('#phone-changed');
     var zipcodeChanged = $('#zipcode-changed');
     var passwordChanged = $('#password-changed');
 
+    // Hardcoded default values.
+    var displayNameVal = 'johnnydoe';
+    var emailVal = 'john.doe@gmail.com';
+    var phoneVal = '012-345-6789';
+    var zipcodeVal = '77005';
+    var passwordVal = 'pass1234';
+
+
+    /*
+     * Updates displayed fields with saved variables.
+     *
+     * Params: None
+     * Returns: None
+     */
     function updateDisplayedValues() {
         displayNameField.text(displayNameVal);
         emailField.text(emailVal);
@@ -27,6 +52,12 @@ $(function() {
         zipcodeField.text(zipcodeVal);
     }
 
+    /*
+     * Hide all alerts.
+     *
+     * Params: None
+     * Returns: None
+     */
     function hideAlerts() {
         // Invalid alerts.
         displayNameAlert.hide();
@@ -43,22 +74,13 @@ $(function() {
         passwordChanged.hide();
     }
 
-
-    var displayNameField = $('#display-name-field');
-    var emailField = $('#email-field');
-    var phoneField = $('#phone-field');
-    var zipcodeField = $('#zipcode-field');
-
-    var submitButton = $('#submit-button');
-
-    var displayNameVal = 'johnnydoe';
-    var emailVal = 'john.doe@gmail.com';
-    var phoneVal = '012-345-6789';
-    var zipcodeVal = '77005';
-    var passwordVal = 'pass1234';
-
-
-
+    /*
+     * Validates each input field. If invalid field, displays corresponding 
+     * error alert.
+     *
+     * Params: None
+     * Returns: True if all fields are valid, false otherwise.
+     */
     function validateInputs() {
         var valid = true;
 
@@ -87,7 +109,8 @@ $(function() {
         }
 
         var passwordValid = passwordInput.val() == passwordConfirmationInput.val();
-        if ((passwordInput.val() || passwordConfirmationInput.val()) && !passwordValid) {
+        if ((passwordInput.val() || passwordConfirmationInput.val()) 
+                && !passwordValid) {
             passwordAlert.show();
             valid = false;
         }
@@ -95,36 +118,47 @@ $(function() {
         return valid;
     }
 
+    /*
+     * If values are valid, updates displayed fields with new values and saves 
+     * new values.
+     */
     function updateValues() {
         hideAlerts();
 
         if (validateInputs()) {
-            if (displayNameInput.val() && (displayNameInput.val() != displayNameVal)) {
-                displayNameChanged.find(".text").text('Display name changed from ' + displayNameVal + ' to ' + displayNameInput.val() + '.');
+            if (displayNameInput.val() 
+                    && (displayNameInput.val() != displayNameVal)) {
+                displayNameChanged.find(".text")
+                    .text('Display name changed from ' + displayNameVal 
+                            + ' to ' + displayNameInput.val() + '.');
                 displayNameChanged.show();
                 displayNameVal = displayNameInput.val();
             }
 
             if (emailInput.val() && (emailInput.val() != emailVal)) {
-                emailChanged.find(".text").text('Email address changed from ' + emailVal+ ' to ' + emailInput.val() + '.');
+                emailChanged.find(".text").text('Email address changed from ' 
+                        + emailVal+ ' to ' + emailInput.val() + '.');
                 emailChanged.show();
                 emailVal = emailInput.val();
             }
 
             if (phoneInput.val() && (phoneInput.val() != phoneVal)) {
-                phoneChanged.find(".text").text('Phone number changed from ' + phoneVal + ' to ' + phoneInput.val() + '.');
+                phoneChanged.find(".text").text('Phone number changed from ' 
+                        + phoneVal + ' to ' + phoneInput.val() + '.');
                 phoneChanged.show();
                 phoneVal = phoneInput.val();
             }
 
             if (zipcodeInput.val() && (zipcodeInput.val() != zipcodeVal)) {
-                zipcodeChanged.find(".text").text('Zipcode changed from ' + zipcodeVal + ' to ' + zipcodeInput.val() + '.');
+                zipcodeChanged.find(".text").text('Zipcode changed from ' 
+                        + zipcodeVal + ' to ' + zipcodeInput.val() + '.');
                 zipcodeChanged.show();
                 zipcodeVal = zipcodeInput.val();
             }
 
-            if ((passwordInput.val() || passwordConfirmationInput.val()) && (passwordInput.val() != passwordVal)) {
-                passwordChanged.find(".text").text('Password changed to ' + passwordInput.val() + '.');
+            if ((passwordInput.val() || passwordConfirmationInput.val()) 
+                    && (passwordInput.val() != passwordVal)) {
+                passwordChanged.find(".text").text('Password changed.');
                 passwordChanged.show();
                 passwordVal = passwordInput.val();
             }
@@ -137,15 +171,12 @@ $(function() {
             passwordInput.val('');
             passwordConfirmationInput.val('');
 
-            // Display default values if any changed.
             updateDisplayedValues();
-
         }
 
     }
 
     submitButton.click(updateValues);
-
     updateDisplayedValues();
 });
 
