@@ -1,26 +1,36 @@
 .img-thumbnail {
-  height: 315px;
-  margin-bottom: 10px;
+    /*height: 315px;*/
+    margin-bottom: 10px;
+}
+
+.image-col {
+    position: relative;
+}
+
+.image-button-div {
+    position: absolute;
+    top: 50%;
+    transform: translateY(50%);
 }
 
 .button-div {
-  text-align: center;
+    text-align: center;
 }
 
 #image-table {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 td {
-  padding-top: 15px;
+    padding-top: 15px;
 }
 
 .panel-default:hover {
-  border-color: #666;
+    border-color: #666;
 }
 
 #profile-table > tbody > tr > td {
-  padding: 10px;
+    padding: 10px;
 }
 
 #profile-table {
@@ -28,21 +38,21 @@ td {
 }
 
 .field-col {
-  font-weight: bold;
-  text-align: right;
+    font-weight: bold;
+    text-align: right;
 }
 
 .alert {
-  width: 70%;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  display: none;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: none;
 }
 .container {
     margin-top: 20px;
 }
 
 #submit-button-div {
-  text-align: center;
+    text-align: center;
 }
