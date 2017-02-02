@@ -1,6 +1,7 @@
 $(function() {
     var $canvas;
     var context;
+    var canvasOffset;
 
     const CELL_DIM = 25; // Length and width dimension of one square cell.
     const DEAD = false;
@@ -12,11 +13,10 @@ $(function() {
     if ($('#canvas').length) {
         $canvas = $('#canvas');
         context = $('#canvas')[0].getContext("2d");
+        canvasOffset = $canvas.offset();
     } else {
         console.error('Could not find canvas object.');
     }
-
-    var canvasOffset = $canvas.offset();
 
     function getCol(xCoord) {
         return Math.floor((xCoord - canvasOffset.left) / CELL_DIM);
@@ -32,11 +32,10 @@ $(function() {
 
     $canvas.mousemove(function(e) {
         console.log('mouseover (' + getRow(e.clientY) + ', ' + getCol(e.clientX) + ')');
-    });
+    })
     
 
     function drawGrid() {
-
         for (var i = 0; i < $canvas.width(); i += CELL_DIM) {
             // Draw vertical lines.
             context.moveTo(i, 0);
@@ -63,7 +62,15 @@ $(function() {
         }
     }
 
+    function drawCells() {
+        cells.forEach(function(row) {
+            row.forEach(function(cell) {
+            });
+        });
+    }
+
     function draw() {
+        drawCells();
         drawGrid();
 
 
