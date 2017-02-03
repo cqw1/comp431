@@ -12,7 +12,16 @@ const particle = ({
 }
 
 const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
-	// IMPLEMENT ME
+
+    velocity[0] += delta * acceleration[0]
+    velocity[1] += delta * acceleration[1]
+
+    position[0] += delta * velocity[0]
+    position[1] += delta * velocity[1]
+
+    position[0] = ((position[0] % canvas.width) + canvas.width) % canvas.width
+    position[1] = ((position[1] % canvas.height) + canvas.height) % canvas.height
+
     return { mass, acceleration, velocity, position }
 }
 
