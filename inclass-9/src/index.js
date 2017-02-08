@@ -18,6 +18,7 @@ function getSpanSibling(e) {
 }
 
 function toggleDone(e) {
+    console.log('toggleDone');
     const el = getSpanSibling(e)
     const done = el.getAttribute('done') == 'false'
     el.setAttribute('done', done)
@@ -25,12 +26,14 @@ function toggleDone(e) {
 }
 
 function removeTask(e) {
+    console.log('removeTask');
     const taskId = e.target.parentElement.getAttribute('id')
     const idx = listItems.findIndex(e => e.props.id === taskId)
     if (idx >= 0) listItems.splice(idx, 1)
 }
 
 function addItem(text) {
+    console.log('text: ' + text);
     console.log('added item');
     const newTODO = document.getElementById("newTODO")
     if (newTODO) {

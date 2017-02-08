@@ -13,10 +13,6 @@ function h(tag, props, ...children) {
         children: Array.isArray(children[0]) ? children[0] : children }
 }
 
-function hello() {
-    console.log('hello world');
-}
-
 function createElement(node) {
 	console.log('Create element called for', node)
 	// create the element and return it to the caller
@@ -27,8 +23,10 @@ function createElement(node) {
     var el = document.createElement(node.tag);
     for (var p in node.props) {
         if (typeof node.props[p] === 'function') {
-            el.setAttribute(p, node.props[p]);
-            el.onclick = node.props[p];
+            //el.setAttribute(p, node.props[p])
+            if (p.slice(0, 2) == 'on') {
+                el.addEventListener(p.slice(2).toLowerCase(), node.props[p]);
+            }
         } else {
             el[p] = node.props[p];
         }
@@ -66,18 +64,20 @@ function updateElement(parent, newNode, oldNode, index=0) {
     if (!oldNode) {
         parent.appendChild(createElement(newNode))
     } else {
-    	console.log('update element that may have changed');
-
-
-        if (Array.isArray(newNode.children)) {
-            for (var i = 0; i < newNode.children.length; i++) {
-                updateElement(node, node.children, i);
-            }
-        }
+        console.log(newNode);
+        console.log(oldNode);
 
         if (changed(newNode, oldNode)) {
-            parent.replaceChild(oldNode, newNode);
+            console.log(createElement(newNode));
+            console.log(createElement(oldNode));
+            parent.replaceChild(createElement(newNode), createElement(oldNode));
         } 
+
+        if (newNode.children) {
+            for (var i = 0; i < newNode.children.length; i++) {
+                updateElement(createElement(newNode), newNode.children[i], oldNode.children[i], i);
+            }
+        }
 
 
     	// you can use my changed(node1, node2) method above
@@ -85,6 +85,7 @@ function updateElement(parent, newNode, oldNode, index=0) {
 
     	// be sure to also update the children!
     }
+    //update();
 }
 
 const deepCopy = (obj) => {
@@ -104,6 +105,7 @@ const update = () => requestAnimationFrame(() => {
 	// compare the current vdom with the original vdom for updates
     updateElement(h.mounted.root, h.mounted.current, h.mounted.original)
     h.mounted.original = deepCopy(h.mounted.current)
+    console.log('requestAnimationFrame');
 })
 
 h.mount = (root, component) => {
