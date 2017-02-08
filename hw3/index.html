@@ -5,28 +5,115 @@
         <meta charset="utf-8">
         <meta name="author" content="Cassie Wang">
 
-        <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <script src="script.js"></script>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div class="page-header">
+            <h1>Conway's Game of Life<small> (kind of)</small></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
 
-        <div id="info">You have <strong><span id="num-left"></span></strong> cell(s) left to allocate.</div>
-        <button id="play" type="button" class="btn btn-default"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
-        <button id="pause" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button>
-        <button id="restart" type="button" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+                <div class="row">
+                    <div class="col-md-12 buffer-cell"></div>
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Controls</h3>
+                            </div>
+                            <div class="panel-body">
 
-        <br>
+                                <div>
+                                    <strong>Cycles Left: </strong>
+                                    <span id="cycles-left"></span>
+                                </div>
 
-        <canvas id="canvas" width="500" height="250"></canvas> 
+                                <div>
+                                    <strong>Toggleable Cells: </strong>
+                                    <span id="toggles-left"></span>
+                                    <!-- 
+                                        <span class="glyphicon glyphicon-question-sign help" aria-hidden="true" data-toggle="popover" data-placement="right" 
+                                        data-content="Number of cells you're allowed to toggle between live/dead initially or when game is paused.">
+                                        </span>
+                                    -->
+                                </div>
+
+                                <div>
+                                    <strong>Current Score: </strong>
+                                    <span id="current-score"></span>
+                                </div>
+
+                                <div>
+                                    <strong>Max Score: </strong>
+                                    <span id="max-score"></span>
+                                </div>
+
+                                <div>
+                                    <strong>Unique Populated Cells: </strong>
+                                    <span id="populated"></span>
+                                </div>
+
+                                <br>
+
+                                <div>
+                                    <button id="play" type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
+                                    <button id="pause" type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                                    </button>
+                                    <button id="restart" type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                    </button>
+                                    <button id="save" type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Highscores</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-condensed table-striped" id="highscores">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th class="text-center">Max Score</th>
+                                            <th class="text-center">Unique Populated</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John</td>
+                                            <td class="text-center">30</td>
+                                            <td class="text-center">42</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 canvas-container">
+                <!-- <canvas id="canvas" width="500" height="250"></canvas>  -->
+                <canvas id="canvas" width="500" height="400"></canvas> 
+            </div>
+        </div>
+
+
 
 
 

@@ -1,5 +1,22 @@
-#canvas {
-    border: 1px solid black;
-    margin-left: 100px;
-    margin-top: 100px;
+
+body {
+    margin: 50px 100px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.panel-title {
+    /*border: 1px solid black; */
+    font-weight: bold;
+}
+
+.help {
+    float: right;
+}
+
+.buffer-cell {
+    /* (CELL_DIM - 1). (-1) for aesthetic. */
+    height: 24px;
 }
