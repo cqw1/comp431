@@ -3,12 +3,7 @@ body {
     margin: 50px 100px;
 }
 
-.text-center {
-    text-align: center;
-}
-
 .panel-title {
-    /*border: 1px solid black; */
     font-weight: bold;
 }
 
@@ -19,4 +14,12 @@ body {
 .buffer-cell {
     /* (CELL_DIM - 1). (-1) for aesthetic. */
     height: 24px;
+}
+
+.stat {
+    padding: 5px;
+}
+
+.alert {
+    margin-bottom: 0px;
 }

@@ -62,20 +62,26 @@ function updateElement(parent, newNode, oldNode, index=0) {
 	// ideally we also handle inserts, but ignore that functionality for now.
 
     if (!oldNode) {
+        console.log('!oldNode');
         parent.appendChild(createElement(newNode))
+    } else if (!newNode && oldNode) {
+        parent.removeChild(oldNode);
     } else {
-        console.log(newNode);
-        console.log(oldNode);
+        console.log('else');
 
         if (changed(newNode, oldNode)) {
-            console.log(createElement(newNode));
-            console.log(createElement(oldNode));
             parent.replaceChild(createElement(newNode), createElement(oldNode));
         } 
 
-        if (newNode.children) {
-            for (var i = 0; i < newNode.children.length; i++) {
-                updateElement(createElement(newNode), newNode.children[i], oldNode.children[i], i);
+        if (newNode.children && oldNode.children) {
+            if (newNode.children.length < oldNode.children.length) {
+                for (var i = 0; i < oldNode.children.length; i++) {
+                    updateElement(createElement(newNode), newNode.children[i], oldNode.children[i], i);
+                }
+            } else {
+                for (var i = 0; i < newNode.children.length; i++) {
+                    updateElement(createElement(newNode), newNode.children[i], oldNode.children[i], i);
+                }
             }
         }
 
@@ -85,7 +91,6 @@ function updateElement(parent, newNode, oldNode, index=0) {
 
     	// be sure to also update the children!
     }
-    //update();
 }
 
 const deepCopy = (obj) => {
@@ -116,5 +121,7 @@ h.mount = (root, component) => {
 }
 
 exports.h = h
+
+update();
 
 })(window);

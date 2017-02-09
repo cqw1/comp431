@@ -1,7 +1,4 @@
 $(function() {
-    // Opt in to bootstrap javascript features.
-    $('[data-toggle="popover"]').popover();
-
     var $canvas;
     var $cyclesLeftSpan = $('#cycles-left');
     var $togglesLeftSpan = $('#toggles-left');
@@ -17,10 +14,17 @@ $(function() {
     var canvasBoundingRect;
     var timerId;
 
+    var $successAlert = $('#success-alert');
+    $successAlert.hide();
+
+    var $errorAlert = $('#error-alert');
+    $errorAlert.hide();
+    var $errorText = $('#error-text');
+
     var populated = [];
     var populatedCount = 0;
 
-    // Matrix of cells. Each cell is true (live) or false (dead).
+    // Matrix of cells. Each cell is live (1) or dead (0).
     var cells = [];
 
     if ($('#canvas').length) {
@@ -29,7 +33,8 @@ $(function() {
         canvasOffset = $canvas.offset();
         canvasBoundingRect = $('#canvas')[0].getBoundingClientRect();
     } else {
-        console.error('Could not find canvas object.');
+        $errorText.text('Could not find canvas object.');
+        $errorAlert.show();
     }
 
     const CYCLES_START = 60;
@@ -58,13 +63,8 @@ $(function() {
     var maxScore = 0;
 
     $canvas.click(function(e) {
-        console.log('click client(' + e.clientX + ', ' + e.clientY + ')');
-        console.log('click page(' + e.pageX + ', ' + e.pageY + ')');
-
         var r = getRow(e.pageY);
         var c = getCol(e.pageX);
-
-        console.log('click (' + r + ', ' + c + ')');
 
         if (gameState != GAME_STATE_RUNNING && togglesLeft > 0 && validCell(r, c)) {
             if (cells[r][c]) {
@@ -81,7 +81,6 @@ $(function() {
         }
     });
 
-    /* Play button. */
     $play.click(function() {
         if (gameState != GAME_STATE_RUNNING) {
             timerId = setInterval(run, 1000);
@@ -89,9 +88,8 @@ $(function() {
             $play.addClass('active');
             $pause.removeClass('active');
         }
-    })
+    });
 
-    /* Pause button. */
     $pause.click(function() {
         if (gameState == GAME_STATE_RUNNING) {
             clearInterval(timerId);
@@ -99,42 +97,40 @@ $(function() {
             $pause.addClass('active');
             $play.removeClass('active');
         }
-    })
+    });
 
-    /* Restart button. */
     $restart.click(function() {
         clearInterval(timerId);
         initGame();
         $play.removeClass('active');
         $pause.removeClass('active');
-    })
+    });
 
-    /* Save button. */
     $save.click(function() {
         if (gameState == GAME_STATE_INITIAL) {
-            console.error("Cannot save scores before starting.");
+            $errorText.text('Cannot save score before starting.');
+            $errorAlert.show();
             return;
         }  else if (gameState == GAME_STATE_RUNNING) {
-            console.error("Cannot save scores while game is running.");
+            $errorText.text('Cannot save score while game is running.');
+            $errorAlert.show();
             return;
         }
 
-        if (window.localStorage) {
-            var saveData = {
-                'maxScore': maxScore,
-                'populatedCount': populatedCount,
-            }
-            var name = Math.random() * 100;
+        var timestamp = Date.now();
+        var date = new Date(timestamp);
+        document.cookie = timestamp + '=' + maxScore + ',' + populatedCount;
 
-            localStorage.setItem(name, JSON.stringify(saveData));
-            $('#highscores tr:last').after('<tr><td class="text-center">' + name +'</td><td class="text-center">' + maxScore + '</td><td class="text-center">' + populatedCount + '</td></tr>');
-        } else {
-                // TODO: generate alert.
-            console.error("localStorage is not supported.");
-        }
-    }) 
+        $('#highscores tr:last').after('<tr><td class="text-center">' + 
+            date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + 
+            '</td><td class="text-center">' + maxScore + 
+            '</td><td class="text-center">' + populatedCount + '</td></tr>');
+    });
 
-    /* Initializes all game variables and other setup. */
+    $('.close').click(function() {
+        $(this).parent().hide();
+    });
+
     function initGame() {
         gameState = GAME_STATE_INITIAL;
         cyclesLeft = CYCLES_START;
@@ -146,18 +142,16 @@ $(function() {
         draw();
     }
 
-    /* Column of cell, in which top left clickable cell is (1, 1) */
     function getCol(xCoord) {
-        //return Math.floor((xCoord - canvasOffset.left) /CELL_DIM);
+        // Returns col of cell, in which top left clickable cell is (1, 1)
         return Math.floor((xCoord - canvasBoundingRect.left) / CELL_DIM);
     }
 
-    /* Row of cell, in which top left clickable cell is (1, 1) */
     function getRow(yCoord) {
+        // Returns row of cell, in which top left clickable cell is (1, 1)
         return Math.floor((yCoord - canvasBoundingRect.top) / CELL_DIM);
     }
 
-    /* Toggle between 0 and 1. */
     function toggleCell(r, c) {
         cells[r][c] = (cells[r][c] + 1) % 2;
 
@@ -166,22 +160,21 @@ $(function() {
         }
     }
 
-    /* Checks if it's within our buffer bounds of matrix. */
     function validCell(r, c) {
+        // Checks if it's within our buffer bounds of matrix. Offset
+        // by 1 due to buffer rows/cols.
         return (r > 0 && r < (ROWS-1) && c > 0 && c < (COLS-1));
     }
 
     function drawGrid() {
         context.beginPath();
         for (var c = 1; c < COLS; c++) {
-            // Draw vertical lines.
             context.moveTo(c * CELL_DIM, CELL_DIM);
             context.lineTo(c * CELL_DIM, HEIGHT - CELL_DIM);
             context.stroke();
         }
 
         for (var r = 1; r < ROWS; r++) {
-            // Draw horizontal lines.
             context.moveTo(CELL_DIM, r * CELL_DIM);
             context.lineTo(WIDTH - CELL_DIM, r * CELL_DIM);
             context.stroke();
@@ -197,6 +190,7 @@ $(function() {
          * Need to index from 1 to < (length - 1) to ignore touching
          * buffer cells.
          */
+
         cells = [];
         populated = [];
         for (var r = 0; r < ROWS; r++) {
@@ -221,17 +215,23 @@ $(function() {
     }
 
     function loadHighscores() {
-        if (window.localStorage) {
-            for (var i = 0; i < localStorage.length; i++) {
-                var saveData = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                $('#highscores tr:last').after('<tr><td class="text-center">' + localStorage.key(i) + '</td><td class="text-center">' + saveData.maxScore + '</td><td class="text-center">' + saveData.populatedCount + '</td></tr>');
+        var cookies = document.cookie.split(';');
+        cookies.forEach(function(cookie) {
+            var keyValue = cookie.split('=');
+            if (keyValue.length == 2) {
+                var date = new Date(Number(keyValue[0]));
+                var values = keyValue[1].split(',');
+                $('#highscores tr:last').after('<tr><td class="text-center">' + 
+                    date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + 
+                    '</td><td class="text-center">' + values[0] + 
+                    '</td><td class="text-center">' + values[1] + '</td></tr>');
             }
-        }
+        });
     }
 
     function getNumLiveNeighbors(r, c) {
-        // Returns the number of live neighbors of given cell.
         var count = 0;
+
         count += cells[r-1][c-1];
         count += cells[r-1][c];
         count += cells[r-1][c+1];
@@ -241,7 +241,6 @@ $(function() {
         count += cells[r+1][c];
         count += cells[r+1][c+1];
 
-        //console.log('getNumLiveNeighbors(' + r + ', ' + c + '): ' + count);
         return count;
     }
 
@@ -255,8 +254,6 @@ $(function() {
     }
 
     function updateCells() {
-        console.log('updateCells');
-
         var new_cells = deepCopyCells(cells);
         for (var r = 1; r < ROWS - 1; r++) {
             for (var c = 1; c < COLS -1; c++) {
@@ -303,6 +300,8 @@ $(function() {
     }
 
     function run() {
+        // Simulates one cycle of life.
+        
         if (cyclesLeft == 0) {
             gameState = GAME_STATE_FINISHED;
 
@@ -317,9 +316,12 @@ $(function() {
     }
 
     function draw() {
+        // Update canvas.
         context.clearRect(0, 0, canvas.width, canvas.height);
         drawCells();
         drawGrid();
+
+        // Update text on screen.
         $cyclesLeftSpan.text(cyclesLeft);
         $togglesLeftSpan.text(togglesLeft);
         $currentScoreSpan.text(currentScore);
@@ -329,5 +331,4 @@ $(function() {
 
     initGame();
     loadHighscores();
-
 });
