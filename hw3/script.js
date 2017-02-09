@@ -12,8 +12,6 @@ $(function() {
     var $save = $('#save');
     var $populated = $('#populated');
     var context;
-    var canvasOffset;
-    var canvasBoundingRect;
     var timerId;
 
     var $successAlert = $('#success-alert');
@@ -32,8 +30,6 @@ $(function() {
     if ($('#canvas').length) {
         $canvas = $('#canvas');
         context = $('#canvas')[0].getContext("2d");
-        canvasOffset = $canvas.offset();
-        canvasBoundingRect = $('#canvas')[0].getBoundingClientRect();
     } else {
         $errorText.text('Could not find canvas object.');
         $errorAlert.show();
@@ -64,9 +60,32 @@ $(function() {
     var currentScore = 0;
     var maxScore = 0;
 
+    function relMouseCoords(event){
+        // Get mouse coordinates inside the canvas element, relative to the top 
+        // left corner of the canvas.
+        
+        var totalOffsetX = 0;
+        var totalOffsetY = 0;
+        var canvasX = 0;
+        var canvasY = 0;
+        var canvas = document.getElementById('canvas');
+    
+        do {
+            totalOffsetX += canvas.offsetLeft - canvas.scrollLeft;
+            totalOffsetY += canvas.offsetTop - canvas.scrollTop;
+        } while(canvas = canvas.offsetParent)
+    
+        canvasX = event.pageX - totalOffsetX;
+        canvasY = event.pageY - totalOffsetY;
+    
+        return {x: canvasX, y: canvasY};
+    }
+
     $canvas.click(function(e) {
-        var r = getRow(e.pageY);
-        var c = getCol(e.pageX);
+        coord = relMouseCoords(e);
+
+        var r = getRow(coord.y);
+        var c = getCol(coord.x);
 
         if (gameState != GAME_STATE_RUNNING && togglesLeft > 0 && validCell(r, c)) {
             if (cells[r][c]) {
@@ -147,12 +166,12 @@ $(function() {
 
     function getCol(xCoord) {
         // Returns col of cell, in which top left clickable cell is (1, 1)
-        return Math.floor((xCoord - canvasBoundingRect.left) / CELL_DIM);
+        return Math.floor(xCoord / CELL_DIM);
     }
 
     function getRow(yCoord) {
         // Returns row of cell, in which top left clickable cell is (1, 1)
-        return Math.floor((yCoord - canvasBoundingRect.top) / CELL_DIM);
+        return Math.floor(yCoord / CELL_DIM);
     }
 
     function toggleCell(r, c) {
