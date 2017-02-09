@@ -1,4 +1,6 @@
 $(function() {
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     var $canvas;
     var $cyclesLeftSpan = $('#cycles-left');
     var $togglesLeftSpan = $('#toggles-left');
@@ -127,6 +129,7 @@ $(function() {
             '</td><td class="text-center">' + populatedCount + '</td></tr>');
     });
 
+    // Closes the alerts. Otherwise would remove the element altogether.
     $('.close').click(function() {
         $(this).parent().hide();
     });

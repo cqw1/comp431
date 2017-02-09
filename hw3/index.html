@@ -17,14 +17,14 @@
             <h1>Conway's Game of Life<small> (kind of)</small>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary text-right" data-toggle="modal" data-target="#instructions">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#instructions">
                 Instructions
             </button>
         </h1>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
 
                 <div class="row">
                     <div class="col-md-12 buffer-cell"></div>
@@ -61,16 +61,16 @@
                                 </div>
 
                                 <div class="stat">
-                                    <button id="play" type="button" class="btn btn-default">
+                                    <button id="play" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play">
                                         <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
                                     </button>
-                                    <button id="pause" type="button" class="btn btn-default">
+                                    <button id="pause" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Pause">
                                         <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
                                     </button>
-                                    <button id="restart" type="button" class="btn btn-default">
+                                    <button id="restart" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Restart">
                                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                     </button>
-                                    <button id="save" type="button" class="btn btn-default">
+                                    <button id="save" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Score">
                                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                                     </button>
                                 </div>
@@ -98,7 +98,7 @@
                                 <table class="table table-condensed table-striped" id="highscores">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Timestamp</th>
                                             <th class="text-center">Max Score</th>
                                             <th class="text-center">Unique Populated</th>
                                         </tr>
@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8 canvas-container">
+            <div class="col-md-7 canvas-container">
                 <!-- <canvas id="canvas" width="500" height="250"></canvas>  -->
                 <canvas id="canvas" width="500" height="400"></canvas> 
             </div>
@@ -122,14 +122,82 @@
 
         <!-- Modal -->
         <div class="modal fade" id="instructions" tabindex="-1" role="dialog" aria-labelledby="instructionsModal">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h4 class="modal-title" id="myModalLabel">Instructions</h4>
                     </div>
                     <div class="modal-body">
-                    ...
+
+                        <strong>tldr; Try to find the best start pattern and 
+                            strategically toggle cells throughout the round to 
+                            achieve the highest score!</strong>
+                        <br><br>
+
+                        ---------
+                        <br>
+                        [As taken from 
+                            <a href="https://en.wikipedia.org/wiki/Conway's_Game_of_Life" target="_blank">https://en.wikipedia.org/wiki/Conway's_Game_of_Life</a>]
+
+                        <br><br>
+                        "The universe of the Game of Life is an infinite 
+                        two-dimensional orthogonal grid of square cells, each 
+                        of which is in one of two possible states, alive or 
+                        dead, or "populated" or "unpopulated" (the difference 
+                        may seem minor, except when viewing it as an early 
+                        model of human/urban behaviour simulation or how one 
+                        views a blank space on a grid). Every cell interacts 
+                        with its eight neighbours, which are the cells that are 
+                        horizontally, vertically, or diagonally adjacent. At 
+                        each step in time, the following transitions occur:
+                        <br><br>
+
+                        <strong>
+                        <ol>
+                            <li>Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.</li>
+                            <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+                            <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+                            <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+                        </ol>
+                        </strong>
+
+                        The initial pattern constitutes the seed of the system. 
+                        The first generation is created by applying the above 
+                        rules simultaneously to every cell in the seed--births 
+                        and deaths occur simultaneously, and the discrete 
+                        moment at which this happens is sometimes called a tick 
+                        (in other words, each generation is a pure function of 
+                        the preceding one). The rules continue to be applied 
+                        repeatedly to create further generations."
+                        <br><br>
+
+                        ---------
+                        <br>
+                        <strong>However,</strong> this game is a little 
+                        different. The player is allowed to toggle 12 cells in 
+                        total. They can choose to use
+                        all 12 cells in the beginning to make a pattern, or 
+                        they may choose to only allocate some and keep the rest 
+                        for later. After creating a
+                        pattern, the player can press the "play" button to 
+                        begin the Game of Life. The Game of Life will only 
+                        proceed through 60 cycles before
+                        the round is over. At any point, the player may choose 
+                        to "pause" the game and toggle cells, given that they 
+                        have toggleable cells left, from live to dead or dead 
+                        to live. Once the 60 cycles are over, the round is done.  
+                        <br><br>
+
+                        For each live cell your pattern generates, your score 
+                        increases by 1. For each cell that dies, your score 
+                        decreases by 1. The end score
+                        recorded, if the player chooses to save their score, 
+                        will be the maximum score achieved in the round. For 
+                        fun, the number of unique cells populated during the 
+                        round is also tracked and recorded.
+                        <br><br>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
