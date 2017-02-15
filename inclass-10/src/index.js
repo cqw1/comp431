@@ -30,6 +30,10 @@ class ToDoItem extends React.Component {
 
     render() { 
 
+        if (!(typeof(this.props.text) === "string")) {
+            this.props.text = "";
+        }
+
         if (this.state.done) {
             return (
                 <li id={"task" + this.props.id} >
