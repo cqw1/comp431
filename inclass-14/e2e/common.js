@@ -17,7 +17,7 @@ exports.login = () =>
         .then(sleep(2000))
 
 exports.logout = () =>
-    sleep(500)
+    sleep(5000)
         .then(findId('logout').click())
         .then(sleep(1000))
         .then(findId('message').getText()

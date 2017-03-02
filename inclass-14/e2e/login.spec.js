@@ -20,33 +20,38 @@ describe('Test Dummy Server Example Page', () => {
     })
 
     it("Update the headline and verify the change", (done) => {
-        sleep(500)
+        var oldHeadline;
+
+        sleep(10000)
+            .then(findId('message').getText()
+                .then(text=> {
+                    oldHeadline = text.split('"')[1]; 
+                }))
             .then(findId('newHeadline').clear())
-            .then(findId('newHeadline').sendKeys('yo'))
+            .then(findId('newHeadline').sendKeys('hi'))
             .then(findId('headline').click())
             .then(sleep(2000))
             .then(findId('message').getText()
                 .then(text => {
-                    expect(text).to.equal(preamble + ' ' + common.creds.username + ' "yo"')
-                })
-                .then(done))
+                    expect(text).to.equal(preamble + ' ' + common.creds.username + ' "hi"')
+                }))
             .then(findId('newHeadline').clear())
-            .then(findId('newHeadline').sendKeys('Becoming a Web Developer!'))
+            .then(findId('newHeadline').sendKeys(oldHeadline))
             .then(findId('headline').click())
             .then(sleep(2000))
             .then(findId('message').getText()
                 .then(text => {
-                    expect(text).to.equal(preamble + ' ' + common.creds.username + ' "Becoming a Web Developer!"')
-                })
-                .then(done))
+                    expect(text).to.equal(preamble + ' ' + common.creds.username + ' "' + oldHeadline + '"')
+                }))
             .then(done)
+
         // IMPLEMENT ME
         // find the headline input
         // .sendKeys(new headline message)
         // verify the headline is updated
         // .sendKeys(the old headline message)
         // verify the headline is updated
-        //done()
+        done()
     })
 
     after('should log out', (done) => {
