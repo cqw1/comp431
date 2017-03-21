@@ -1,4 +1,4 @@
-import { resource } from '../../actions.js'
+import { resource, navigateMain } from '../../actions.js'
 
 /**
  * Actions associated with authenticating a user or managing profile fields.
@@ -64,18 +64,16 @@ export function getProfile() {
             dob = r.dob; // milliseconds
             return resource('GET', 'avatars/');
         }).then(r => {
-            image = r.avatars[0].avatar; 
+            img = r.avatars[0].avatar; 
         }).then(r => {
 
             dispatch({
                 type: AuthAction.GET_PROFILE,
                 profile: {
-                    username,
-                    password,
                     email,
                     zipcode,
                     dob,
-                    image,
+                    img,
                 },
             })
         }).catch((err) => {
@@ -103,11 +101,6 @@ export function loginUser(username, password) {
     var passwordError = '';
     var unauthorizedError = '';
 
-    var headline = '';
-    var email = '';
-    var zipcode = '';
-    var dob = '';
-    var image = '';
     var filteredArticles = [];
     var following = [];
 
@@ -140,18 +133,6 @@ export function loginUser(username, password) {
         .then(r => {
             dispatch(getHeadline());
             dispatch(getProfile());
-            return resource('GET', 'email/');
-        }).then(r => {
-            email = r.emailAddress;
-            return resource('GET', 'zipcode/');
-        }).then(r => {
-            zipcode = r.zipcode;
-            return resource('GET', 'dob/');
-        }).then(r => {
-            dob = r.dob; // milliseconds
-            return resource('GET', 'avatars/');
-        }).then(r => {
-            image = r.avatars[0].avatar; 
             return resource('GET', 'articles/');
         }).then(r => {
             filteredArticles = r.articles;
@@ -166,6 +147,8 @@ export function loginUser(username, password) {
                 following,
                 valid
             })
+
+            dispatch(navigateMain())
         }).catch((err) => {
             valid = false;
             console.log(err);

@@ -48,7 +48,6 @@ const Reducer = (state = {
             if (action.valid) {
                 return { 
                     ...state, 
-                    page: Pages.MAIN, 
                     profile: Object.assign({}, state.profile, action.profile),
                     filteredArticles: action.filteredArticles,
                     following: action.following,

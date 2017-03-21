@@ -34,14 +34,17 @@ const resource = (method, endpoint, payload) => {
 export const ActionTypes = {
     NAVIGATE_PROFILE: 'NAVIGATE_PROFILE', 
     NAVIGATE_MAIN: 'NAVIGATE_MAIN', 
+    NAVIGATE_LANDING: 'NAVIGATE_LANDING', 
 }
 
-export const navigateProfile = () => {
-    return { type: ActionTypes.NAVIGATE_PROFILE }
+export const navigateProfile = () => (dispatch) => {
+    dispatch({ type: ActionTypes.NAVIGATE_PROFILE })
 }
 
-export const navigateMain = () => {
-    return { type: ActionTypes.NAVIGATE_MAIN}
+export const navigateMain = () => (dispatch) => {
+    dispatch({ type: ActionTypes.NAVIGATE_MAIN })
 }
+
+export const navigateLanding = () => (dispatch) => dispatch({ type: ActionTypes.NAVIGATE_LANDING })
 
 export { resource }

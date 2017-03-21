@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
-import {url, resource} from './actions'
+import {url, resource, ActionTypes} from './actions'
 
 let Action, actions
 beforeEach(() => {
@@ -67,4 +67,31 @@ it('validate actions: resource should be POSTable', done => {
         expect(r.postable).to.eql('success');
         done();
     })
+})
+
+it('validate actions: should navigate to landing', done => {
+    actions.navigateLanding()(
+        action => {
+            expect(action).to.eql({ type: ActionTypes.NAVIGATE_LANDING });
+            done();
+        }
+    )
+})
+
+it('validate actions: should navigate to main', done => {
+    actions.navigateMain()(
+        action => {
+            expect(action).to.eql({ type: ActionTypes.NAVIGATE_MAIN });
+            done();
+        }
+    )
+})
+
+it('validate actions: should navigate to profile', done => {
+    actions.navigateProfile()(
+        action => {
+            expect(action).to.eql({ type: ActionTypes.NAVIGATE_PROFILE });
+            done();
+        }
+    )
 })
