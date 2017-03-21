@@ -17,7 +17,7 @@ export const ArticleFilter = ({
         <div className='article-filter'> 
             <input 
                 className='form-control' 
-                ref= {node => {input= node}} 
+                ref={node => {input=node}} 
                 placeholder='Filter articles' 
                 onChange={() => {
                     filterArticles(input.value);

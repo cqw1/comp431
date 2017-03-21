@@ -54,3 +54,9 @@ it('validate article actions: should fetch articles', done => {
     )
 })
 
+it('validate article actions: should update the search keyword', done => {
+    var action = articleActions.filterArticles('randomfilter');
+    expect(action.type).to.be.eql(ArticleAction.FILTER_ARTICLES);
+    expect(action.filter).to.be.eql('randomfilter');
+    done();
+})
