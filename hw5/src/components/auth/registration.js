@@ -51,7 +51,7 @@ export const Registration = ({
                             <input 
                                 className='form-control' 
                                 ref = {node => { usernameInput = node }} 
-                                defaultValue={profile.username} 
+                                defaultValue={profile.username ? profile.username : ''} 
                                 placeholder='Username' /> 
                             <div className='error-msg'>
                                 {registrationErrors.usernameError}
@@ -149,9 +149,9 @@ export const Registration = ({
 
 export default connect(
     (state) => ({ 
-        profile: state.profile,
-        registrationErrors: state.registrationErrors,
-        registrationSuccess: state.registrationSuccess
+        profile: state.authReducer.profile,
+        registrationErrors: state.authReducer.registrationErrors,
+        registrationSuccess: state.authReducer.registrationSuccess
     }),
     (dispatch, ownProps) => ({ 
         submit: (profile) => dispatch(register(profile))

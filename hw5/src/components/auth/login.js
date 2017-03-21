@@ -8,7 +8,7 @@ import { loginUser } from './authActions'
  */
 export const Login = ({ 
     loginUser,
-    loginErrors
+    loginErrors,
 }) => {
     let username;
     let password;
@@ -73,7 +73,7 @@ export const Login = ({
 }
 
 export default connect(
-    (state) => ({ loginErrors: state.loginErrors }),
+    (state) => ({ loginErrors: state.authReducer.loginErrors }),
     (dispatch) => ({ 
         loginUser: (username, password) => dispatch(loginUser(username, password))
     })

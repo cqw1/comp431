@@ -27,7 +27,7 @@ export const ArticleList = ({
 
 export default connect(
     (state) => ({ 
-        filteredArticles: state.filteredArticles
+        filteredArticles: state.articleReducer.filteredArticles
     }),
     (dispatch) => ({ })
 )(ArticleList)

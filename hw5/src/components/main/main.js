@@ -53,9 +53,7 @@ export const Main = ({
 );
 
 export default connect(
-    (state) => ({ 
-        profile: state.profile
-    }),
+    (state) => ({ profile: state.mainReducer.profile }),
     (dispatch) => ({ })
 )(Main)
 

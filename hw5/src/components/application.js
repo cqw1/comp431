@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { navigateProfile, navigateMain } from '../actions'
+import { navigateProfile, navigateMain, navigateLanding } from '../actions'
 import { logoutUser } from './auth/authActions'
 
 import Main from './main/main'
@@ -23,7 +23,14 @@ export const Application = ({
     logoutUser,
     navigateProfile,
     navigateMain,
+    navigateLanding,
 }) => {
+
+    const _onLogoutClick = () => {
+        logoutUser();
+        navigateLanding();
+    }
+
     if (page == Pages.MAIN) {
         return(
             <div> 
@@ -38,7 +45,7 @@ export const Application = ({
                         </div>
                         <div className='nav navbar-nav navbar-right'>
                             <a className='navbar-text'
-                                onClick={logoutUser}> Logout </a>
+                                onClick={_onLogoutClick}> Logout </a>
                         </div>
                     </div>
                 </nav>
@@ -59,7 +66,7 @@ export const Application = ({
                             </a>
                         </div>
                         <div className='nav navbar-nav navbar-right'>
-                            <a className='navbar-text' onClick={logoutUser}> 
+                            <a className='navbar-text' onClick={_onLogoutClick}> 
                                 Logout
                             </a>
                         </div>
@@ -79,11 +86,12 @@ export const Application = ({
 }
 
 export default connect(
-    (state) => ({ page: state.page}),
+    (state) => ({ page: state.navigationReducer.page}),
     (dispatch) => ({ 
         logoutUser: () => dispatch(logoutUser()),
         navigateProfile: () => dispatch(navigateProfile()),
-        navigateMain: () => dispatch(navigateMain())
+        navigateMain: () => dispatch(navigateMain()),
+        navigateLanding: () => dispatch(navigateLanding()),
     })
 )(Application)
 

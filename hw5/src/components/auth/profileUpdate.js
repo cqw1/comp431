@@ -168,8 +168,8 @@ export const ProfileUpdate = ({
 
 export default connect(
     (state) => ({ 
-        profile: state.profile,
-        errors: state.errors
+        profile: state.mainReducer.profile,
+        errors: state.mainReducer.errors
     }),
     (dispatch, ownProps) => ({ 
         submit: (profile) => dispatch(updateProfile(profile))

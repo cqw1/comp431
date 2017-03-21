@@ -43,7 +43,7 @@ export const FollowingList= ({
 
 export default connect(
     (state) => ({ 
-        following: state.following
+        following: state.mainReducer.following
     }),
     (dispatch) => ({ })
 )(FollowingList)

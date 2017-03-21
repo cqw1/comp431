@@ -4,6 +4,7 @@ import fetch, { mock } from 'mock-fetch'
 
 import {url, resource} from '../../actions'
 import {AuthAction, loginUser} from './authActions'
+import {authReducer, mainReducer} from '../../reducers'
 
 let authActions
 beforeEach(() => {
@@ -75,11 +76,32 @@ it('validate authentication: should not log in an invalid user', done => {
 
 it('validate authentication: should logout a user (state should be cleared)', done => {
 
-    mock(`${url}/logout`, {
+    mock(`${url}/logout/`, {
         method: 'PUT',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
         json: {},
+    })
+
+    // Clearing old profile state.
+    expect(authReducer({ 
+        profile: {'oldkey': 'oldvalue'} }, 
+        {type: AuthAction.LOGOUT})
+    ).to.eql({
+        profile: {},
+        loginErrors: {},
+        registrationErrors: {},
+        errors: {},
+        registrationSuccess: '',
+    })
+
+    expect(mainReducer({ 
+        profile: {'oldkey': 'oldvalue'} }, 
+        {type: AuthAction.LOGOUT})
+    ).to.eql({
+        profile: {},
+        errors: {},
+        following: [],
     })
 
     authActions.logoutUser()(

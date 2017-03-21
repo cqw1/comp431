@@ -1,4 +1,4 @@
-
+import { combineReducers } from 'redux'
 import { Pages } from './components/application'
 import { ActionTypes } from './actions'
 import { AuthAction } from './components/auth/authActions'
@@ -23,27 +23,14 @@ let errors = {
     passwordError: '',
 }
 
-const Reducer = (state = {
+export const authReducer = (state = {
     profile: {},
-    loginErrors: errors,
-    registrationErrors: errors,
-    errors: errors,
-    following: following,
-    articles: articles,
-    filteredArticles: articles,
-    filter: '',
+    loginErrors: {},
+    registrationErrors: {},
+    errors: {},
     registrationSuccess: '',
-    page: Pages.LANDING,
 }, action) => {
     switch (action.type) {
-        case ActionTypes.NAVIGATE_PROFILE:
-            return {
-                ...state, 
-                page: Pages.PROFILE, 
-                profile: state.profile,
-            }
-        case ActionTypes.NAVIGATE_MAIN:
-            return { ...state, page: Pages.MAIN}
         case AuthAction.LOGIN:
             if (action.valid) {
                 return { 
@@ -61,6 +48,14 @@ const Reducer = (state = {
                     loginErrors: action.loginErrors
                 }
             }
+        case AuthAction.LOGOUT:
+            return {
+                profile: {},
+                loginErrors: {},
+                registrationErrors: {},
+                errors: {},
+                registrationSuccess: '',
+            };
         case AuthAction.UPDATE_PROFILE:
             if (action.valid) {
                 return {
@@ -91,34 +86,52 @@ const Reducer = (state = {
                     registrationSuccess: '',
                 }
             }
-        case AuthAction.LOGOUT:
-            return { ...state, page: Pages.LANDING , profile: {}}
-        case MainAction.UPDATE_HEADLINE:
+        case AuthAction.GET_PROFILE:
             return { 
                 ...state, 
-                profile: Object.assign(
-                    {}, 
-                    state.profile, 
-                    {headline: action.headline}
-                )
+                profile: {
+                    ... state.profile,
+                    email: action.email,
+                    dob: action.dob,
+                    zipcode: action.zipcode,
+                    img: action.img,
+                }
             }
-        case MainAction.FOLLOW_USER:
-            return { 
+        default:
+            return state
+    }
+}
+
+export const navigationReducer = (state = {
+    page: Pages.LANDING,
+}, action) => {
+    switch (action.type) {
+        case ActionTypes.NAVIGATE_PROFILE:
+            return {
                 ...state, 
-                following: [ 
-                    ...state.following, 
-                    Object.assign(
-                        {}, 
-                        sampleFollowing, 
-                        {id: followingId++, displayName: action.username}
-                    )
-                ] 
+                page: Pages.PROFILE, 
+                profile: state.profile,
             }
-        case MainAction.UNFOLLOW_USER:
+        case ActionTypes.NAVIGATE_MAIN:
+            return { ...state, page: Pages.MAIN}
+        case ActionTypes.NAVIGATE_LANDING:
+            return { ...state, page: Pages.LANDING}
+        default:
+            return state
+    }
+}
+
+export const articleReducer = (state = {
+    articles: articles,
+    filteredArticles: articles,
+    filter: '',
+}, action) => {
+    switch (action.type) {
+        case ArticleAction.GET_ARTICLES:
             return { 
                 ...state, 
-                following: state.following.filter(
-                        (el) => {return el.id != action.id}) 
+                articles: action.articles,
+                filteredArticles: action.articles,
             }
         case ArticleAction.POST_ARTICLE:
             var newArticle = Object.assign(
@@ -150,7 +163,31 @@ const Reducer = (state = {
                 ),
                 filter: action.filter
             }
-        case AuthAction.GET_HEADLINE:
+        default:
+            return state
+    }
+}
+
+export const mainReducer = (state = {
+    profile: {},
+    errors: {},
+    following: [],
+}, action) => {
+    switch (action.type) {
+        case AuthAction.LOGIN:
+            if (action.valid) {
+                return { 
+                    ...state, 
+                    profile: Object.assign({}, state.profile, action.profile),
+                }
+            } 
+        case AuthAction.LOGOUT:
+            return {
+                profile: {},
+                errors: {},
+                following: [],
+            };
+        case MainAction.GET_HEADLINE:
             return { 
                 ...state, 
                 profile: {
@@ -158,21 +195,43 @@ const Reducer = (state = {
                     headline: action.headline,
                 }
             }
-        case AuthAction.GET_PROFILE:
+        case MainAction.UPDATE_HEADLINE:
             return { 
                 ...state, 
-                profile: {
-                    ... state.profile,
-                    email: action.email,
-                    dob: action.dob,
-                    zipcode: action.zipcode,
-                    img: action.img,
-                }
+                profile: Object.assign(
+                    {}, 
+                    state.profile, 
+                    {headline: action.headline}
+                )
+            }
+        case MainAction.FOLLOW_USER:
+            return { 
+                ...state, 
+                following: [ 
+                    ...state.following, 
+                    Object.assign(
+                        {}, 
+                        sampleFollowing, 
+                        {id: followingId++, displayName: action.username}
+                    )
+                ] 
+            }
+        case MainAction.UNFOLLOW_USER:
+            return { 
+                ...state, 
+                following: state.following.filter(
+                        (el) => {return el.id != action.id}) 
             }
         default:
             return state
     }
 }
 
-export default Reducer
+//export default Reducer
+export default combineReducers({
+    authReducer,
+    articleReducer,
+    mainReducer,
+    navigationReducer,
+})
 

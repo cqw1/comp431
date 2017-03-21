@@ -1,4 +1,6 @@
 import { resource, navigateMain } from '../../actions.js'
+import { getHeadline } from '../main/mainActions.js'
+import { getArticles } from '../article/articleActions.js'
 
 /**
  * Actions associated with authenticating a user or managing profile fields.
@@ -9,41 +11,7 @@ export const AuthAction = {
     LOGOUT: 'LOGOUT', 
     UPDATE_PROFILE: 'UPDATE_PROFILE', 
     REGISTER: 'REGISTER', 
-    GET_HEADLINE: 'GET_HEADLINE', 
     GET_PROFILE: 'GET_PROFILE', 
-}
-
-export function getHeadline() {
-    var headline = '';
-
-    return (dispatch) => {
-        resource('GET', 'headlines/')
-        .then(r => {
-            headline = r.headlines[0].headline;
-            console.log(headline);
-
-            dispatch({
-                type: AuthAction.GET_HEADLINE,
-                headline,
-                success: true
-            })
-        }).catch((err) => {
-            console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
-        })
-    }
 }
 
 export function getProfile() {
@@ -132,6 +100,7 @@ export function loginUser(username, password) {
         resource('POST', 'login', { username, password })
         .then(r => {
             dispatch(getHeadline());
+            dispatch(getArticles());
             /*
              dispatch(getProfile());
             return resource('GET', 'articles/');
@@ -168,8 +137,14 @@ export function loginUser(username, password) {
     }
 }
 
-export const logoutUser = () => (dispatch)=> {
-    dispatch({ type: AuthAction.LOGOUT })
+export const logoutUser = () => (dispatch) => {
+    resource('PUT', 'logout/')
+    .then(r => {
+        dispatch({ type: AuthAction.LOGOUT });
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }
 
 function validate(profile, registering) {

@@ -10,9 +10,7 @@ const resource = (method, endpoint, payload) => {
         method,
         credentials: 'include',
         headers: {
-            'Content-Type': 'application/json'
-        }
-    }
+            'Content-Type': 'application/json' } }
 
     if (payload) options.body = JSON.stringify(payload)
 
@@ -45,6 +43,8 @@ export const navigateMain = () => (dispatch) => {
     dispatch({ type: ActionTypes.NAVIGATE_MAIN })
 }
 
-export const navigateLanding = () => (dispatch) => dispatch({ type: ActionTypes.NAVIGATE_LANDING })
+export const navigateLanding = () => (dispatch) => {
+    dispatch({ type: ActionTypes.NAVIGATE_LANDING })
+}
 
 export { resource }

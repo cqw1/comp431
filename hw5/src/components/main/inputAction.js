@@ -33,7 +33,7 @@ export const InputAction = ({
 }
 
 export default connect(
-    (state) => ({ }),
+    (state) => ({}),
     (dispatch, ownProps) => ({ 
         onClick: (text) => dispatch(ownProps.onClickAction(text)),
     })

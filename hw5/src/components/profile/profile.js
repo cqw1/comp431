@@ -15,9 +15,7 @@ export const Profile = ({
 );
 
 export default connect(
-    (state) => ({ 
-        profile: state.profile
-    }),
+    (state) => ({ profile: state.authReducer.profile }),
     (dispatch) => ({ })
 )(Profile)
 
