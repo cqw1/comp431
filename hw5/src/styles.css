@@ -1,0 +1,123 @@
+body {
+    padding: 30px 50px 0px 50px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+table td {
+    padding: 10px;
+}
+
+.navbar-right {
+    margin-right: initial;
+}
+
+.navbar-text.active-page {
+    color: black;
+    font-weight: bold;
+}
+
+.navbar-text:hover {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
+.update-headline {
+    padding-top: 10px;
+}
+
+.image-upload {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.padding-right-10px {
+    padding-right: 10px;
+}
+
+.padding-left-5px {
+    padding-left: 5px;
+}
+
+.padding-bottom-5px {
+    padding-bottom: 5px;
+}
+
+.display-table-cell {
+    display: table-cell;
+}
+
+.display-table {
+    display: table;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.article-filter {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.article-creation {
+    padding: 10px;
+}
+
+.button-container button {
+    margin: 5px;
+}
+
+.float-right {
+    float: right;
+}
+
+.article-card {
+    padding: 10px;
+}
+
+.float-right {
+    float: right;
+}
+
+.text-align-right{
+    text-align: right;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.vertical-center-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.org-table {
+    margin: auto;
+}
+
+.input-label {
+    font-weight: bold;
+    text-align: right;
+}
+
+.error-msg {
+    color: red;
+    max-width: 250px;
+}
+
+.success-msg {
+    color: green;
+    max-width: 250px;
+}
