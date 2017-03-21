@@ -4,7 +4,7 @@ import fetch, { mock } from 'mock-fetch'
 
 import {url, resource, ActionTypes} from './actions'
 
-let Action, actions
+let actions
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache: true});
@@ -13,7 +13,6 @@ beforeEach(() => {
     }
     global.fetch = fetch;
 
-    Action = require('./actions').default;
     actions = require('./actions')
 })
 

@@ -132,11 +132,13 @@ export function loginUser(username, password) {
         resource('POST', 'login', { username, password })
         .then(r => {
             dispatch(getHeadline());
-            dispatch(getProfile());
+            /*
+             dispatch(getProfile());
             return resource('GET', 'articles/');
         }).then(r => {
             filteredArticles = r.articles;
 
+            */
             dispatch({
                 type: AuthAction.LOGIN,
                 profile: {
@@ -166,8 +168,8 @@ export function loginUser(username, password) {
     }
 }
 
-export const logoutUser = () => {
-    return { type: AuthAction.LOGOUT }
+export const logoutUser = () => (dispatch)=> {
+    dispatch({ type: AuthAction.LOGOUT })
 }
 
 function validate(profile, registering) {
