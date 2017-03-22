@@ -18,13 +18,13 @@ export const FollowingUser = ({
         <div> 
             <button 
                 className='float-right btn btn-danger' 
-                onClick={() => { unfollow(profile.id) }}> 
+                onClick={() => { unfollow(profile.username) }}> 
                 Unfollow 
             </button>
             <AccountInfo 
                 username={profile.username} 
                 headline={profile.headline} 
-                image={profile.image} />
+                avatar={profile.avatar} />
         </div>
     )
 }
@@ -32,7 +32,7 @@ export const FollowingUser = ({
 export default connect(
     (state) => ({ }),
     (dispatch) => ({ 
-        unfollow: (id) => dispatch(unfollowUser(id))
+        unfollow: (username) => dispatch(unfollowUser(username))
     })
 )(FollowingUser)
 

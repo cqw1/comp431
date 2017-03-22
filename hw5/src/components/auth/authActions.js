@@ -1,5 +1,5 @@
 import { resource, navigateMain } from '../../actions.js'
-import { getHeadline } from '../main/mainActions.js'
+import { getHeadline, getAvatar, getFollowing } from '../main/mainActions.js'
 import { getArticles } from '../article/articleActions.js'
 
 /**
@@ -18,7 +18,7 @@ export function getProfile() {
     var email = '';
     var zipcode = '';
     var dob = '';
-    var img = '';
+    var avatar = '';
 
     return (dispatch) => {
         resource('GET', 'email/')
@@ -32,7 +32,7 @@ export function getProfile() {
             dob = r.dob; // milliseconds
             return resource('GET', 'avatars/');
         }).then(r => {
-            img = r.avatars[0].avatar; 
+            avatar = r.avatars[0].avatar; 
         }).then(r => {
 
             dispatch({
@@ -41,7 +41,7 @@ export function getProfile() {
                     email,
                     zipcode,
                     dob,
-                    img,
+                    avatar,
                 },
             })
         }).catch((err) => {
@@ -100,14 +100,16 @@ export function loginUser(username, password) {
         resource('POST', 'login', { username, password })
         .then(r => {
             dispatch(getHeadline());
+            dispatch(getAvatar());
             dispatch(getArticles());
+            dispatch(getFollowing());
             /*
              dispatch(getProfile());
             return resource('GET', 'articles/');
         }).then(r => {
             filteredArticles = r.articles;
-
             */
+
             dispatch({
                 type: AuthAction.LOGIN,
                 profile: {

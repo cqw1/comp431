@@ -94,7 +94,7 @@ export const authReducer = (state = {
                     email: action.email,
                     dob: action.dob,
                     zipcode: action.zipcode,
-                    img: action.img,
+                    avatar: action.avatar,
                 }
             }
         default:
@@ -134,13 +134,7 @@ export const articleReducer = (state = {
                 filteredArticles: action.articles,
             }
         case ArticleAction.POST_ARTICLE:
-            var newArticle = Object.assign(
-                {}, 
-                sampleArticle, 
-                {id: articleId++, text:action.text, date: action.date}
-            );
-
-            var filtered = [newArticle, ...state.filteredArticles].filter(
+            var filtered = [action.article, ...state.filteredArticles].filter(
                 (el) => { 
                     return (el.text.includes(state.filter) || 
                             el.author.includes(state.filter));
@@ -149,7 +143,7 @@ export const articleReducer = (state = {
 
             return { 
                 ...state, 
-                articles: [newArticle, ...state.articles],
+                articles: [action.article, ...state.articles],
                 filteredArticles: filtered,
             }
         case ArticleAction.FILTER_ARTICLES:
@@ -195,6 +189,14 @@ export const mainReducer = (state = {
                     headline: action.headline,
                 }
             }
+        case MainAction.GET_AVATAR:
+            return { 
+                ...state, 
+                profile: {
+                    ... state.profile,
+                    avatar: action.avatar,
+                }
+            }
         case MainAction.UPDATE_HEADLINE:
             return { 
                 ...state, 
@@ -204,23 +206,21 @@ export const mainReducer = (state = {
                     {headline: action.headline}
                 )
             }
-        case MainAction.FOLLOW_USER:
+        case MainAction.UPDATE_FOLLOWING:
             return { 
                 ...state, 
-                following: [ 
-                    ...state.following, 
-                    Object.assign(
-                        {}, 
-                        sampleFollowing, 
-                        {id: followingId++, displayName: action.username}
-                    )
-                ] 
+                following: action.following,
             }
         case MainAction.UNFOLLOW_USER:
             return { 
                 ...state, 
                 following: state.following.filter(
                         (el) => {return el.id != action.id}) 
+            }
+        case MainAction.GET_FOLLOWING:
+            return { 
+                ...state, 
+                following: action.following,
             }
         default:
             return state

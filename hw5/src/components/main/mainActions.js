@@ -1,46 +1,157 @@
 import { resource } from '../../actions.js'
+import { getArticles } from '../article/articleActions.js'
 
 /*
  * Actions triggered by events from the main page.
  */
 export const MainAction = {
+    UPDATE_FOLLOWING: 'UPDATE_FOLLOWING',
     GET_HEADLINE: 'GET_HEADLINE', 
+    GET_AVATAR: 'GET_AVATAR', 
     UPDATE_HEADLINE: 'UPDATE_HEADLINE',
+    GET_FOLLOWING: 'GET_FOLLOWING',
     FOLLOW_USER: 'FOLLOW_USER',
     UNFOLLOW_USER: 'UNFOLLOW_USER',
 }
 
-export const unfollowUser = (id) => {
-    return {
-        type: MainAction.UNFOLLOW_USER,
-        id: id 
+export const unfollowUser = (username) => {
+    if (username.length > 0) {
+
+        return (dispatch) => {
+            resource('DELETE', 'following/' + username)
+            .then(r => {
+                dispatch(createFollowProfiles(r.following.join(',')));
+                dispatch(getArticles());
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
 }
 
-export const followUser = (text) => {
-    if (text.length > 0) {
-        return {
-            type: MainAction.FOLLOW_USER,
-            username: text
+export const followUser = (username) => {
+    if (username.length > 0) {
+
+        return (dispatch) => {
+            resource('PUT', 'following/' + username)
+            .then(r => {
+                dispatch(createFollowProfiles(r.following.join(',')));
+                dispatch(getArticles());
+            }).catch((err) => {
+                console.log(err);
+                /*
+                valid = false;
+                unauthorizedError = 'Username or password is invalid.';
+                dispatch({
+                    type: AuthAction.LOGIN, 
+                    loginErrors: Object.assign({}, {
+                        usernameError,
+                        passwordError,
+                        unauthorizedError,
+                    }),
+                    valid
+                })
+                */
+            })
         }
     }
+}
 
-    return { type: 'ERROR' }
+export function getFollowing() {
+    return (dispatch) => {
+        let following = [];
+        resource('GET', 'following/')
+        .then(r => {
+            dispatch(createFollowProfiles(r.following.join(',')))
+        }).catch((err) => {
+            console.log(err);
+            /*
+            valid = false;
+            unauthorizedError = 'Username or password is invalid.';
+            dispatch({
+                type: AuthAction.LOGIN, 
+                loginErrors: Object.assign({}, {
+                    usernameError,
+                    passwordError,
+                    unauthorizedError,
+                }),
+                valid
+            })
+            */
+        })
+    }
+}
+
+function createFollowProfiles(usernames) {
+    return (dispatch) => {
+        let following = [];
+        resource('GET', 'headlines/' + usernames)
+        .then(r => {
+            following = r.headlines;
+
+            return resource('GET', 'avatars/' + usernames)
+        }).then(r => {
+            following.forEach(function(element, index) {
+                Object.assign(element, r.avatars[index])
+            })
+
+            dispatch({
+                type: MainAction.UPDATE_FOLLOWING,
+                following,
+            })
+        }).catch((err) => {
+            console.log(err);
+            /*
+            valid = false;
+            unauthorizedError = 'Username or password is invalid.';
+            dispatch({
+                type: AuthAction.LOGIN, 
+                loginErrors: Object.assign({}, {
+                    usernameError,
+                    passwordError,
+                    unauthorizedError,
+                }),
+                valid
+            })
+            */
+        })
+    }
+}
+
+export function getAvatar() {
+    return (dispatch) => {
+        resource('GET', 'avatars/')
+        .then(r => {
+            dispatch({
+                type: MainAction.GET_AVATAR,
+                avatar: r.avatars[0].avatar,
+            })
+        }).catch((err) => {
+            console.log(err);
+            /*
+            valid = false;
+            unauthorizedError = 'Username or password is invalid.';
+            dispatch({
+                type: AuthAction.LOGIN, 
+                loginErrors: Object.assign({}, {
+                    usernameError,
+                    passwordError,
+                    unauthorizedError,
+                }),
+                valid
+            })
+            */
+        })
+    }
 }
 
 export function getHeadline() {
-    var headline = '';
-
     return (dispatch) => {
         resource('GET', 'headlines/')
         .then(r => {
-            headline = r.headlines[0].headline;
-            console.log(headline);
-
             dispatch({
                 type: MainAction.GET_HEADLINE,
-                headline,
-                success: true
+                headline: r.headlines[0].headline,
             })
         }).catch((err) => {
             console.log(err);

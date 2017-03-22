@@ -44,19 +44,16 @@ export function getArticles() {
 
 export const postArticle = (text) => {
     if (text.length > 0) {
-        var date = new Date();
-        var month = date.getUTCMonth() + 1;
-        var day = date.getUTCDay();
-        var year = date.getUTCFullYear();
-
-        return {
-            type: ArticleAction.POST_ARTICLE,
-            text: text,
-            date: '' + month + '/' + day + '/' + year,
+        return (dispatch) => {
+            resource('POST', 'article/', {text})
+            .then(r => {
+                dispatch({
+                    type: ArticleAction.POST_ARTICLE,
+                    article: r.articles[0],
+                })
+            })
         }
     }
-
-    return { type: 'ERROR' }
 }
 
 export const filterArticles = (filter) => {

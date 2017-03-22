@@ -8,13 +8,13 @@ import { connect } from 'react-redux'
 export const AccountInfo = ({ 
     username,
     headline,
-    image
+    avatar 
 }) =>  {
 
     return (
         <div className='media'>
             <div className='media-left'>
-                <img className='media-object' src={image} />
+                <img className='media-object' src={avatar} />
             </div>
             <div className='media-body'>
                 <h3> 

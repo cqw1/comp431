@@ -28,7 +28,7 @@ export const Main = ({
                         <AccountInfo 
                             username={profile.username} 
                             headline={profile.headline} 
-                            image={profile.image} />
+                            avatar={profile.avatar} />
 
                         <div className='update-headline'>
                             <InputAction 
