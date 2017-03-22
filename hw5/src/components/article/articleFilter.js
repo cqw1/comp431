@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 
 import { filterArticles } from './articleActions'
 
-/*
- * Input to filter articles based on user input.
- */
+// Input to filter articles based on user input.
 export const ArticleFilter = ({ 
     filterArticles,
 }) =>  {

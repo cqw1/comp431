@@ -1,36 +1,27 @@
 import { resource } from '../../actions.js'
 
 // Actions for managing success and error alerts.
+export const AlertType = {
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+}
+
 export const AlertAction = {
-    CLOSE_SUCCESS_ALERT: 'CLOSE_SUCCESS_ALERT',
-    SHOW_SUCCESS_ALERT: 'SHOW_SUCCESS_ALERT',
-    CLOSE_ERROR_ALERT: 'CLOSE_ERROR_ALERT',
-    SHOW_ERROR_ALERT: 'SHOW_ERROR_ALERT',
+    CLOSE_ALERT: 'CLOSE_ALERT',
+    SHOW_ALERT: 'SHOW_ALERT',
 }
 
-export const closeSuccessAlert = () => (dispatch) => {
-    console.log('closeSuccessAlert');
+export const closeAlert = () => (dispatch) => {
     dispatch({
-        type: AlertAction.CLOSE_SUCCESS_ALERT,
+        type: AlertAction.CLOSE_ALERT,
     })
 }
 
-export const showSuccessAlert = (message) => (dispatch) => {
+export const showAlert = (message, alertType) => (dispatch) => {
     dispatch({
-        type: AlertAction.SHOW_SUCCESS_ALERT,
-        message
+        type: AlertAction.SHOW_ALERT,
+        message,
+        alertType,
     })
 }
 
-export const closeErrorAlert = () => (dispatch) => {
-    dispatch({
-        type: AlertAction.CLOSE_ERROR_ALERT,
-    })
-}
-
-export const showErrorAlert = (message) => (dispatch) => {
-    dispatch({
-        type: AlertAction.SHOW_ERROR_ALERT,
-        message
-    })
-}

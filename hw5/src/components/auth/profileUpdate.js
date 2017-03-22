@@ -23,7 +23,7 @@ export const ProfileUpdate = ({
     let passwordConfirmationInput;
 
     const _submit = () => {
-        var profile = {};
+        const profile = {};
 
         if (usernameInput.value) {
             profile['username'] = usernameInput.value;
@@ -51,7 +51,7 @@ export const ProfileUpdate = ({
                     <tr>
                         <td className='input-label'>Profile Picture</td>
                         <td>
-                            <input className='display-table-cell' type='file' />
+                            <input className='display-table-cell' type='file'/>
                         </td>
                         <td>
                             <img src={profile.avatar} />

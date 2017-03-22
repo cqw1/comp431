@@ -1,6 +1,6 @@
 import { resource } from '../../actions.js'
 
-import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
+import {AlertType, showAlert} from '../alert/alertActions.js'
 
 /*
  * Actions associated with articles. Includes filtering
@@ -21,10 +21,15 @@ export const toggleComments = (id) => (dispatch) => {
 }
 
 export function checkShowComments(id, showComments) {
-    return showComments.filter(function(obj) {
+    const filtered = showComments.filter(function(obj) {
         return obj.id == id;
-    })[0].show;
+    });
     
+    if (filtered.length > 0) {
+        return filtered[0].show;
+    }
+
+    return false;
 }
 
 export function getArticles() {
@@ -41,8 +46,7 @@ export function getArticles() {
             })
         }).catch((err) => {
             console.log(err);
-            console.log(typeof err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
         })
     }
 }
@@ -58,7 +62,7 @@ export const postArticle = (text) => {
                     article: r.articles[0],
                 })
 
-                dispatch(showSuccessAlert('Posted article.'))
+                dispatch(showAlert('Posted article.', AlertType.SUCCESS));
             })
         }
     }

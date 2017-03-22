@@ -7,19 +7,16 @@ import { logoutUser } from './auth/authActions'
 import Main from './main/main'
 import Profile from './profile/profile'
 import Landing from './landing/landing'
-import SuccessAlert from './alert/successAlert'
-import ErrorAlert from './alert/errorAlert'
+import Alert from './alert/alert'
 
-/* Constants for navigation through pages. */
+// Constants for navigation through pages.
 export const Pages = {
     LANDING: 'LANDING',
     MAIN: 'MAIN',
     PROFILE: 'PROFILE'
 }
 
-/*
- * Root of application. Logic for single page application is here.
- */
+// Root of application. Logic for single page application is here.
 export const Application = ({ 
     page,
     logoutUser,
@@ -48,7 +45,9 @@ export const Application = ({
                     <div className='container-fluid'>
                         {page == Pages.MAIN &&
                             <div className='nav navbar-nav'>
-                                <a className='navbar-text active-page'> Main </a>
+                                <a className='navbar-text active-page'> 
+                                    Main
+                                </a>
                                 <a className='navbar-text' 
                                     onClick={_onProfileClick}> 
                                     Update Profile 
@@ -57,7 +56,9 @@ export const Application = ({
                         }
                         {page == Pages.PROFILE &&
                             <div className='nav navbar-nav'>
-                                <a className='navbar-text' onClick={_onMainClick}>
+                                <a 
+                                    className='navbar-text' 
+                                    onClick={_onMainClick}>
                                     Main 
                                 </a>
                                 <a className='navbar-text active-page'> 
@@ -66,7 +67,9 @@ export const Application = ({
                             </div>
                         }
                         <div className='nav navbar-nav navbar-right'>
-                            <a className='navbar-text' onClick={_onLogoutClick}> 
+                            <a 
+                                className='navbar-text' 
+                                onClick={_onLogoutClick}> 
                                 Logout
                             </a>
                         </div>
@@ -79,8 +82,7 @@ export const Application = ({
                     <Profile />
                 }
 
-                <ErrorAlert />
-                <SuccessAlert />
+                <Alert />
             </div>
         );
 
@@ -88,8 +90,7 @@ export const Application = ({
         return(
             <div> 
                 <Landing />
-                <ErrorAlert />
-                <SuccessAlert />
+                <Alert />
             </div>
         );
     }

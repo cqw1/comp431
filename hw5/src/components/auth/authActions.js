@@ -2,11 +2,9 @@ import { resource, getPrettyDate, navigateMain } from '../../actions.js'
 import { getHeadline, getAvatar, getFollowing } from '../main/mainActions.js'
 import { getArticles } from '../article/articleActions.js'
 
-import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
+import {AlertType, showAlert} from '../alert/alertActions.js'
 
-/**
- * Actions associated with authenticating a user or managing profile fields.
- */
+// Actions associated with authenticating a user or managing profile fields.
 
 export const AuthAction = {
     LOGIN: 'LOGIN', 
@@ -48,7 +46,7 @@ export function getProfile() {
             })
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
         })
     }
 
@@ -127,42 +125,33 @@ export const logoutUser = () => (dispatch) => {
     })
 }
 
-function validate(profile, registering) {
-    let valid = true;
-
-    let usernameError = '';
-    let emailError = '';
-    let dobError = '';
-    let zipcodeError = '';
-    let passwordError = '';
-
+function validateUsername(profile, registering) {
     const usernameValid = /^([a-zA-Z]+[a-zA-Z0-9]*)$/.test(profile.username);
     if (!profile.username && registering) {
-        usernameError = 'Username is a required field.';
-        valid = false;
+        return 'Username is a required field.';
     } else if (profile.username && !usernameValid) {
-        usernameError = 
-            `Invalid username format. Can only contain alphanumeric 
+        return `Invalid username format. Can only contain alphanumeric 
             characters, but cannot start with a number.`;
-        valid = false;
     } 
+    return '';
+}
 
+function validateEmail(profile, registering) {
     const emailValid = 
         /^([a-zA-Z0-9]+[a-zA-Z0-9\.\_]*\@[a-zA-Z]+\.[a-zA-Z]+)$/.test(
                 profile.email);
     if (!profile.email && registering) {
-        emailError = 'Email is a required field.';
-        valid = false;
+        return 'Email is a required field.';
     } else if (profile.email && !emailValid) {
-        emailError = 'Invalid email format.';
-        valid = false;
+        return 'Invalid email format.';
     }
+    return '';
+}
 
-
+function validateDob(profile, registering) {
     if (registering) {
         if (!profile.dob) {
-            dobError = 'Date of birth is a required field.';
-            valid = false;
+            return 'Date of birth is a required field.';
         } else {
             let dobValid = true;
             const age = new Date(profile.dob);
@@ -181,35 +170,54 @@ function validate(profile, registering) {
             }
 
             if (profile.dob && !dobValid) {
-                dobError = 
-                    `Invalid date of birth, must be over 
+                return `Invalid date of birth, must be over 
                     18 years old to register.`;
-                valid = false;
             }
         }
     }
 
+    return '';
+}
+
+function validateZipcode(profile, registering) {
     const zipcodeValid = /^(\d{5}(-\d{4})?)$/.test(profile.zipcode);
     if (!profile.zipcode && registering) {
-        zipcodeError = 'Zipcode is a required field.';
-        valid = false;
+        return 'Zipcode is a required field.';
     } else if (profile.zipcode && !zipcodeValid) {
-        zipcodeError = 'Invalid zipcode format.';
-        valid = false;
+        return 'Invalid zipcode format.';
     }
 
+    return '';
+}
 
+function validatePassword(profile, registering) {
     const passwordValid = profile.password == profile.passwordConfirmation;
     if (!(profile.password || profile.passwordConfirmation) && registering) {
-        passwordError = 'Password is a required field.';
-        valid = false;
-    } else if ((profile.password || profile.passwordConfirmation) && !passwordValid) {
-        passwordError = 'Password values must match.';
-        valid = false;
+        return 'Password is a required field.';
+    } else if ((profile.password || profile.passwordConfirmation) 
+            && !passwordValid) {
+        return 'Password values must match.';
     }
 
+    return '';
+}
+
+function validate(profile, registering) {
+    const usernameError = validateUsername(profile, registering);
+    const emailError = validateEmail(profile, registering);
+    const dobError = validateDob(profile, registering);
+    const zipcodeError = validateZipcode(profile, registering);
+    const passwordError = validatePassword(profile, registering);
+
+    const valid = 
+        !usernameError && 
+        !emailError && 
+        !dobError && 
+        !zipcodeError && 
+        !passwordError;
+
     return {
-        valid: valid,
+        valid,
         errors: Object.assign({}, {
             usernameError,
             passwordError,
@@ -229,7 +237,7 @@ export const updateProfile = (profile) => {
             resource('PUT', 'email/', {email: profile.email})
             .catch((err) => {
                 console.log(err);
-                dispatch(showErrorAlert(err.toString()));
+                dispatch(showAlert(err.toString()), AlertType.ERROR);
             })
         }
 
@@ -237,7 +245,7 @@ export const updateProfile = (profile) => {
             resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
             .catch((err) => {
                 console.log(err);
-                dispatch(showErrorAlert(err.toString()));
+                dispatch(showAlert(err.toString()), AlertType.ERROR);
             })
         }
 
@@ -245,7 +253,7 @@ export const updateProfile = (profile) => {
             resource('PUT', 'password/', {password: profile.password})
             .catch((err) => {
                 console.log(err);
-                dispatch(showErrorAlert(err.toString()));
+                dispatch(showAlert(err.toString()), AlertType.ERROR);
             })
         }
     }
@@ -259,7 +267,7 @@ export const updateProfile = (profile) => {
         })
 
         if (validation.valid) {
-            dispatch(showSuccessAlert('Updated profile.'))
+            dispatch(showAlert('Updated profile.', AlertType.SUCCESS));
         }
     }
 }
@@ -286,11 +294,12 @@ export function register(profile) {
                     valid: validation.valid
                 })
 
-                dispatch(showSuccessAlert('Successfully registered.'))
+                dispatch(showAlert('Successfully registered.', 
+                            AlertType.SUCCESS));
             }
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
         })
     }
 }

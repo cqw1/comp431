@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 
 import { loginUser } from './authActions'
 
-/**
- * Form for an existing user to login.
- */
+// Form for an existing user to login.
 export const Login = ({ 
     loginUser,
     loginErrors,
@@ -75,6 +73,7 @@ export const Login = ({
 export default connect(
     (state) => ({ loginErrors: state.authReducer.loginErrors }),
     (dispatch) => ({ 
-        loginUser: (username, password) => dispatch(loginUser(username, password))
+        loginUser: 
+            (username, password) => dispatch(loginUser(username, password))
     })
 )(Login)

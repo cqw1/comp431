@@ -51,7 +51,7 @@ export const Registration = ({
                             <input 
                                 className='form-control' 
                                 ref = {node => { usernameInput = node }} 
-                                defaultValue={profile.username ? profile.username : ''} 
+                                defaultValue={profile.username} 
                                 placeholder='Username' /> 
                             <div className='error-msg'>
                                 {registrationErrors.usernameError}

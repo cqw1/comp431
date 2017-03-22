@@ -5,6 +5,7 @@ import fetch, { mock } from 'mock-fetch'
 import {url, resource} from '../../actions'
 import {MainAction, updateHeadline} from './mainActions'
 
+// Tests for actions related to the main page.
 let mainActions 
 beforeEach(() => {
     if (mockery.enable) {

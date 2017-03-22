@@ -1,11 +1,9 @@
 import { resource } from '../../actions.js'
 import { getArticles } from '../article/articleActions.js'
 
-import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
+import {AlertType, showAlert} from '../alert/alertActions.js'
 
-/*
- * Actions triggered by events from the main page.
- */
+// Actions triggered by events from the main page.
 export const MainAction = {
     UPDATE_FOLLOWING: 'UPDATE_FOLLOWING',
     GET_HEADLINE: 'GET_HEADLINE', 
@@ -23,7 +21,7 @@ export const unfollowUser = (username) => {
                 dispatch(getArticles());
             }).catch((err) => {
                 console.log(err);
-                dispatch(showErrorAlert(err.toString()));
+                dispatch(showAlert(err.toString(), AlertType.ERROR));
             })
         }
     }
@@ -39,7 +37,7 @@ export const followUser = (username) => {
                 dispatch(getArticles());
             }).catch((err) => {
                 console.log(err);
-                dispatch(showErrorAlert(err.toString()));
+                dispatch(showAlert(err.toString(), AlertType.ERROR));
             })
         }
     }
@@ -53,7 +51,7 @@ export function getFollowing() {
             dispatch(createFollowProfiles(r.following.join(',')))
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString(), AlertType.ERROR));
         })
     }
 }
@@ -77,7 +75,7 @@ function createFollowProfiles(usernames) {
             })
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString(), AlertType.ERROR));
         })
     }
 }
@@ -92,7 +90,7 @@ export function getAvatar() {
             })
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString(), AlertType.ERROR));
         })
     }
 }
@@ -107,7 +105,7 @@ export function getHeadline() {
             })
         }).catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(err.toString()));
+            dispatch(showAlert(err.toString(), AlertType.ERROR));
         })
     }
 }
@@ -123,10 +121,11 @@ export function updateHeadline(text) {
                     headline: text,
                 })
 
-                dispatch(showSuccessAlert('Updated headline.'))
+                dispatch(showAlert('Updated headline.', AlertType.SUCCESS));
 
             }).catch((err) => {
                 console.log(err);
+                dispatch(showAlert(err.toString(), AlertType.ERROR));
             })
         }
     }

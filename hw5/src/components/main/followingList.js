@@ -15,8 +15,6 @@ import { followUser } from './mainActions'
 export const FollowingList= ({ 
     following
 }) =>  {
-    let id = 0;
-
     return (
         <div className='panel panel-default'> 
             <div className='panel-heading'>

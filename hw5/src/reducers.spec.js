@@ -3,10 +3,17 @@ import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
 import { Pages } from './components/application'
-import { articleReducer, authReducer, mainReducer, navigationReducer, alertReducer } from './reducers'
+import { 
+    articleReducer, 
+    authReducer, 
+    mainReducer, 
+    navigationReducer, 
+    alertReducer 
+} from './reducers'
 import {ArticleAction} from './components/article/articleActions'
 import {AlertAction} from './components/alert/alertActions'
 
+// Tests for reducers.
 it('should initialize state', done => {
     expect(authReducer(undefined, {type: ''}))
     .to.eql({

@@ -6,6 +6,7 @@ import { MainAction } from './components/main/mainActions'
 import { ArticleAction } from './components/article/articleActions'
 import { AlertAction } from './components/alert/alertActions'
 
+// Reducer for authorization and profile actions.
 export const authReducer = (state = {
     profile: {},
     loginErrors: {},
@@ -85,6 +86,7 @@ export const authReducer = (state = {
     }
 }
 
+// Reducer for navigation actions.
 export const navigationReducer = (state = {
     page: Pages.LANDING,
 }, action) => {
@@ -104,6 +106,7 @@ export const navigationReducer = (state = {
     }
 }
 
+// Reducer for article actions.
 export const articleReducer = (state = {
     articles: [],
     filteredArticles: [],
@@ -119,14 +122,25 @@ export const articleReducer = (state = {
                 }
             })
 
+            const sorted_get = action.articles.sort(function (a, b) {
+                return new Date(b.date) - new Date(a.date);
+            })
+
             return { 
                 ...state, 
-                articles: action.articles,
-                filteredArticles: action.articles,
+                articles: sorted_get,
+                filteredArticles: sorted_get,
                 showComments,
             }
         case ArticleAction.POST_ARTICLE:
-            var filtered = [action.article, ...state.filteredArticles].filter(
+
+            const sorted_post = [action.article, ...state.articles].sort(
+                function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                }
+            );
+
+            const filtered = sorted_post.filter(
                 (el) => { 
                     return (el.text.includes(state.filter) || 
                             el.author.includes(state.filter));
@@ -135,10 +149,12 @@ export const articleReducer = (state = {
 
             return { 
                 ...state, 
-                articles: [action.article, ...state.articles],
+                articles: sorted_post,
                 filteredArticles: filtered,
-                showComments: 
-                    [{id: action.article._id, show: false}, ...state.showComments]
+                showComments: [
+                    {id: action.article._id, show: false}, 
+                    ...state.showComments
+                ]
             }
         case ArticleAction.FILTER_ARTICLES:
             return { 
@@ -169,6 +185,7 @@ export const articleReducer = (state = {
     }
 }
 
+// Reducer for actions on the main page.
 export const mainReducer = (state = {
     profile: {},
     errors: {},
@@ -223,36 +240,23 @@ export const mainReducer = (state = {
     }
 }
 
+// Reducer for alert actions.
 export const alertReducer = (state = {
-    successMessage: '',
-    errorMessage: '',
-    showSuccessAlert: false,
-    showErrorAlert: false,
+    alert: {},
 }, action) => {
     switch (action.type) {
-        case AlertAction.CLOSE_SUCCESS_ALERT:
+        case AlertAction.CLOSE_ALERT:
             return { 
                 ...state, 
-                showSuccessAlert: false,
-                message: ''
+                alert: {},
             }
-        case AlertAction.SHOW_SUCCESS_ALERT:
+        case AlertAction.SHOW_ALERT:
             return { 
                 ...state, 
-                showSuccessAlert: true,
-                successMessage: action.message
-            }
-        case AlertAction.CLOSE_ERROR_ALERT:
-            return { 
-                ...state, 
-                showErrorAlert: false,
-                message: ''
-            }
-        case AlertAction.SHOW_ERROR_ALERT:
-            return { 
-                ...state, 
-                showErrorAlert: true,
-                errorMessage: action.message
+                alert: {
+                    message: action.message,
+                    alertType: action.alertType
+                },
             }
         default:
             return state

@@ -9,7 +9,9 @@ export const ArticleComment = ({
     return (
         <div>
             <small> 
-                {comment.author} on {getPrettyDate(comment.date)} at {getPrettyTime(comment.date)} 
+                {comment.author + ' '} 
+                on {getPrettyDate(comment.date) + ' '}
+                at {getPrettyTime(comment.date)}
             </small>
             <div>{comment.text}</div>
         </div>

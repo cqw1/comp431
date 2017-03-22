@@ -6,6 +6,7 @@ import {url, resource} from '../../actions'
 import {AuthAction, loginUser} from './authActions'
 import {authReducer, mainReducer} from '../../reducers'
 
+// Tests for actions related to authorization and profile.
 let authActions
 beforeEach(() => {
     if (mockery.enable) {
@@ -27,8 +28,8 @@ afterEach(() => {
 
 it('should log in a user', done => {
 
-    var username = 'foo';
-    var password = 'bar';
+    const username = 'foo';
+    const password = 'bar';
 
     mock(`${url}/login`, {
         method: 'POST',
@@ -39,7 +40,8 @@ it('should log in a user', done => {
 
     authActions.loginUser(username, password)(
         action => {
-            if (typeof action !== 'function' && action.type == AuthAction.LOGIN) {
+            if (typeof action !== 'function' && 
+                    action.type == AuthAction.LOGIN) {
                 expect(action.profile.username).to.be.eql(username);
                 expect(action.profile.password).to.be.eql(password);
                 expect(action.valid).to.be.true;
@@ -51,8 +53,8 @@ it('should log in a user', done => {
 
 it('should not log in an invalid user', done => {
 
-    var username = 'foo';
-    var password = 'bar';
+    const username = 'foo';
+    const password = 'bar';
 
     mock(`${url}/login`, {
         method: 'POST',
@@ -67,7 +69,8 @@ it('should not log in an invalid user', done => {
             expect(action.type).to.be.eql(AuthAction.LOGIN);
             expect(action.loginErrors.usernameError).to.be.eql('');
             expect(action.loginErrors.passwordError).to.be.eql('');
-            expect(action.loginErrors.unauthorizedError).to.be.eql('Username or password is invalid.');
+            expect(action.loginErrors.unauthorizedError)
+                .to.be.eql('Username or password is invalid.');
             expect(action.valid).to.be.false;
             done();
         }

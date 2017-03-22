@@ -5,6 +5,7 @@ import fetch, { mock } from 'mock-fetch'
 import {url, resource} from '../../actions'
 import {ArticleAction, getArticles} from './articleActions'
 
+// Tests actions related to articles.
 let articleActions
 beforeEach(() => {
     if (mockery.enable) {
@@ -54,7 +55,7 @@ it('should fetch articles', done => {
 })
 
 it('should update the search keyword', done => {
-    var action = articleActions.filterArticles('randomfilter');
+    const action = articleActions.filterArticles('randomfilter');
     expect(action.type).to.be.eql(ArticleAction.FILTER_ARTICLES);
     expect(action.filter).to.be.eql('randomfilter');
     done();
