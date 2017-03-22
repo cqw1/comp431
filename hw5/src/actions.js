@@ -1,8 +1,8 @@
-//import fetch from 'isomorphic-fetch'
+import { getHeadline, getAvatar, getFollowing } from './components/main/mainActions.js'
+import { getArticles } from './components/article/articleActions.js'
+import { getProfile } from './components/auth/authActions'
 
-/**
- * Fetch wrapper
- */
+// Fetch wrapper
 export const url = 'https://webdev-dummy.herokuapp.com'
 
 const resource = (method, endpoint, payload) => {
@@ -26,9 +26,17 @@ const resource = (method, endpoint, payload) => {
         })
 }
 
-/**
- * Generic navigation actions.
- */
+export function getPrettyDate(date) {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString();
+}
+
+export function getPrettyTime(date) {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleTimeString().split(' ')[0];
+}
+
+// Generic navigation actions.
 export const ActionTypes = {
     NAVIGATE_PROFILE: 'NAVIGATE_PROFILE', 
     NAVIGATE_MAIN: 'NAVIGATE_MAIN', 
@@ -36,10 +44,15 @@ export const ActionTypes = {
 }
 
 export const navigateProfile = () => (dispatch) => {
+    dispatch(getProfile());
     dispatch({ type: ActionTypes.NAVIGATE_PROFILE })
 }
 
 export const navigateMain = () => (dispatch) => {
+    dispatch(getHeadline());
+    dispatch(getAvatar());
+    dispatch(getArticles());
+    dispatch(getFollowing());
     dispatch({ type: ActionTypes.NAVIGATE_MAIN })
 }
 

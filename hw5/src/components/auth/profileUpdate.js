@@ -54,7 +54,7 @@ export const ProfileUpdate = ({
                             <input className='display-table-cell' type='file' />
                         </td>
                         <td>
-                            <img src={profile.image} />
+                            <img src={profile.avatar} />
                         </td>
                     </tr>
                     <tr>
@@ -168,8 +168,8 @@ export const ProfileUpdate = ({
 
 export default connect(
     (state) => ({ 
-        profile: state.mainReducer.profile,
-        errors: state.mainReducer.errors
+        profile: state.authReducer.profile,
+        errors: state.authReducer.errors
     }),
     (dispatch, ownProps) => ({ 
         submit: (profile) => dispatch(updateProfile(profile))

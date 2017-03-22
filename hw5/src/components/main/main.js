@@ -34,7 +34,7 @@ export const Main = ({
                             <InputAction 
                                 buttonText='Update Headline' 
                                 onClickAction={updateHeadline} 
-                                placeholder='Update your headline' />
+                                placeholder='Headline' />
                         </div>
                     </div>
                 </div>

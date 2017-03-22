@@ -8,6 +8,21 @@ export const ArticleAction = {
     GET_ARTICLES: 'GET_ARTICLES',
     POST_ARTICLE: 'POST_ARTICLE',
     FILTER_ARTICLES: 'FILTER_ARTICLES',
+    TOGGLE_COMMENTS: 'TOGGLE_COMMENTS',
+}
+
+export const toggleComments = (id) => (dispatch) => {
+    dispatch({
+        type: ArticleAction.TOGGLE_COMMENTS,
+        articleId: id,
+    })
+}
+
+export function checkShowComments(id, showComments) {
+    return showComments.filter(function(obj) {
+        return obj.id == id;
+    })[0].show;
+    
 }
 
 export function getArticles() {

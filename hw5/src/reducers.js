@@ -66,7 +66,6 @@ export const authReducer = (state = {
             } else {
                 return { 
                     ... state, 
-                    profile: Object.assign({}, state.profile, action.profile),
                     errors: action.errors,
                 }
             }
@@ -91,11 +90,12 @@ export const authReducer = (state = {
                 ...state, 
                 profile: {
                     ... state.profile,
-                    email: action.email,
-                    dob: action.dob,
-                    zipcode: action.zipcode,
-                    avatar: action.avatar,
-                }
+                    email: action.profile.email,
+                    dob: action.profile.dob,
+                    zipcode: action.profile.zipcode,
+                    avatar: action.profile.avatar,
+                },
+                errors: {}
             }
         default:
             return state
@@ -122,16 +122,25 @@ export const navigationReducer = (state = {
 }
 
 export const articleReducer = (state = {
-    articles: articles,
-    filteredArticles: articles,
+    articles: [],
+    filteredArticles: [],
     filter: '',
+    showComments: [],
 }, action) => {
     switch (action.type) {
         case ArticleAction.GET_ARTICLES:
+            const showComments = action.articles.map(function(article) {
+                return {
+                    id: article._id,
+                    show: false,
+                }
+            })
+
             return { 
                 ...state, 
                 articles: action.articles,
                 filteredArticles: action.articles,
+                showComments,
             }
         case ArticleAction.POST_ARTICLE:
             var filtered = [action.article, ...state.filteredArticles].filter(
@@ -145,6 +154,8 @@ export const articleReducer = (state = {
                 ...state, 
                 articles: [action.article, ...state.articles],
                 filteredArticles: filtered,
+                showComments: 
+                    [{id: action.article._id, show: false}, ...state.showComments]
             }
         case ArticleAction.FILTER_ARTICLES:
             return { 
@@ -156,6 +167,19 @@ export const articleReducer = (state = {
                     }
                 ),
                 filter: action.filter
+            }
+        case ArticleAction.TOGGLE_COMMENTS:
+            const newShowComments = state.showComments;
+
+            newShowComments.forEach(function(el) {
+                if (el.id == action.articleId) {
+                    el.show = !el.show;
+                }
+            })
+
+            return { 
+                ...state, 
+                showComments: newShowComments,
             }
         default:
             return state
@@ -207,17 +231,6 @@ export const mainReducer = (state = {
                 )
             }
         case MainAction.UPDATE_FOLLOWING:
-            return { 
-                ...state, 
-                following: action.following,
-            }
-        case MainAction.UNFOLLOW_USER:
-            return { 
-                ...state, 
-                following: state.following.filter(
-                        (el) => {return el.id != action.id}) 
-            }
-        case MainAction.GET_FOLLOWING:
             return { 
                 ...state, 
                 following: action.following,

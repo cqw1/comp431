@@ -15,25 +15,32 @@ export const AuthAction = {
 }
 
 export function getProfile() {
-    var email = '';
-    var zipcode = '';
-    var dob = '';
-    var avatar = '';
+    let email = '';
+    let zipcode = '';
+    let dob = '';
+    let avatar = '';
 
     return (dispatch) => {
         resource('GET', 'email/')
         .then(r => {
-            email = r.emailAddress;
+            email = r.email;
             return resource('GET', 'zipcode/');
         }).then(r => {
             zipcode = r.zipcode;
+            console.log(zipcode);
             return resource('GET', 'dob/');
         }).then(r => {
-            dob = r.dob; // milliseconds
+            const dobDate = new Date(r.dob);
+            const month = dobDate.getUTCMonth() + 1;
+            const day = dobDate.getUTCDate();
+            const year = dobDate.getUTCFullYear();
+
+            dob = month + '/' + day + '/' + year
+
             return resource('GET', 'avatars/');
         }).then(r => {
             avatar = r.avatars[0].avatar; 
-        }).then(r => {
+            console.log(avatar);
 
             dispatch({
                 type: AuthAction.GET_PROFILE,
@@ -64,15 +71,13 @@ export function getProfile() {
 }
 
 export function loginUser(username, password) {
-    var valid = true;
-    var usernameError = '';
-    var passwordError = '';
-    var unauthorizedError = '';
+    let valid = true;
+    let usernameError = '';
+    let passwordError = '';
+    let unauthorizedError = '';
 
-    var filteredArticles = [];
-    var following = [];
-
-    console.log('loginUser');
+    let filteredArticles = [];
+    let following = [];
 
     if (username.length <= 0) {
         usernameError = 'Username is required.';
@@ -99,17 +104,6 @@ export function loginUser(username, password) {
     return (dispatch) => {
         resource('POST', 'login', { username, password })
         .then(r => {
-            dispatch(getHeadline());
-            dispatch(getAvatar());
-            dispatch(getArticles());
-            dispatch(getFollowing());
-            /*
-             dispatch(getProfile());
-            return resource('GET', 'articles/');
-        }).then(r => {
-            filteredArticles = r.articles;
-            */
-
             dispatch({
                 type: AuthAction.LOGIN,
                 profile: {
@@ -150,15 +144,15 @@ export const logoutUser = () => (dispatch) => {
 }
 
 function validate(profile, registering) {
-    var valid = true;
+    let valid = true;
 
-    var usernameError = '';
-    var emailError = '';
-    var dobError = '';
-    var zipcodeError = '';
-    var passwordError = '';
+    let usernameError = '';
+    let emailError = '';
+    let dobError = '';
+    let zipcodeError = '';
+    let passwordError = '';
 
-    var usernameValid = /^([a-zA-Z]+[a-zA-Z0-9]*)$/.test(profile.username);
+    const usernameValid = /^([a-zA-Z]+[a-zA-Z0-9]*)$/.test(profile.username);
     if (!profile.username && registering) {
         usernameError = 'Username is a required field.';
         valid = false;
@@ -169,7 +163,7 @@ function validate(profile, registering) {
         valid = false;
     } 
 
-    var emailValid = 
+    const emailValid = 
         /^([a-zA-Z0-9]+[a-zA-Z0-9\.\_]*\@[a-zA-Z]+\.[a-zA-Z]+)$/.test(
                 profile.email);
     if (!profile.email && registering) {
@@ -186,9 +180,9 @@ function validate(profile, registering) {
             dobError = 'Date of birth is a required field.';
             valid = false;
         } else {
-            var dobValid = true;
-            var age = new Date(profile.dob);
-            var now = new Date();
+            let dobValid = true;
+            const age = new Date(profile.dob);
+            const now = new Date();
 
             if ((now.getUTCFullYear() - age.getUTCFullYear()) < 18) {
                 dobValid = false;
@@ -211,7 +205,7 @@ function validate(profile, registering) {
         }
     }
 
-    var zipcodeValid = /^(\d{5}(-\d{4})?)$/.test(profile.zipcode);
+    const zipcodeValid = /^(\d{5}(-\d{4})?)$/.test(profile.zipcode);
     if (!profile.zipcode && registering) {
         zipcodeError = 'Zipcode is a required field.';
         valid = false;
@@ -221,7 +215,7 @@ function validate(profile, registering) {
     }
 
 
-    var passwordValid = profile.password == profile.passwordConfirmation;
+    const passwordValid = profile.password == profile.passwordConfirmation;
     if (!(profile.password || profile.passwordConfirmation) && registering) {
         passwordError = 'Password is a required field.';
         valid = false;
@@ -244,7 +238,30 @@ function validate(profile, registering) {
 
 export const updateProfile = (profile) => {
 
-    var validation = validate(profile, false);
+    const validation = validate(profile, false);
+
+    if (validation.valid) {
+        if (profile.email) {
+            resource('PUT', 'email/', {email: profile.email})
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+        if (profile.zipcode) {
+            resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+        if (profile.password) {
+            resource('PUT', 'password/', {password: profile.password})
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+    }
 
     return {
         type: AuthAction.UPDATE_PROFILE,
@@ -256,7 +273,7 @@ export const updateProfile = (profile) => {
 
 export function register(profile) {
 
-    var validation = validate(profile, true);
+    const validation = validate(profile, true);
 
     if (!validation.valid) {
         return {

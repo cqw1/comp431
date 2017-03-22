@@ -31,40 +31,38 @@ export const Application = ({
         navigateLanding();
     }
 
-    if (page == Pages.MAIN) {
+    const _onProfileClick = () => {
+        navigateProfile();
+    }
+
+    const _onMainClick = () => {
+        navigateMain();
+    }
+
+    if (page == Pages.MAIN || page == Pages.PROFILE) {
         return(
             <div> 
                 <nav className='navbar navbar-default'>
                     <div className='container-fluid'>
-                        <div className='nav navbar-nav'>
-                            <a className='navbar-text active-page'> Main </a>
-                            <a className='navbar-text' 
-                                onClick={navigateProfile}> 
-                                Update Profile 
-                            </a>
-                        </div>
-                        <div className='nav navbar-nav navbar-right'>
-                            <a className='navbar-text'
-                                onClick={_onLogoutClick}> Logout </a>
-                        </div>
-                    </div>
-                </nav>
-                <Main />
-            </div>
-        );
-    } else if (page == Pages.PROFILE) {
-        return(
-            <div> 
-                <nav className='navbar navbar-default'>
-                    <div className='container-fluid'>
-                        <div className='nav navbar-nav'>
-                            <a className='navbar-text' onClick={navigateMain}>
-                                Main 
-                            </a>
-                            <a className='navbar-text active-page'> 
-                                Update Profile 
-                            </a>
-                        </div>
+                        {page == Pages.MAIN &&
+                            <div className='nav navbar-nav'>
+                                <a className='navbar-text active-page'> Main </a>
+                                <a className='navbar-text' 
+                                    onClick={_onProfileClick}> 
+                                    Update Profile 
+                                </a>
+                            </div>
+                        }
+                        {page == Pages.PROFILE &&
+                            <div className='nav navbar-nav'>
+                                <a className='navbar-text' onClick={_onMainClick}>
+                                    Main 
+                                </a>
+                                <a className='navbar-text active-page'> 
+                                    Update Profile 
+                                </a>
+                            </div>
+                        }
                         <div className='nav navbar-nav navbar-right'>
                             <a className='navbar-text' onClick={_onLogoutClick}> 
                                 Logout
@@ -72,7 +70,12 @@ export const Application = ({
                         </div>
                     </div>
                 </nav>
-                <Profile />
+                {page == Pages.MAIN &&
+                    <Main />
+                }
+                {page == Pages.PROFILE &&
+                    <Profile />
+                }
             </div>
         );
 

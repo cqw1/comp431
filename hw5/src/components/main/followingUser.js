@@ -16,11 +16,10 @@ export const FollowingUser = ({
 }) =>  {
     return (
         <div> 
-            <button 
-                className='float-right btn btn-danger' 
+            <span
+                className='float-right glyphicon glyphicon-remove' 
                 onClick={() => { unfollow(profile.username) }}> 
-                Unfollow 
-            </button>
+            </span>
             <AccountInfo 
                 username={profile.username} 
                 headline={profile.headline} 

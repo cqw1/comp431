@@ -27,7 +27,7 @@ export const FollowingList= ({
                 <InputAction 
                     buttonText='Follow User' 
                     onClickAction={followUser} 
-                    placeholder='Username to follow' />
+                    placeholder='Username' />
             </div>
 
             <ul className='list-group'>

@@ -28,7 +28,7 @@ export const Registration = ({
     let passwordConfirmationInput;
 
     const _submit = () => {
-        var profile = {
+        const profile = {
             username: usernameInput.value,
             email: emailInput.value,
             dob: dobInput.value,

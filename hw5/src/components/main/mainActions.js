@@ -9,9 +9,6 @@ export const MainAction = {
     GET_HEADLINE: 'GET_HEADLINE', 
     GET_AVATAR: 'GET_AVATAR', 
     UPDATE_HEADLINE: 'UPDATE_HEADLINE',
-    GET_FOLLOWING: 'GET_FOLLOWING',
-    FOLLOW_USER: 'FOLLOW_USER',
-    UNFOLLOW_USER: 'UNFOLLOW_USER',
 }
 
 export const unfollowUser = (username) => {
