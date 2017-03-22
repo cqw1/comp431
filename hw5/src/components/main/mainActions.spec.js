@@ -35,9 +35,11 @@ it('should update headline', done => {
 
     mainActions.updateHeadline('newheadline')(
         action => {
-            expect(action.type).to.eql(MainAction.UPDATE_HEADLINE);
-            expect(action.headline).to.eql('newheadline');
+            if (typeof action !== 'function') {
+                expect(action.type).to.eql(MainAction.UPDATE_HEADLINE);
+                expect(action.headline).to.eql('newheadline');
             done();
+            }
         }
     )
 })

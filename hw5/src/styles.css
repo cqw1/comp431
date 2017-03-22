@@ -127,7 +127,7 @@ table td {
     position: fixed;
     z-index: 1;
     right: 40px;
-    bottom: 20px;
+    bottom: 10px;
 }
 
 .alert-position > .close {
