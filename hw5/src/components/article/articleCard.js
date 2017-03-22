@@ -40,12 +40,12 @@ export const ArticleCard = ({
 
                 <div className='button-container text-align-right'>
                     <button className='btn btn-warning'>Edit</button>
-                    <button className='btn btn-success'>Comment</button>
                     {article.comments.length > 0 &&
                         <button className='btn btn-info' onClick={_toggleComment}>
                             Show comments ({article.comments.length})
                         </button>
                     }
+                    <button className='btn btn-success'>Comment</button>
                 </div>
             </div>
 

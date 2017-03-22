@@ -121,3 +121,15 @@ table td {
     color: green;
     max-width: 250px;
 }
+
+.alert-position {
+    text-align: center;
+    position: fixed;
+    z-index: 1;
+    right: 40px;
+    bottom: 20px;
+}
+
+.alert-position > .close {
+    margin-left: 20px;
+}

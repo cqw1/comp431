@@ -7,6 +7,8 @@ import { logoutUser } from './auth/authActions'
 import Main from './main/main'
 import Profile from './profile/profile'
 import Landing from './landing/landing'
+import SuccessAlert from './alert/successAlert'
+import ErrorAlert from './alert/errorAlert'
 
 /* Constants for navigation through pages. */
 export const Pages = {
@@ -76,6 +78,9 @@ export const Application = ({
                 {page == Pages.PROFILE &&
                     <Profile />
                 }
+
+                <ErrorAlert />
+                <SuccessAlert />
             </div>
         );
 
@@ -83,6 +88,8 @@ export const Application = ({
         return(
             <div> 
                 <Landing />
+                <ErrorAlert />
+                <SuccessAlert />
             </div>
         );
     }

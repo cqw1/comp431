@@ -1,6 +1,8 @@
-import { resource, navigateMain } from '../../actions.js'
+import { resource, getPrettyDate, navigateMain } from '../../actions.js'
 import { getHeadline, getAvatar, getFollowing } from '../main/mainActions.js'
 import { getArticles } from '../article/articleActions.js'
+
+import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
 
 /**
  * Actions associated with authenticating a user or managing profile fields.
@@ -27,20 +29,13 @@ export function getProfile() {
             return resource('GET', 'zipcode/');
         }).then(r => {
             zipcode = r.zipcode;
-            console.log(zipcode);
             return resource('GET', 'dob/');
         }).then(r => {
-            const dobDate = new Date(r.dob);
-            const month = dobDate.getUTCMonth() + 1;
-            const day = dobDate.getUTCDate();
-            const year = dobDate.getUTCFullYear();
-
-            dob = month + '/' + day + '/' + year
+            dob = getPrettyDate(r.dob)
 
             return resource('GET', 'avatars/');
         }).then(r => {
             avatar = r.avatars[0].avatar; 
-            console.log(avatar);
 
             dispatch({
                 type: AuthAction.GET_PROFILE,
@@ -53,18 +48,7 @@ export function getProfile() {
             })
         }).catch((err) => {
             console.log(err);
-            /*
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 
@@ -245,6 +229,7 @@ export const updateProfile = (profile) => {
             resource('PUT', 'email/', {email: profile.email})
             .catch((err) => {
                 console.log(err);
+                dispatch(showErrorAlert(err.toString()));
             })
         }
 
@@ -252,6 +237,7 @@ export const updateProfile = (profile) => {
             resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
             .catch((err) => {
                 console.log(err);
+                dispatch(showErrorAlert(err.toString()));
             })
         }
 
@@ -259,15 +245,22 @@ export const updateProfile = (profile) => {
             resource('PUT', 'password/', {password: profile.password})
             .catch((err) => {
                 console.log(err);
+                dispatch(showErrorAlert(err.toString()));
             })
         }
     }
 
-    return {
-        type: AuthAction.UPDATE_PROFILE,
-        profile: profile,
-        errors: validation.errors,
-        valid: validation.valid
+    return (dispatch) => {
+        dispatch({
+            type: AuthAction.UPDATE_PROFILE,
+            profile: profile,
+            errors: validation.errors,
+            valid: validation.valid
+        })
+
+        if (validation.valid) {
+            dispatch(showSuccessAlert('Updated profile.'))
+        }
     }
 }
 
@@ -292,9 +285,12 @@ export function register(profile) {
                     profile,
                     valid: validation.valid
                 })
+
+                dispatch(showSuccessAlert('Successfully registered.'))
             }
         }).catch((err) => {
             console.log(err);
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }

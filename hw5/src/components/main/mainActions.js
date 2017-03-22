@@ -1,6 +1,8 @@
 import { resource } from '../../actions.js'
 import { getArticles } from '../article/articleActions.js'
 
+import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
+
 /*
  * Actions triggered by events from the main page.
  */
@@ -21,6 +23,7 @@ export const unfollowUser = (username) => {
                 dispatch(getArticles());
             }).catch((err) => {
                 console.log(err);
+                dispatch(showErrorAlert(err.toString()));
             })
         }
     }
@@ -36,19 +39,7 @@ export const followUser = (username) => {
                 dispatch(getArticles());
             }).catch((err) => {
                 console.log(err);
-                /*
-                valid = false;
-                unauthorizedError = 'Username or password is invalid.';
-                dispatch({
-                    type: AuthAction.LOGIN, 
-                    loginErrors: Object.assign({}, {
-                        usernameError,
-                        passwordError,
-                        unauthorizedError,
-                    }),
-                    valid
-                })
-                */
+                dispatch(showErrorAlert(err.toString()));
             })
         }
     }
@@ -62,19 +53,7 @@ export function getFollowing() {
             dispatch(createFollowProfiles(r.following.join(',')))
         }).catch((err) => {
             console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }
@@ -98,19 +77,7 @@ function createFollowProfiles(usernames) {
             })
         }).catch((err) => {
             console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }
@@ -125,19 +92,7 @@ export function getAvatar() {
             })
         }).catch((err) => {
             console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }
@@ -152,19 +107,7 @@ export function getHeadline() {
             })
         }).catch((err) => {
             console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }
@@ -173,17 +116,18 @@ export function getHeadline() {
 export function updateHeadline(text) {
     if (text.length > 0) {
         return (dispatch) => {
-            resource('PUT', 'headline', {headline: text})
+            resource('PUT', 'headline/', {headline: text})
             .then(r => {
                 dispatch({
                     type: MainAction.UPDATE_HEADLINE,
                     headline: text,
                 })
+
+                dispatch(showSuccessAlert('Updated headline.'))
+
             }).catch((err) => {
                 console.log(err);
             })
         }
     }
-
-    return { type: 'ERROR' }
 }

@@ -25,7 +25,7 @@ afterEach(() => {
     }
 })
 
-it('validate authentication: should log in a user', done => {
+it('should log in a user', done => {
 
     var username = 'foo';
     var password = 'bar';
@@ -49,7 +49,7 @@ it('validate authentication: should log in a user', done => {
     )
 })
 
-it('validate authentication: should not log in an invalid user', done => {
+it('should not log in an invalid user', done => {
 
     var username = 'foo';
     var password = 'bar';
@@ -74,7 +74,7 @@ it('validate authentication: should not log in an invalid user', done => {
     )
 })
 
-it('validate authentication: should logout a user (state should be cleared)', done => {
+it('should logout a user (state should be cleared)', done => {
 
     mock(`${url}/logout/`, {
         method: 'PUT',
@@ -107,6 +107,58 @@ it('validate authentication: should logout a user (state should be cleared)', do
     authActions.logoutUser()(
         action => {
             expect(action).to.eql({ type: AuthAction.LOGOUT});
+            done();
+        }
+    )
+})
+
+it("should fetch the user's profile information", done => {
+
+    mock(`${url}/email/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'email': 'testemail'}
+    })
+
+    mock(`${url}/dob/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'dob': 1490179322372}
+    })
+
+    mock(`${url}/zipcode/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'zipcode': 'testzipcode'}
+    })
+
+    mock(`${url}/avatars/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'avatars': [
+            {
+                'avatar': 'testavatar'
+            }
+        ]}
+    })
+
+    const response = {
+        type: AuthAction.GET_PROFILE,
+        profile: {
+            'email': 'testemail',
+            'zipcode': 'testzipcode',
+            'dob': '3/22/2017',
+            'avatar': 'testavatar',
+        }
+    }
+
+    authActions.getProfile()(
+        action => {
+            expect(action).to.eql(response);
             done();
         }
     )

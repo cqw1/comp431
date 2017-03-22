@@ -1,5 +1,7 @@
 import { resource } from '../../actions.js'
 
+import {showSuccessAlert, showErrorAlert} from '../alert/alertActions.js'
+
 /*
  * Actions associated with articles. Includes filtering
  * or creating a new article
@@ -26,7 +28,7 @@ export function checkShowComments(id, showComments) {
 }
 
 export function getArticles() {
-    var articles = [];
+    let articles = [];
 
     return (dispatch) => {
         resource('GET', 'articles/')
@@ -39,19 +41,8 @@ export function getArticles() {
             })
         }).catch((err) => {
             console.log(err);
-            /*
-            valid = false;
-            unauthorizedError = 'Username or password is invalid.';
-            dispatch({
-                type: AuthAction.LOGIN, 
-                loginErrors: Object.assign({}, {
-                    usernameError,
-                    passwordError,
-                    unauthorizedError,
-                }),
-                valid
-            })
-            */
+            console.log(typeof err);
+            dispatch(showErrorAlert(err.toString()));
         })
     }
 }
@@ -66,6 +57,8 @@ export const postArticle = (text) => {
                     type: ArticleAction.POST_ARTICLE,
                     article: r.articles[0],
                 })
+
+                dispatch(showSuccessAlert('Posted article.'))
             })
         }
     }

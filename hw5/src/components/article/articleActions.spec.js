@@ -4,7 +4,6 @@ import fetch, { mock } from 'mock-fetch'
 
 import {url, resource} from '../../actions'
 import {ArticleAction, getArticles} from './articleActions'
-import {articleReducer} from '../../reducers'
 
 let articleActions
 beforeEach(() => {
@@ -25,9 +24,9 @@ afterEach(() => {
     }
 })
 
-it('validate article actions: should fetch articles', done => {
+it('should fetch articles', done => {
 
-    var articles = [
+    const articles = [
         {
             'id': 1,
             'text': 'one'
@@ -54,7 +53,7 @@ it('validate article actions: should fetch articles', done => {
     )
 })
 
-it('validate article actions: should update the search keyword', done => {
+it('should update the search keyword', done => {
     var action = articleActions.filterArticles('randomfilter');
     expect(action.type).to.be.eql(ArticleAction.FILTER_ARTICLES);
     expect(action.filter).to.be.eql('randomfilter');

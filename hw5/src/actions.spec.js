@@ -23,7 +23,7 @@ afterEach(() => {
     }
 })
 
-it('validate actions: resource should be a resource (i.e., mock a request)', done => {
+it('resource should be a resource (i.e., mock a request)', done => {
     mock(`${url}/`, {
         method: 'GET',
         credentials: 'include',
@@ -38,7 +38,7 @@ it('validate actions: resource should be a resource (i.e., mock a request)', don
     })
 })
 
-it('validate actions: resource should give the http error', done => {
+it('resource should give me the http error', done => {
     mock(`${url}/`, {
         method: 'GET',
         credentials: 'include',
@@ -53,7 +53,7 @@ it('validate actions: resource should give the http error', done => {
     })
 })
 
-it('validate actions: resource should be POSTable', done => {
+it('resource should be POSTable', done => {
     mock(`${url}/`, {
         method: 'POST',
         credentials: 'include',
@@ -68,7 +68,7 @@ it('validate actions: resource should be POSTable', done => {
     })
 })
 
-it('validate actions: should navigate to landing', done => {
+it('should navigate to landing', done => {
     actions.navigateLanding()(
         action => {
             expect(action).to.eql({ type: ActionTypes.NAVIGATE_LANDING });
@@ -77,20 +77,71 @@ it('validate actions: should navigate to landing', done => {
     )
 })
 
-it('validate actions: should navigate to main', done => {
+it('should navigate to main', done => {
+    const articles = [
+        {
+            'id': 1,
+            'text': 'one'
+        },
+        {
+            'id': 2,
+            'text': 'two'
+        },
+    ];
+
+    mock(`${url}/headlines/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'headlines': [
+            {
+                'headline': 'testheadline'
+            }
+        ]}
+    })
+
+    mock(`${url}/articles/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'articles': articles}
+    })
+
+    mock(`${url}/avatars/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'avatars': [
+            {
+                'avatar': 'testavatar'
+            }
+        ]}
+    })
+
+    mock(`${url}/following/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        json: {'following': []}
+    })
+
     actions.navigateMain()(
         action => {
-            expect(action).to.eql({ type: ActionTypes.NAVIGATE_MAIN });
-            done();
+            if (typeof action !== 'function') {
+                expect(action).to.eql({ type: ActionTypes.NAVIGATE_MAIN });
+            }
         }
     )
+    done();
 })
 
-it('validate actions: should navigate to profile', done => {
+it('should navigate to profile', done => {
     actions.navigateProfile()(
         action => {
-            expect(action).to.eql({ type: ActionTypes.NAVIGATE_PROFILE });
-            done();
+            if (typeof action !== 'function') {
+                expect(action).to.eql({ type: ActionTypes.NAVIGATE_PROFILE });
+            }
         }
     )
+    done();
 })

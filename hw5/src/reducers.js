@@ -4,24 +4,7 @@ import { ActionTypes } from './actions'
 import { AuthAction } from './components/auth/authActions'
 import { MainAction } from './components/main/mainActions'
 import { ArticleAction } from './components/article/articleActions'
-
-const following = require('./data/following.json')
-const articles = require('./data/articles.json')
-
-const sampleFollowing = following[0];
-let followingId = following.length;
-
-const sampleArticle = articles[0];
-let articleId = articles.length;
-
-let errors = {
-    usernameError: '',
-    emailError: '',
-    phoneError: '',
-    dobError: '',
-    zipcodeError: '',
-    passwordError: '',
-}
+import { AlertAction } from './components/alert/alertActions'
 
 export const authReducer = (state = {
     profile: {},
@@ -240,11 +223,48 @@ export const mainReducer = (state = {
     }
 }
 
+export const alertReducer = (state = {
+    successMessage: '',
+    errorMessage: '',
+    showSuccessAlert: false,
+    showErrorAlert: false,
+}, action) => {
+    switch (action.type) {
+        case AlertAction.CLOSE_SUCCESS_ALERT:
+            return { 
+                ...state, 
+                showSuccessAlert: false,
+                message: ''
+            }
+        case AlertAction.SHOW_SUCCESS_ALERT:
+            return { 
+                ...state, 
+                showSuccessAlert: true,
+                successMessage: action.message
+            }
+        case AlertAction.CLOSE_ERROR_ALERT:
+            return { 
+                ...state, 
+                showErrorAlert: false,
+                message: ''
+            }
+        case AlertAction.SHOW_ERROR_ALERT:
+            return { 
+                ...state, 
+                showErrorAlert: true,
+                errorMessage: action.message
+            }
+        default:
+            return state
+    }
+}
+
 //export default Reducer
 export default combineReducers({
     authReducer,
     articleReducer,
     mainReducer,
     navigationReducer,
+    alertReducer,
 })
 
