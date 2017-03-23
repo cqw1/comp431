@@ -14,7 +14,6 @@ import { register } from './authActions'
  * Also checks input validation for each field.
  */
 export const Registration = ({ 
-    profile,
     registrationErrors,
     registrationSuccess,
     submit,
@@ -50,8 +49,7 @@ export const Registration = ({
                         <td>
                             <input 
                                 className='form-control' 
-                                ref = {node => { usernameInput = node }} 
-                                defaultValue={profile.username} 
+                                ref={node => { usernameInput = node }} 
                                 placeholder='Username' /> 
                             <div className='error-msg'>
                                 {registrationErrors.usernameError}
@@ -64,7 +62,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
-                                ref = {node => { passwordInput = node }} 
+                                ref={node => { passwordInput = node }} 
                                 type='password'
                                 placeholder='Password' /> 
                         </td>
@@ -75,7 +73,7 @@ export const Registration = ({
                             <input 
                                 className='form-control' 
                                 type='password' 
-                                ref = {node => { 
+                                ref={node => { 
                                     passwordConfirmationInput = node 
                                 }} 
                                 placeholder='Password Confirmation' /> 
@@ -91,8 +89,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
-                                ref = {node => { emailInput = node }} 
-                                defaultValue={profile.email} 
+                                ref={node => { emailInput = node }} 
                                 placeholder='Email' />
                             <div className='error-msg'>
                                 {registrationErrors.emailError}
@@ -107,8 +104,7 @@ export const Registration = ({
                             <input 
                                 className='form-control' 
                                 type='date' 
-                                ref = {node => { dobInput = node }} 
-                                defaultValue={profile.dob} />
+                                ref={node => { dobInput = node }} />
                             <div className='error-msg'>
                                 {registrationErrors.dobError}
                             </div>
@@ -121,8 +117,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
-                                ref = {node => { zipcodeInput = node }} 
-                                defaultValue={profile.zipcode} 
+                                ref={node => { zipcodeInput = node }} 
                                 placeholder='Zipcode' />
                             <div className='error-msg'>
                                 {registrationErrors.zipcodeError}
@@ -149,7 +144,6 @@ export const Registration = ({
 
 export default connect(
     (state) => ({ 
-        profile: state.authReducer.profile,
         registrationErrors: state.authReducer.registrationErrors,
         registrationSuccess: state.authReducer.registrationSuccess
     }),
