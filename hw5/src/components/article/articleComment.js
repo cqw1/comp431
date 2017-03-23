@@ -8,12 +8,12 @@ export const ArticleComment = ({
 }) =>  {
     return (
         <div>
-            <small> 
+            <small className='comment-info'> 
                 {comment.author + ' '} 
                 on {getPrettyDate(comment.date) + ' '}
                 at {getPrettyTime(comment.date)}
             </small>
-            <div>{comment.text}</div>
+            <div className='comment-text'>{comment.text}</div>
         </div>
     )
 }

@@ -11,7 +11,7 @@ import {
     alertReducer 
 } from './reducers'
 import {ArticleAction} from './components/article/articleActions'
-import {AlertAction} from './components/alert/alertActions'
+import {AlertType, AlertAction} from './components/alert/alertActions'
 
 // Tests for reducers.
 it('should initialize state', done => {
@@ -50,20 +50,18 @@ it('should initialize state', done => {
 it('should state success (for displaying success message to user)', done => {
     expect(alertReducer(
         {
-            successMessage: '',
-            errorMessage: '',
-            showSuccessAlert: false,
-            showErrorAlert: false,
+            alert: {}
         }, 
         { 
-            type: AlertAction.SHOW_SUCCESS_ALERT,
+            type: AlertAction.SHOW_ALERT,
             message: 'success',
+            alertType: AlertType.SUCCESS
         })
     ).to.eql({
-        successMessage: 'success',
-        errorMessage: '',
-        showSuccessAlert: true,
-        showErrorAlert: false,
+        alert: {
+            message: 'success',
+            alertType: AlertType.SUCCESS,
+        }
     })
 
     done();
@@ -73,20 +71,18 @@ it('should state success (for displaying success message to user)', done => {
 it('should state error (for displaying error message to user)', done => {
     expect(alertReducer(
         {
-            successMessage: '',
-            errorMessage: '',
-            showSuccessAlert: false,
-            showErrorAlert: false,
+            alert: {}
         }, 
         { 
-            type: AlertAction.SHOW_ERROR_ALERT,
+            type: AlertAction.SHOW_ALERT,
             message: 'error',
+            alertType: AlertType.ERROR
         })
     ).to.eql({
-        successMessage: '',
-        errorMessage: 'error',
-        showSuccessAlert: false,
-        showErrorAlert: true,
+        alert: {
+            message: 'error',
+            alertType: AlertType.ERROR,
+        }
     })
 
     done();

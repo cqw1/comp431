@@ -12,8 +12,6 @@ import ArticleComment from './articleComment'
  */
 export const ArticleCard = ({ 
     article,
-    getPrettyDate,
-    getPrettyTime,
     toggleComments,
     checkShowComments,
 }) =>  {
@@ -36,7 +34,7 @@ export const ArticleCard = ({
                     on {getPrettyDate(article.date) + ' '}
                     at {getPrettyTime(article.date)}
                 </h4>
-                <div>{article.text}</div>
+                <div className='article-text'>{article.text}</div>
 
                 <div className='button-container text-align-right'>
                     <button className='btn btn-warning'>Edit</button>
@@ -67,8 +65,6 @@ export const ArticleCard = ({
 
 export default connect(
     (state) => ({ 
-        getPrettyDate: (date) => getPrettyDate(date),
-        getPrettyTime: (date) => getPrettyTime(date),
         checkShowComments: 
             (id) => checkShowComments(id, state.articleReducer.showComments),
     }),

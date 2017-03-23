@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
-import {url, resource} from '../../actions'
+import {url} from '../../actions'
 import {MainAction, updateHeadline} from './mainActions'
 
 // Tests for actions related to the main page.
