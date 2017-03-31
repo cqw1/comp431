@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome 56.0.2924 (Linux 0.0.0)" package="" timestamp="2017-03-23T02:32:40" id="0" hostname="cwang-ThinkPad-T530" tests="23" errors="0" failures="0" time="0.085">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"/>
+  </properties>
+  <testcase name=" resource should be a resource (i.e., mock a request)" time="0.003" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" resource should give me the http error" time="0.002" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" resource should be POSTable" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should navigate to landing" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should navigate to main" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should navigate to profile" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should update success message (for displaying success message to user)" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should update error message (for displaying error message to user)" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should fetch articles" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should update the search keyword" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should dispatch actions to create a new article" time="0.033" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should render articles" time="0.034" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should log in a user" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should not log in an invalid user" time="0.002" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should logout a user (state should be cleared)" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should fetch the user's profile information" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should update headline" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should initialize state" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should state success (for displaying success message to user)" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should state error (for displaying error message to user)" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should set the articles" time="0.001" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should set the search keyword" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <testcase name=" should filter displayed articles by the search keyword" time="0" classname="Chrome_56_0_2924_(Linux_0_0_0).undefined"/>
+  <system-out>
+    <![CDATA[Chrome 56.0.2924 (Linux 0.0.0) ERROR: 'GET  undefined'
+,Chrome 56.0.2924 (Linux 0.0.0) ERROR: 'POST login undefined'
+,Chrome 56.0.2924 (Linux 0.0.0) LOG: Error{}
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>
