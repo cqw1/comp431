@@ -111,14 +111,15 @@ export const articleReducer = (state = {
     articles: [],
     filteredArticles: [],
     filter: '',
-    showComments: [],
+    articlesMeta: [],
 }, action) => {
     switch (action.type) {
         case ArticleAction.GET_ARTICLES:
-            const showComments = action.articles.map(function(article) {
+            const articlesMeta = action.articles.map(function(article) {
                 return {
                     id: article._id,
-                    show: false,
+                    comments: false,
+                    edit: false,
                 }
             })
 
@@ -130,7 +131,7 @@ export const articleReducer = (state = {
                 ...state, 
                 articles: sorted_get,
                 filteredArticles: sorted_get,
-                showComments,
+                articlesMeta,
             }
         case ArticleAction.POST_ARTICLE:
 
@@ -155,9 +156,9 @@ export const articleReducer = (state = {
                 ...state, 
                 articles: sorted_post,
                 filteredArticles: filtered,
-                showComments: [
-                    {id: action.article._id, show: false}, 
-                    ...state.showComments
+                articlesMeta: [
+                    {id: action.article._id, comments: false, edit: false}, 
+                    ...state.articlesMeta
                 ]
             }
         case ArticleAction.FILTER_ARTICLES:
@@ -172,17 +173,35 @@ export const articleReducer = (state = {
                 filter: action.filter
             }
         case ArticleAction.TOGGLE_COMMENTS:
-            const newShowComments = state.showComments;
+            let articlesMetaComments= [];
 
-            newShowComments.forEach(function(el) {
+            state.articlesMeta.forEach(function(el) {
                 if (el.id == action.articleId) {
-                    el.show = !el.show;
+                    articlesMetaComments.push(Object.assign({}, el, {comments: !el.comments}));
+                } else {
+                    articlesMetaComments.push(el);
                 }
             })
 
             return { 
                 ...state, 
-                showComments: newShowComments,
+                articlesMeta: articlesMetaComments,
+            }
+        case ArticleAction.TOGGLE_EDIT_ARTICLE:
+            let articlesMetaEdit = [];
+            console.log('toggle edit article action received');
+
+            state.articlesMeta.forEach(function(el) {
+                if (el.id == action.articleId) {
+                    articlesMetaEdit.push(Object.assign({}, el, {edit: !el.edit}));
+                } else {
+                    articlesMetaEdit.push(el);
+                }
+            })
+
+            return { 
+                ...state, 
+                articlesMeta: articlesMetaEdit,
             }
         default:
             return state

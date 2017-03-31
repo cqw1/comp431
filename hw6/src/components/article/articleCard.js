@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import {getPrettyDate, getPrettyTime} from '../../actions.js'
-import {toggleComments, checkShowComments} from './articleActions.js'
+import {toggleComments, checkShowComments, checkEditArticle, editArticle} from './articleActions.js'
 
 import ArticleComment from './articleComment'
 
@@ -14,11 +14,21 @@ export const ArticleCard = ({
     profile,
     article,
     toggleComments,
+    editArticle,
     checkShowComments,
+    checkEditArticle,
 }) =>  {
+
+    let editTextarea;
 
     const _toggleComment = () => {
         toggleComments(article._id);
+    }
+
+    const _editArticle = () => {
+        console.log('_editArticle');
+        editArticle(article._id);
+        console.log(article._id);
     }
     
     return (
@@ -35,22 +45,40 @@ export const ArticleCard = ({
                     on {getPrettyDate(article.date) + ' '}
                     at {getPrettyTime(article.date)}
                 </h4>
-                <div className='article-text'>{article.text}</div>
-
-                {article.author == profile.username &&
-                    <div className='button-container text-align-right'>
-                        <button className='btn btn-warning'>Edit</button>
-                        {article.comments.length > 0 && 
-                            <button 
-                                className='btn btn-info' 
-                                onClick={_toggleComment}>
-                                {checkShowComments(article._id) ? `Hide` : `Show`}
-                                {' '} comments ({article.comments.length})
-                            </button>
-                        }
-                        <button className='btn btn-success'>Comment</button>
-                    </div>
+                {checkEditArticle(article._id) 
+                    ?  (
+                        <textarea 
+                            className='form-control' 
+                            placeholder='' 
+                            ref= {node => {editTextarea = node}}
+                            defaultValue={article.text} />
+                    ) :
+                    (<div className='article-text'>{article.text}</div>)
                 }
+
+                <div className='button-container text-align-right'>
+                    {checkEditArticle(article._id) &&
+                        <button className='btn btn-primary'>
+                            Update 
+                        </button>
+                    }
+                    {article.author == profile.username &&
+                        <button 
+                            className='btn btn-warning'
+                            onClick={_editArticle}>
+                            {checkEditArticle(article._id) ? `Cancel Edit` : `Edit`}
+                        </button>
+                    }
+                    {article.comments.length > 0 && 
+                        <button 
+                            className='btn btn-info' 
+                            onClick={_toggleComment}>
+                            {checkShowComments(article._id) ? `Hide` : `Show`}
+                            {' '} comments ({article.comments.length})
+                        </button>
+                    }
+                    <button className='btn btn-success'>Comment</button>
+                </div>
             </div>
 
             {article.comments.length > 0 && checkShowComments(article._id) &&
@@ -69,9 +97,17 @@ export const ArticleCard = ({
 export default connect(
     (state) => ({ 
         checkShowComments: 
-            (id) => checkShowComments(id, state.articleReducer.showComments),
+            (id) => checkShowComments(id, state.articleReducer.articlesMeta),
+        checkEditArticle: 
+            (id) => checkEditArticle(id, state.articleReducer.articlesMeta),
         profile: state.authReducer.profile,
     }),
-    (dispatch) => ({ toggleComments: (id) => dispatch(toggleComments(id)) })
+    (dispatch) => ({ 
+        toggleComments: (id) => dispatch(toggleComments(id)),
+        editArticle: (id) => {
+            dispatch(editArticle(id));
+            console.log('in dispatch');
+        }
+    })
 )(ArticleCard)
 

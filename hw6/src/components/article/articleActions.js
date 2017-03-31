@@ -11,6 +11,15 @@ export const ArticleAction = {
     POST_ARTICLE: 'POST_ARTICLE',
     FILTER_ARTICLES: 'FILTER_ARTICLES',
     TOGGLE_COMMENTS: 'TOGGLE_COMMENTS',
+    TOGGLE_EDIT_ARTICLE: 'TOGGLE_EDIT_ARTICLE',
+}
+
+export const editArticle = (id) => (dispatch) => {
+    console.log('dispatch editArticle');
+    dispatch({
+        type: ArticleAction.TOGGLE_EDIT_ARTICLE,
+        articleId: id,
+    })
 }
 
 export const toggleComments = (id) => (dispatch) => {
@@ -20,13 +29,25 @@ export const toggleComments = (id) => (dispatch) => {
     })
 }
 
-export function checkShowComments(id, showComments) {
-    const filtered = showComments.filter(function(obj) {
+export function checkEditArticle(id, articlesMeta) {
+    const filtered = articlesMeta.filter(function(obj) {
         return obj.id == id;
     });
     
     if (filtered.length > 0) {
-        return filtered[0].show;
+        return filtered[0].edit;
+    }
+
+    return false;
+}
+
+export function checkShowComments(id, articlesMeta) {
+    const filtered = articlesMeta.filter(function(obj) {
+        return obj.id == id;
+    });
+    
+    if (filtered.length > 0) {
+        return filtered[0].comments;
     }
 
     return false;

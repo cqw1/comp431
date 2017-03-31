@@ -81,10 +81,6 @@ table td {
     padding: 10px;
 }
 
-.float-right {
-    float: right;
-}
-
 .text-align-right{
     text-align: right;
 }
@@ -132,4 +128,8 @@ table td {
 
 .alert-position > .close {
     margin-left: 20px;
+}
+
+.glyphicon-remove {
+    cursor: pointer;
 }
