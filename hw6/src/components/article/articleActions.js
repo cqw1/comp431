@@ -12,10 +12,28 @@ export const ArticleAction = {
     FILTER_ARTICLES: 'FILTER_ARTICLES',
     TOGGLE_COMMENTS: 'TOGGLE_COMMENTS',
     TOGGLE_EDIT_ARTICLE: 'TOGGLE_EDIT_ARTICLE',
+    UPDATE_ARTICLE: 'UPDATE_ARTICLE',
+}
+
+export function updateArticle(id, text) {
+    console.log('updateArticle');
+    console.log(text);
+
+    return (dispatch) => {
+        resource('PUT', 'articles/' + id, {text})
+        .then(r => {
+            dispatch({
+                type: ArticleAction.UPDATE_ARTICLE,
+                article: r.articles[0],
+            });
+        }).catch((err) => {
+            console.log(err);
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
+        })
+    }
 }
 
 export const editArticle = (id) => (dispatch) => {
-    console.log('dispatch editArticle');
     dispatch({
         type: ArticleAction.TOGGLE_EDIT_ARTICLE,
         articleId: id,
@@ -31,7 +49,7 @@ export const toggleComments = (id) => (dispatch) => {
 
 export function checkEditArticle(id, articlesMeta) {
     const filtered = articlesMeta.filter(function(obj) {
-        return obj.id == id;
+        return obj._id == id;
     });
     
     if (filtered.length > 0) {
@@ -43,7 +61,7 @@ export function checkEditArticle(id, articlesMeta) {
 
 export function checkShowComments(id, articlesMeta) {
     const filtered = articlesMeta.filter(function(obj) {
-        return obj.id == id;
+        return obj._id == id;
     });
     
     if (filtered.length > 0) {

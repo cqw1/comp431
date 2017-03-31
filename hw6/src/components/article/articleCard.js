@@ -2,7 +2,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import {getPrettyDate, getPrettyTime} from '../../actions.js'
-import {toggleComments, checkShowComments, checkEditArticle, editArticle} from './articleActions.js'
+import {
+    toggleComments, 
+    checkShowComments, 
+    checkEditArticle, 
+    editArticle,
+    updateArticle,
+} from './articleActions.js'
 
 import ArticleComment from './articleComment'
 
@@ -17,18 +23,21 @@ export const ArticleCard = ({
     editArticle,
     checkShowComments,
     checkEditArticle,
+    updateArticle,
 }) =>  {
 
-    let editTextarea;
+    let editTextArea;
 
     const _toggleComment = () => {
         toggleComments(article._id);
     }
 
     const _editArticle = () => {
-        console.log('_editArticle');
         editArticle(article._id);
-        console.log(article._id);
+    }
+
+    const _updateArticle = () => {
+        updateArticle(article._id, editTextArea.value);
     }
     
     return (
@@ -50,7 +59,7 @@ export const ArticleCard = ({
                         <textarea 
                             className='form-control' 
                             placeholder='' 
-                            ref= {node => {editTextarea = node}}
+                            ref= {node => {editTextArea = node}}
                             defaultValue={article.text} />
                     ) :
                     (<div className='article-text'>{article.text}</div>)
@@ -58,7 +67,10 @@ export const ArticleCard = ({
 
                 <div className='button-container text-align-right'>
                     {checkEditArticle(article._id) &&
-                        <button className='btn btn-primary'>
+                        <button 
+                            className='btn btn-primary'
+                            onClick={_updateArticle}>
+
                             Update 
                         </button>
                     }
@@ -106,8 +118,8 @@ export default connect(
         toggleComments: (id) => dispatch(toggleComments(id)),
         editArticle: (id) => {
             dispatch(editArticle(id));
-            console.log('in dispatch');
-        }
+        },
+        updateArticle: (id, text) => dispatch(updateArticle(id, text)),
     })
 )(ArticleCard)
 

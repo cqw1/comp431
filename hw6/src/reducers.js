@@ -117,7 +117,7 @@ export const articleReducer = (state = {
         case ArticleAction.GET_ARTICLES:
             const articlesMeta = action.articles.map(function(article) {
                 return {
-                    id: article._id,
+                    _id: article._id,
                     comments: false,
                     edit: false,
                 }
@@ -143,12 +143,8 @@ export const articleReducer = (state = {
 
             const filtered = sorted_post.filter(
                 (el) => { 
-                    if (el.text) {
-                        return (el.text.includes(state.filter) || 
-                                el.author.includes(state.filter));
-                    } else {
-                        return (el.author.includes(state.filter));
-                    }
+                    return (el.text.includes(state.filter) || 
+                            el.author.includes(state.filter));
                 }
             );
 
@@ -176,7 +172,7 @@ export const articleReducer = (state = {
             let articlesMetaComments= [];
 
             state.articlesMeta.forEach(function(el) {
-                if (el.id == action.articleId) {
+                if (el._id == action.articleId) {
                     articlesMetaComments.push(Object.assign({}, el, {comments: !el.comments}));
                 } else {
                     articlesMetaComments.push(el);
@@ -189,10 +185,9 @@ export const articleReducer = (state = {
             }
         case ArticleAction.TOGGLE_EDIT_ARTICLE:
             let articlesMetaEdit = [];
-            console.log('toggle edit article action received');
 
             state.articlesMeta.forEach(function(el) {
-                if (el.id == action.articleId) {
+                if (el._id == action.articleId) {
                     articlesMetaEdit.push(Object.assign({}, el, {edit: !el.edit}));
                 } else {
                     articlesMetaEdit.push(el);
@@ -203,6 +198,44 @@ export const articleReducer = (state = {
                 ...state, 
                 articlesMeta: articlesMetaEdit,
             }
+        case ArticleAction.UPDATE_ARTICLE:
+            console.log('article id in reducers');
+            console.log(action.article._id);
+
+            let articlesMetaUpdated = [];
+            state.articlesMeta.forEach(function (el) {
+                if (el._id == action.article._id) {
+                    articlesMetaUpdated.push(Object.assign({}, el, {edit: false}));
+                } else {
+                    articlesMetaUpdated.push(el);
+                }
+            })
+
+            let articlesUpdated = [];
+            state.articles.forEach(function (el) {
+                if (el._id == action.article._id) {
+                    articlesUpdated.push(action.article);
+                } else {
+                    articlesUpdated.push(el);
+                }
+            })
+
+
+            const filteredUpdated = articlesUpdated.filter(
+                (el) => { 
+                    return (el.text.includes(state.filter) || 
+                            el.author.includes(state.filter));
+                }
+            );
+
+            return {
+                ... state,
+                articles: articlesUpdated,
+                filteredArticles: filteredUpdated,
+                articlesMeta: articlesMetaUpdated,
+            }
+
+
         default:
             return state
     }
