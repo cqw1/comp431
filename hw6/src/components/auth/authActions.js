@@ -1,4 +1,9 @@
-import { resource, getPrettyDate, navigateMain } from '../../actions.js'
+import { 
+    resource, 
+    nonJSONResource,
+    getPrettyDate, 
+    navigateMain, 
+} from '../../actions.js'
 import { getHeadline, getAvatar, getFollowing } from '../main/mainActions.js'
 import { getArticles } from '../article/articleActions.js'
 
@@ -232,43 +237,63 @@ export const updateProfile = (profile) => {
 
     const validation = validate(profile, false);
 
-    if (validation.valid) {
-        if (profile.email) {
-            resource('PUT', 'email/', {email: profile.email})
-            .catch((err) => {
-                console.log(err);
-                dispatch(showAlert(err.toString()), AlertType.ERROR);
-            })
-        }
-
-        if (profile.zipcode) {
-            resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
-            .catch((err) => {
-                console.log(err);
-                dispatch(showAlert(err.toString()), AlertType.ERROR);
-            })
-        }
-
-        if (profile.password) {
-            resource('PUT', 'password/', {password: profile.password})
-            .catch((err) => {
-                console.log(err);
-                dispatch(showAlert(err.toString()), AlertType.ERROR);
-            })
-        }
-    }
-
     return (dispatch) => {
-        dispatch({
-            type: AuthAction.UPDATE_PROFILE,
-            profile: profile,
-            errors: validation.errors,
-            valid: validation.valid
-        })
-
         if (validation.valid) {
-            dispatch(showAlert('Updated profile.', AlertType.SUCCESS));
+            resource('PUT', 'email/', {email: profile.email})
+            .then(r => {
+                profile.email = r.email;
+                return resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
+            }).then(r => {
+                profile.zipcode = r.zipcode;
+                return resource('PUT', 'password/', {password: profile.password})
+            }).then(r => {
+
+                dispatch({
+                    type: AuthAction.UPDATE_PROFILE,
+                    profile,
+                    errors: validation.errors,
+                    valid: validation.valid
+                })
+
+                if (validation.valid) {
+                    dispatch(showAlert('Updated profile.', AlertType.SUCCESS));
+                }
+
+            }).catch(err => {
+                console.log(err);
+                dispatch(showAlert(err.toString()), AlertType.ERROR);
+            })
+        } else {
+            dispatch({
+                type: AuthAction.UPDATE_PROFILE,
+                profile,
+                errors: validation.errors,
+                valid: validation.valid
+            })
         }
+
+    }
+}
+
+export function updateAvatar(avatar) {
+    return (dispatch) => {
+        const fd = new FormData();
+        fd.append('image', avatar);
+
+        nonJSONResource('PUT', 'avatar/', fd)
+        .then(r => {
+            dispatch({
+                type: AuthAction.UPDATE_PROFILE,
+                profile: {avatar: r.avatar},
+                valid: true,
+            })
+
+            dispatch(showAlert('Updated profile.', AlertType.SUCCESS));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
+        })
     }
 }
 

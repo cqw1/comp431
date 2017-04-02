@@ -13,12 +13,13 @@ export const ArticleAction = {
     TOGGLE_COMMENTS: 'TOGGLE_COMMENTS',
     TOGGLE_EDIT_ARTICLE: 'TOGGLE_EDIT_ARTICLE',
     UPDATE_ARTICLE: 'UPDATE_ARTICLE',
+    TOGGLE_COMMENTING: 'TOGGLE_COMMENTING',
+    POST_COMMENT: 'POST_COMMENT',
+    TOGGLE_EDIT_COMMENT: 'TOGGLE_EDIT_COMMENT',
+    UPDATE_COMMENT: 'UPDATE_COMMENT',
 }
 
 export function updateArticle(id, text) {
-    console.log('updateArticle');
-    console.log(text);
-
     return (dispatch) => {
         resource('PUT', 'articles/' + id, {text})
         .then(r => {
@@ -47,6 +48,13 @@ export const toggleComments = (id) => (dispatch) => {
     })
 }
 
+export const toggleCommenting = (id) => (dispatch) => {
+    dispatch({
+        type: ArticleAction.TOGGLE_COMMENTING,
+        articleId: id,
+    })
+}
+
 export function checkEditArticle(id, articlesMeta) {
     const filtered = articlesMeta.filter(function(obj) {
         return obj._id == id;
@@ -71,6 +79,18 @@ export function checkShowComments(id, articlesMeta) {
     return false;
 }
 
+export function checkCommenting(id, articlesMeta) {
+    const filtered = articlesMeta.filter(function(obj) {
+        return obj._id == id;
+    });
+    
+    if (filtered.length > 0) {
+        return filtered[0].commenting;
+    }
+
+    return false;
+}
+
 export function getArticles() {
     let articles = [];
 
@@ -89,7 +109,6 @@ export function getArticles() {
         })
     }
 }
-
 
 export const postArticle = (text, image) => {
     if (text.length > 0 || image) {
@@ -120,6 +139,58 @@ export const filterArticles = (filter) => {
     return {
         type: ArticleAction.FILTER_ARTICLES,
         filter: filter 
+    }
+}
+
+export const postComment = (id, text) => {
+    if (text.length > 0) {
+        return (dispatch) => {
+
+            resource('PUT', 'articles/' + id, {"commentId": -1, text})
+            .then(r => {
+                dispatch({
+                    type: ArticleAction.POST_COMMENT,
+                    article: r.articles[0],
+                })
+
+                dispatch(showAlert('Posted comment.', AlertType.SUCCESS));
+            })
+        }
+    }
+}
+
+export const editComment = (id) => (dispatch) => {
+    dispatch({
+        type: ArticleAction.TOGGLE_EDIT_COMMENT,
+        commentId: id,
+    })
+}
+
+export function checkEditComment(id, commentsMeta) {
+    const filtered = commentsMeta.filter(function(obj) {
+        return obj.commentId == id;
+    });
+    
+    if (filtered.length > 0) {
+        return filtered[0].edit;
+    }
+
+    return false;
+}
+
+export function updateComment(articleId, commentId, text) {
+    return (dispatch) => {
+        resource('PUT', 'articles/' + articleId, {text, commentId})
+        .then(r => {
+            dispatch({
+                type: ArticleAction.UPDATE_COMMENT,
+                article: r.articles[0],
+                commentId,
+            });
+        }).catch((err) => {
+            console.log(err);
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
+        })
     }
 }
 

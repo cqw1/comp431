@@ -6,11 +6,14 @@ import {
     toggleComments, 
     checkShowComments, 
     checkEditArticle, 
+    checkCommenting, 
     editArticle,
     updateArticle,
+    toggleCommenting,
 } from './articleActions.js'
 
-import ArticleComment from './articleComment'
+import CommentsList from './commentsList'
+import CommentCreation from './commentCreation'
 
 /*
  * Displays an article's title, author, date, and image if it exists.
@@ -21,9 +24,11 @@ export const ArticleCard = ({
     article,
     toggleComments,
     editArticle,
+    updateArticle,
+    toggleCommenting,
     checkShowComments,
     checkEditArticle,
-    updateArticle,
+    checkCommenting,
 }) =>  {
 
     let editTextArea;
@@ -38,6 +43,10 @@ export const ArticleCard = ({
 
     const _updateArticle = () => {
         updateArticle(article._id, editTextArea.value);
+    }
+
+    const _toggleCommenting = () => {
+        toggleCommenting(article._id);
     }
     
     return (
@@ -70,7 +79,6 @@ export const ArticleCard = ({
                         <button 
                             className='btn btn-primary'
                             onClick={_updateArticle}>
-
                             Update 
                         </button>
                     }
@@ -89,18 +97,20 @@ export const ArticleCard = ({
                             {' '} comments ({article.comments.length})
                         </button>
                     }
-                    <button className='btn btn-success'>Comment</button>
+                    <button 
+                        className='btn btn-success'
+                        onClick={_toggleCommenting}>
+                        {checkCommenting(article._id) ? `Cancel Comment` : `Comment`}
+                    </button>
                 </div>
+
+                {checkCommenting(article._id) && 
+                    <CommentCreation article={article} />
+                }
             </div>
 
             {article.comments.length > 0 && checkShowComments(article._id) &&
-                <ul className="list-group">
-                    {article.comments.map(c => 
-                        <li key={c.commentId} className='list-group-item'>
-                            <ArticleComment key={c.commentId} comment={c} />
-                        </li>
-                    )}
-                </ul>
+                <CommentsList article={article} />
             }
         </div>
     )
@@ -112,14 +122,15 @@ export default connect(
             (id) => checkShowComments(id, state.articleReducer.articlesMeta),
         checkEditArticle: 
             (id) => checkEditArticle(id, state.articleReducer.articlesMeta),
+        checkCommenting: 
+            (id) => checkCommenting(id, state.articleReducer.articlesMeta),
         profile: state.authReducer.profile,
     }),
     (dispatch) => ({ 
         toggleComments: (id) => dispatch(toggleComments(id)),
-        editArticle: (id) => {
-            dispatch(editArticle(id));
-        },
+        editArticle: (id) => {dispatch(editArticle(id));},
         updateArticle: (id, text) => dispatch(updateArticle(id, text)),
+        toggleCommenting: (id) => dispatch(toggleCommenting(id)),
     })
 )(ArticleCard)
 

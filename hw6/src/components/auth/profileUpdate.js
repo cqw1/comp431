@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { updateProfile } from './authActions'
+import { updateProfile, updateAvatar } from './authActions'
 
 /*
  * Form for a user to update their profile fields.
@@ -12,37 +12,52 @@ import { updateProfile } from './authActions'
 export const ProfileUpdate = ({ 
     profile,
     errors,
-    submit,
+    submitProfile,
+    submitAvatar,
 }) =>  {
 
-    let usernameInput;
     let emailInput;
-    let dobInput;
     let zipcodeInput;
     let passwordInput;
     let passwordConfirmationInput;
+    let avatarInput;
+    let avatar;
 
     const _submit = () => {
-        const profile = {};
+        const updatedProfile = {};
 
-        if (usernameInput.value) {
-            profile['username'] = usernameInput.value;
-        }
         if (emailInput.value) {
-            profile['email'] = emailInput.value;
-        }
-        if (zipcodeInput.value) {
-            profile['zipcode'] = zipcodeInput.value;
-        }
-        if (passwordInput.value) {
-            profile['password'] = passwordInput.value;
-        }
-        if (passwordConfirmationInput.value) {
-            profile['passwordConfirmation'] = passwordConfirmationInput.value;
+            updatedProfile['email'] = emailInput.value;
+        } else {
+            updatedProfile['email'] = profile.email
         }
 
-        submit(profile);
+        if (zipcodeInput.value) {
+            updatedProfile['zipcode'] = zipcodeInput.value;
+        } else {
+            updatedProfile['zipcode'] = profile.zipcode;
+        }
+
+        if (passwordInput.value || passwordConfirmationInput.value) {
+            updatedProfile['password'] = passwordInput.value;
+            updatedProfile['passwordConfirmation'] = passwordConfirmationInput.value;
+        } else {
+            updatedProfile['password'] = profile.password;
+            updatedProfile['passwordConfirmation'] = profile.password;
+        }
+
+        submitProfile(updatedProfile);
+
+        if (avatar) {
+            submitAvatar(avatar);
+        }
     }
+
+    const _handleAvatarChange = (e) => {
+        if (e.target.files.length > 0) {
+            avatar = e.target.files[0];
+        }
+    } 
 
     return (
         <div> 
@@ -51,7 +66,12 @@ export const ProfileUpdate = ({
                     <tr>
                         <td className='input-label'>Profile Picture</td>
                         <td>
-                            <input className='display-table-cell' type='file'/>
+                            <input 
+                                className='display-table-cell' 
+                                type='file' 
+                                accept="image/*" 
+                                ref= {node => {avatarInput = node}}
+                                onChange={(e) => {_handleAvatarChange(e);}} />
                         </td>
                         <td>
                             <img src={profile.avatar} />
@@ -62,8 +82,8 @@ export const ProfileUpdate = ({
                         <td>
                             <input 
                                 className='form-control' 
-                                ref = {node => { usernameInput = node }} 
-                                placeholder='Username' /> 
+                                placeholder={profile.username}
+                                disabled = {true} /> 
                             <div className='error-msg'>
                                 {errors.usernameError}
                             </div>
@@ -126,7 +146,6 @@ export const ProfileUpdate = ({
                             <input 
                                 className='form-control' 
                                 type='date' 
-                                ref = {node => { dobInput = node }} 
                                 placeholder={profile.dob} 
                                 disabled={true} />
                             <div className='error-msg'>
@@ -172,7 +191,8 @@ export default connect(
         errors: state.authReducer.errors
     }),
     (dispatch, ownProps) => ({ 
-        submit: (profile) => dispatch(updateProfile(profile))
+        submitProfile: (profile) => dispatch(updateProfile(profile)),
+        submitAvatar: (avatar) => dispatch(updateAvatar(avatar))
     })
 )(ProfileUpdate)
 
