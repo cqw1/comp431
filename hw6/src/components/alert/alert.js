@@ -19,7 +19,7 @@ export const Alert= ({
                 <div className={'alert alert-position ' + 
                     (alert.alertType == AlertType.SUCCESS ? 
                      'alert-success' : 'alert-danger')}> 
-                    <span>{alert.message}</span>
+                    <span id='alert-message'>{alert.message}</span>
                     <span 
                         className='close glyphicon glyphicon-remove' 
                         onClick={_close}>

@@ -59,14 +59,16 @@ export const ArticleCard = ({
 
             <div className='media-body'>
                 <h4 className='media-heading'>
-                    {article.author + ' '} 
+                    <span className='article-author'>
+                        {article.author + ' '}
+                    </span>
                     on {getPrettyDate(article.date) + ' '}
                     at {getPrettyTime(article.date)}
                 </h4>
                 {checkEditArticle(article._id) 
                     ?  (
                         <textarea 
-                            className='form-control' 
+                            className='form-control edit-article-textarea' 
                             placeholder='' 
                             ref= {node => {editTextArea = node}}
                             defaultValue={article.text} />
@@ -77,14 +79,14 @@ export const ArticleCard = ({
                 <div className='button-container text-align-right'>
                     {checkEditArticle(article._id) &&
                         <button 
-                            className='btn btn-primary'
+                            className='btn btn-primary update-edit-article-btn'
                             onClick={_updateArticle}>
                             Update 
                         </button>
                     }
                     {article.author == profile.username &&
                         <button 
-                            className='btn btn-warning'
+                            className='btn btn-warning edit-article-btn'
                             onClick={_editArticle}>
                             {checkEditArticle(article._id) ? `Cancel Edit` : `Edit`}
                         </button>

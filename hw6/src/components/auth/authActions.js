@@ -124,6 +124,7 @@ export const logoutUser = () => (dispatch) => {
     resource('PUT', 'logout/')
     .then(r => {
         dispatch({ type: AuthAction.LOGOUT });
+        dispatch(showAlert('Logged out.', AlertType.SUCCESS));
     })
     .catch(err => {
         console.log(err);

@@ -26,6 +26,7 @@ export const ArticleCreation = ({
         <div className='well article-creation'> 
             <textarea 
                 className='form-control' 
+                id='new-article-textarea'
                 placeholder='New article content' 
                 ref= {node => {textarea = node}} />
 
@@ -47,10 +48,13 @@ export const ArticleCreation = ({
                     Cancel 
                 </button>
 
-                <button className='btn btn-primary' onClick={() => {
-                    postArticle(textarea.value, image);
-                    textarea.value = '';
-                    imageInput.value = null;
+                <button 
+                    className='btn btn-primary' 
+                    id='post-article-btn'
+                    onClick={() => {
+                        postArticle(textarea.value, image);
+                        textarea.value = '';
+                        imageInput.value = null;
                 }}>
                     Post
                 </button>

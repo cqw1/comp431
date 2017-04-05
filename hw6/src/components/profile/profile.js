@@ -9,7 +9,7 @@ import ProfileUpdate from '../auth/profileUpdate'
 export const Profile = ({
     profile
 }) => (
-    <div> 
+    <div id='profile-page'> 
         <ProfileUpdate />
     </div>
 );

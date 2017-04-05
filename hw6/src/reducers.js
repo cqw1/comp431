@@ -185,7 +185,7 @@ export const articleReducer = (state = {
                 articles: sorted_post,
                 filteredArticles: filtered,
                 articlesMeta: [
-                    {id: action.article._id, comments: false, edit: false, commenting: false}, 
+                    {_id: action.article._id, comments: false, edit: false, commenting: false}, 
                     ...state.articlesMeta
                 ]
             }

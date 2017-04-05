@@ -26,6 +26,7 @@ export const Login = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='username-input'
                                 ref = {node => { username = node }} 
                                 placeholder='Username' /> 
                             <div className='error-msg'>
@@ -43,6 +44,7 @@ export const Login = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='password-input'
                                 ref = {node => { password = node }} 
                                 type='password'
                                 placeholder='Password' /> 
@@ -61,7 +63,10 @@ export const Login = ({
             </div>
 
             <div className='text-align-center'>
-                <button className='btn btn-primary' onClick={_onLoginClick}>
+                <button 
+                    className='btn btn-primary' 
+                    id='login-btn' 
+                    onClick={_onLoginClick}>
                     Login
                 </button>
             </div>

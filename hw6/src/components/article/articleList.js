@@ -9,7 +9,7 @@ export const ArticleList = ({
     filteredArticles
 }) =>  {
     return (
-        <div> 
+        <div id='article-list'> 
             {filteredArticles.map(a => 
                 <ArticleCard key={a._id} article={a} />
             )}

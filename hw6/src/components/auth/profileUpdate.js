@@ -99,6 +99,7 @@ export const ProfileUpdate = ({
                             <input 
                                 type='password' 
                                 className='form-control' 
+                                id='profile-password-input'
                                 ref = {node => { passwordInput = node }} 
                                 placeholder='Password' />
                         </td>
@@ -110,6 +111,7 @@ export const ProfileUpdate = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='profile-password-confirmation-input'
                                 type='password' 
                                 ref = {node => { 
                                     passwordConfirmationInput = node 
@@ -128,13 +130,14 @@ export const ProfileUpdate = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='profile-email-input'
                                 ref = {node => { emailInput = node }} 
                                 placeholder='Email' />
                             <div className='error-msg'>
                                 {errors.emailError}
                             </div>
                         </td> 
-                        <td>
+                        <td id='profile-email-value'>
                             {profile.email}
                         </td>
                     </tr>
@@ -163,13 +166,14 @@ export const ProfileUpdate = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='profile-zipcode-input'
                                 ref = {node => { zipcodeInput = node }} 
                                 placeholder='Zipcode' />
                             <div className='error-msg'>
                                 {errors.zipcodeError}
                             </div>
                         </td> 
-                        <td>
+                        <td id='profile-zipcode-value'>
                             {profile.zipcode}
                         </td>
                     </tr>
@@ -177,7 +181,10 @@ export const ProfileUpdate = ({
             </table>
 
             <div className='text-align-center'>
-                <button className='btn btn-primary' onClick={_submit}>
+                <button 
+                    id='update-profile-btn' 
+                    className='btn btn-primary' 
+                    onClick={_submit}>
                     Update
                 </button>
             </div>

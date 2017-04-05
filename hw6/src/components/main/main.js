@@ -5,7 +5,6 @@ import { updateHeadline } from './mainActions'
 
 import AccountInfo from './accountInfo'
 import FollowingList from './followingList'
-import InputAction from './inputAction'
 import ArticleCreation from '../article/articleCreation'
 import ArticleList from '../article/articleList'
 import ArticleFilter from '../article/articleFilter'
@@ -16,44 +15,65 @@ import ArticleFilter from '../article/articleFilter'
  */
 export const Main = ({
     profile,
-}) => (
-    <div>
-        <div className='row'>
-            <div className='col-md-3'>
-                <div className='panel panel-default'>
-                    <div className='panel-heading'>
-                        <h3 className='panel-title'>Account</h3>
-                    </div>
-                    <div className='panel-body'>
-                        <AccountInfo 
-                            username={profile.username} 
-                            headline={profile.headline} 
-                            avatar={profile.avatar} />
+    updateHeadline,
+}) => {
+    let input;
 
-                        <div className='update-headline'>
-                            <InputAction 
-                                buttonText='Update Headline' 
-                                onClickAction={updateHeadline} 
-                                placeholder='Headline' />
+    const _updateHeadline = () => {
+        updateHeadline(input.value);
+        input.value = ''
+    }
+
+    return (
+        <div id='main-page'>
+            <div className='row'>
+                <div className='col-md-3'>
+                    <div className='panel panel-default'>
+                        <div className='panel-heading'>
+                            <h3 className='panel-title'>Account</h3>
+                        </div>
+                        <div className='panel-body' id='user-account'>
+                            <AccountInfo 
+                                username={profile.username} 
+                                headline={profile.headline} 
+                                avatar={profile.avatar} />
+
+                            <div className='update-headline display-table'>
+                                <input 
+                                    className='form-control display-table-cell' 
+                                    id='headline-input'
+                                    ref = {node => { input = node }} 
+                                    placeholder='Headline' />
+                                <span className='display-table-cell padding-left-5px'>
+                                    <button 
+                                        id='headline-btn'
+                                        className='btn btn-default' 
+                                        onClick={_updateHeadline}>
+                                        Update Headline
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
+
+                    <FollowingList />
                 </div>
 
-                <FollowingList />
-            </div>
-
-            <div className='col-md-9'>
-                <ArticleCreation />
-                <hr />
-                <ArticleFilter />
-                <ArticleList />
+                <div className='col-md-9'>
+                    <ArticleCreation />
+                    <hr />
+                    <ArticleFilter />
+                    <ArticleList />
+                </div>
             </div>
         </div>
-    </div>
-);
+    )
+}
 
 export default connect(
     (state) => ({ profile: state.mainReducer.profile }),
-    (dispatch) => ({ })
+    (dispatch) => ({
+        updateHeadline: (headline) => dispatch(updateHeadline(headline)),
+    })
 )(Main)
 

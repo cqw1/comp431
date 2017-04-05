@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { navigateProfile, navigateMain, navigateLanding } from '../actions'
+import { navigateProfile, navigateMain, navigateLanding, sendGetHeadlines } from '../actions'
 import { logoutUser } from './auth/authActions'
 
 import Main from './main/main'
@@ -23,7 +23,10 @@ export const Application = ({
     navigateProfile,
     navigateMain,
     navigateLanding,
+    sendGetHeadlines, 
 }) => {
+
+    //sendGetHeadlines(); // For inclass-14
 
     const _onLogoutClick = () => {
         logoutUser();
@@ -45,10 +48,12 @@ export const Application = ({
                     <div className='container-fluid'>
                         {page == Pages.MAIN &&
                             <div className='nav navbar-nav'>
-                                <a className='navbar-text active-page'> 
+                                <a className='navbar-text active-page main-btn'> 
                                     Main
                                 </a>
-                                <a className='navbar-text' 
+                                <a 
+                                    className='navbar-text' 
+                                    id='profile-btn'
                                     onClick={_onProfileClick}> 
                                     Update Profile 
                                 </a>
@@ -57,11 +62,13 @@ export const Application = ({
                         {page == Pages.PROFILE &&
                             <div className='nav navbar-nav'>
                                 <a 
-                                    className='navbar-text' 
+                                    className='navbar-text main-btn' 
                                     onClick={_onMainClick}>
                                     Main 
                                 </a>
-                                <a className='navbar-text active-page'> 
+                                <a 
+                                    className='navbar-text active-page' 
+                                    id='profile-btn'> 
                                     Update Profile 
                                 </a>
                             </div>
@@ -69,6 +76,7 @@ export const Application = ({
                         <div className='nav navbar-nav navbar-right'>
                             <a 
                                 className='navbar-text' 
+                                id='logout-btn'
                                 onClick={_onLogoutClick}> 
                                 Logout
                             </a>
@@ -97,7 +105,10 @@ export const Application = ({
 }
 
 export default connect(
-    (state) => ({ page: state.navigationReducer.page}),
+    (state) => ({ 
+        page: state.navigationReducer.page,
+        sendGetHeadlines,
+    }),
     (dispatch) => ({ 
         logoutUser: () => dispatch(logoutUser()),
         navigateProfile: () => dispatch(navigateProfile()),

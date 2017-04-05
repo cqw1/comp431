@@ -49,6 +49,7 @@ export const Registration = ({
                         <td>
                             <input 
                                 className='form-control' 
+                                id='register-username'
                                 ref={node => { usernameInput = node }} 
                                 placeholder='Username' /> 
                             <div className='error-msg'>
@@ -62,6 +63,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='register-password'
                                 ref={node => { passwordInput = node }} 
                                 type='password'
                                 placeholder='Password' /> 
@@ -72,6 +74,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='register-password-confirmation'
                                 type='password' 
                                 ref={node => { 
                                     passwordConfirmationInput = node 
@@ -89,6 +92,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='register-email'
                                 ref={node => { emailInput = node }} 
                                 placeholder='Email' />
                             <div className='error-msg'>
@@ -103,6 +107,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='register-dob'
                                 type='date' 
                                 ref={node => { dobInput = node }} />
                             <div className='error-msg'>
@@ -117,6 +122,7 @@ export const Registration = ({
                         <td> 
                             <input 
                                 className='form-control' 
+                                id='register-zipcode'
                                 ref={node => { zipcodeInput = node }} 
                                 placeholder='Zipcode' />
                             <div className='error-msg'>
@@ -134,7 +140,10 @@ export const Registration = ({
             </div>
 
             <div className='text-align-center'>
-                <button className='btn btn-primary' onClick={_submit}>
+                <button 
+                    className='btn btn-primary' 
+                    id='register-btn' 
+                    onClick={_submit}>
                     Register
                 </button>
             </div>

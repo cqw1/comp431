@@ -15,7 +15,7 @@ export const FollowingUser = ({
     unfollow
 }) =>  {
     return (
-        <div> 
+        <div className='following-user'> 
             <span
                 className='float-right glyphicon glyphicon-remove' 
                 onClick={() => { unfollow(profile.username) }}> 

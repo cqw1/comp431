@@ -10,12 +10,14 @@ import Registration from '../auth/registration'
  * form for new users.
  */
 export const Landing = ({ }) => (
-    <div className='row'> 
-        <div className='col-md-6'>
-            <Login />
-        </div>
-        <div className='col-md-6'>
-            <Registration />
+    <div id='landing-page'>
+        <div className='row'> 
+            <div className='col-md-6'>
+                <Login />
+            </div>
+            <div className='col-md-6'>
+                <Registration />
+            </div>
         </div>
     </div>
 );

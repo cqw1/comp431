@@ -18,9 +18,9 @@ export const AccountInfo = ({
             </div>
             <div className='media-body'>
                 <h3> 
-                    {username} 
+                    <span className='account-username'>{username}</span>
                     <br />
-                    <small>{headline}</small>
+                    <small className='account-headline'>{headline}</small>
                 </h3>
             </div>
         </div>
