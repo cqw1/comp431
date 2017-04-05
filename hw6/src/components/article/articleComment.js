@@ -57,7 +57,11 @@ export const ArticleComment = ({
                     <button 
                         className='btn btn-warning'
                         onClick={_editComment}>
-                        {checkEditComment(comment.commentId) ? `Cancel Edit` : `Edit`}
+                        { 
+                            checkEditComment(comment.commentId) 
+                            ? `Cancel Edit` 
+                            : `Edit`
+                        }
                     </button>
                 }
             </div>

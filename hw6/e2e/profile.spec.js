@@ -14,7 +14,8 @@ describe('Testing profile end-to-end', () => {
         let now = '' + Date.now();
 
         sleep(500)
-        .then(findId('user-account').findElements(By.className('account-headline'))
+        .then(findId('user-account').findElements(
+                    By.className('account-headline'))
             .then(oldHeadlines => {
                 oldHeadlines[0].getText()
                 .then(oldHeadline => {
@@ -23,7 +24,8 @@ describe('Testing profile end-to-end', () => {
                     .then(findId('headline-input').sendKeys(now))
                     .then(findId('headline-btn').click())
                     .then(sleep(500))
-                    .then(findId('user-account').findElements(By.className('account-headline'))
+                    .then(findId('user-account').findElements(
+                                By.className('account-headline'))
                         .then(newHeadlines => {
                             newHeadlines[0].getText()
                             .then(newHeadline => {

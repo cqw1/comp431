@@ -44,7 +44,8 @@ it('should render articles', (done) => {
 
     const filteredArticles = [article1, article2];
 
-    const articleList = shallow(<ArticleList filteredArticles={filteredArticles} />)
+    const articleList = 
+        shallow(<ArticleList filteredArticles={filteredArticles} />)
     const articleCard = shallow(
         <ArticleCard 
             article={article1} 

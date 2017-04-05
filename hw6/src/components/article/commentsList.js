@@ -10,7 +10,10 @@ export const CommentsList = ({
         <ul className="list-group">
             {article.comments.map(c => 
                 <li key={c.commentId} className='list-group-item'>
-                    <ArticleComment key={c.commentId} comment={c} article={article}/>
+                    <ArticleComment 
+                        key={c.commentId} 
+                        comment={c} 
+                        article={article}/>
                 </li>
             )}
         </ul>

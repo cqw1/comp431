@@ -88,7 +88,10 @@ export const ArticleCard = ({
                         <button 
                             className='btn btn-warning edit-article-btn'
                             onClick={_editArticle}>
-                            {checkEditArticle(article._id) ? `Cancel Edit` : `Edit`}
+                            {
+                                checkEditArticle(article._id) 
+                                    ? `Cancel Edit` : `Edit`
+                            }
                         </button>
                     }
                     {article.comments.length > 0 && 
@@ -102,7 +105,10 @@ export const ArticleCard = ({
                     <button 
                         className='btn btn-success'
                         onClick={_toggleCommenting}>
-                        {checkCommenting(article._id) ? `Cancel Comment` : `Comment`}
+                        {
+                            checkCommenting(article._id) 
+                            ? `Cancel Comment` : `Comment`
+                        }
                     </button>
                 </div>
 

@@ -185,7 +185,12 @@ export const articleReducer = (state = {
                 articles: sorted_post,
                 filteredArticles: filtered,
                 articlesMeta: [
-                    {_id: action.article._id, comments: false, edit: false, commenting: false}, 
+                    {
+                        _id: action.article._id, 
+                        comments: false, 
+                        edit: false, 
+                        commenting: false
+                    }, 
                     ...state.articlesMeta
                 ]
             }
@@ -204,7 +209,8 @@ export const articleReducer = (state = {
             let articlesMetaComments= [];
             state.articlesMeta.forEach(function(el) {
                 if (el._id == action.articleId) {
-                    articlesMetaComments.push(Object.assign({}, el, {comments: !el.comments}));
+                    articlesMetaComments.push(
+                            Object.assign({}, el, {comments: !el.comments}));
                 } else {
                     articlesMetaComments.push(el);
                 }
@@ -219,7 +225,8 @@ export const articleReducer = (state = {
 
             state.articlesMeta.forEach(function(el) {
                 if (el._id == action.articleId) {
-                    articlesMetaEdit.push(Object.assign({}, el, {edit: !el.edit}));
+                    articlesMetaEdit.push(
+                            Object.assign({}, el, {edit: !el.edit}));
                 } else {
                     articlesMetaEdit.push(el);
                 }
@@ -234,7 +241,8 @@ export const articleReducer = (state = {
             let articlesMetaUpdated = [];
             state.articlesMeta.forEach(function (el) {
                 if (el._id == action.article._id) {
-                    articlesMetaUpdated.push(Object.assign({}, el, {edit: false}));
+                    articlesMetaUpdated.push(
+                            Object.assign({}, el, {edit: false}));
                 } else {
                     articlesMetaUpdated.push(el);
                 }
@@ -261,7 +269,10 @@ export const articleReducer = (state = {
 
             state.articlesMeta.forEach(function(el) {
                 if (el._id == action.articleId) {
-                    articlesMetaCommenting.push(Object.assign({}, el, {commenting: !el.commenting}));
+                    articlesMetaCommenting.push(
+                            Object.assign({}, el, {
+                                commenting: !el.commenting
+                            }));
                 } else {
                     articlesMetaCommenting.push(el);
                 }
@@ -276,19 +287,22 @@ export const articleReducer = (state = {
             let articlesMetaCommented = [];
             state.articlesMeta.forEach(function(el) {
                 if (el._id == action.article._id) {
-                    articlesMetaCommented.push(Object.assign({}, el, {commenting: false}))
+                    articlesMetaCommented.push(
+                            Object.assign({}, el, {commenting: false}))
                 } else {
                     articlesMetaCommented.push(el);
                 }
             })
 
-            const articlesNewComment= findAndReplaceArticle(action.article, state.articles);
+            const articlesNewComment = 
+                findAndReplaceArticle(action.article, state.articles);
             
 
             return { 
                 ...state, 
                 articles: articlesNewComment,
-                filteredArticles: findAndReplaceArticle(action.article, state.filteredArticles),
+                filteredArticles: findAndReplaceArticle(
+                        action.article, state.filteredArticles),
                 articlesMeta: articlesMetaCommented,
                 commentsMeta: createCommentsMeta(articlesNewComment),
             }
@@ -297,7 +311,8 @@ export const articleReducer = (state = {
 
             state.commentsMeta.forEach(function(el) {
                 if (el.commentId == action.commentId) {
-                    commentsMetaEdit.push(Object.assign({}, el, {edit: !el.edit}));
+                    commentsMetaEdit.push(
+                            Object.assign({}, el, {edit: !el.edit}));
                 } else {
                     commentsMetaEdit.push(el);
                 }
@@ -312,7 +327,8 @@ export const articleReducer = (state = {
             let commentsMetaUpdated = [];
             state.commentsMeta.forEach(function (el) {
                 if (el.commentId == action.commentId) {
-                    commentsMetaUpdated.push(Object.assign({}, el, {edit: false}));
+                    commentsMetaUpdated.push(
+                            Object.assign({}, el, {edit: false}));
                 } else {
                     commentsMetaUpdated.push(el);
                 }

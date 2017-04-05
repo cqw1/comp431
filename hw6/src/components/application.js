@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { navigateProfile, navigateMain, navigateLanding, sendGetHeadlines } from '../actions'
+import { navigateProfile, navigateMain, navigateLanding } from '../actions'
 import { logoutUser } from './auth/authActions'
 
 import Main from './main/main'
@@ -23,10 +23,7 @@ export const Application = ({
     navigateProfile,
     navigateMain,
     navigateLanding,
-    sendGetHeadlines, 
 }) => {
-
-    //sendGetHeadlines(); // For inclass-14
 
     const _onLogoutClick = () => {
         logoutUser();
@@ -107,7 +104,6 @@ export const Application = ({
 export default connect(
     (state) => ({ 
         page: state.navigationReducer.page,
-        sendGetHeadlines,
     }),
     (dispatch) => ({ 
         logoutUser: () => dispatch(logoutUser()),

@@ -25,46 +25,45 @@ export const Main = ({
     }
 
     return (
-        <div id='main-page'>
-            <div className='row'>
-                <div className='col-md-3'>
-                    <div className='panel panel-default'>
-                        <div className='panel-heading'>
-                            <h3 className='panel-title'>Account</h3>
-                        </div>
-                        <div className='panel-body' id='user-account'>
-                            <AccountInfo 
-                                username={profile.username} 
-                                headline={profile.headline} 
-                                avatar={profile.avatar} />
+        <div className='row' id='main-page'>
+            <div className='col-md-3'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>
+                        <h3 className='panel-title'>Account</h3>
+                    </div>
+                    <div className='panel-body' id='user-account'>
+                        <AccountInfo 
+                            username={profile.username} 
+                            headline={profile.headline} 
+                            avatar={profile.avatar} />
 
-                            <div className='update-headline display-table'>
-                                <input 
-                                    className='form-control display-table-cell' 
-                                    id='headline-input'
-                                    ref = {node => { input = node }} 
-                                    placeholder='Headline' />
-                                <span className='display-table-cell padding-left-5px'>
-                                    <button 
-                                        id='headline-btn'
-                                        className='btn btn-default' 
-                                        onClick={_updateHeadline}>
-                                        Update Headline
-                                    </button>
-                                </span>
-                            </div>
+                        <div className='update-headline display-table'>
+                            <input 
+                                className='form-control display-table-cell' 
+                                id='headline-input'
+                                ref = {node => { input = node }} 
+                                placeholder='Headline' />
+                            <span 
+                                className='display-table-cell padding-left-5px'>
+                                <button 
+                                    id='headline-btn'
+                                    className='btn btn-default' 
+                                    onClick={_updateHeadline}>
+                                    Update Headline
+                                </button>
+                            </span>
                         </div>
                     </div>
-
-                    <FollowingList />
                 </div>
 
-                <div className='col-md-9'>
-                    <ArticleCreation />
-                    <hr />
-                    <ArticleFilter />
-                    <ArticleList />
-                </div>
+                <FollowingList />
+            </div>
+
+            <div className='col-md-9'>
+                <ArticleCreation />
+                <hr />
+                <ArticleFilter />
+                <ArticleList />
             </div>
         </div>
     )

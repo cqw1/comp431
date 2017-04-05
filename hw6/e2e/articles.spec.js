@@ -41,16 +41,19 @@ describe('Testing articles end-to-end', () => {
                     editArticleBtns[0].click()
                 })
                 .then(sleep(500))
-                .then(articleCard.findElements(By.className('edit-article-textarea'))
+                .then(articleCard.findElements(
+                            By.className('edit-article-textarea'))
                     .then(editArticleTextAreas => {
                         editArticleTextAreas[0].clear()
                         editArticleTextAreas[0].sendKeys('edited article')
-                        articleCard.findElements(By.className('update-edit-article-btn'))
+                        articleCard.findElements(
+                                By.className('update-edit-article-btn'))
                         .then(updateEditArticleBtns => {
                             updateEditArticleBtns[0].click()
                         })
                         .then(sleep(500))
-                        .then(articleCard.findElements(By.className('article-text'))
+                        .then(articleCard.findElements(
+                                    By.className('article-text'))
                             .then(texts => {
                                 texts[0].getText()
                                 .then(text => {
@@ -68,7 +71,8 @@ describe('Testing articles end-to-end', () => {
     it('search for "Only One Article Like This" and verify one article shows and verify the author', (done) => {
         sleep(500)
         .then(findId('article-filter-input').clear())
-        .then(findId('article-filter-input').sendKeys('Only One Article Like This'))
+        .then(findId('article-filter-input')
+                .sendKeys('Only One Article Like This'))
         .then(sleep(500))
         .then(findClass('article-card')
             .then(articleCards => {

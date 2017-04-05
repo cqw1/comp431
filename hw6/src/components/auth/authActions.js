@@ -246,7 +246,8 @@ export const updateProfile = (profile) => {
                 return resource('PUT', 'zipcode/', {zipcode: profile.zipcode})
             }).then(r => {
                 profile.zipcode = r.zipcode;
-                return resource('PUT', 'password/', {password: profile.password})
+                return resource(
+                        'PUT', 'password/', {password: profile.password})
             }).then(r => {
 
                 dispatch({

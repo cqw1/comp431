@@ -37,7 +37,8 @@ it('should dispatch actions to create a new article', (done) => {
     })
 
     const postArticleSpy = sinon.spy(articleActions.postArticle);
-    const articleCreation = mount(<ArticleCreation postArticle={postArticleSpy} />);
+    const articleCreation = 
+        mount(<ArticleCreation postArticle={postArticleSpy} />);
     const textarea = articleCreation.find('.form-control');
 
     textarea.node.value = 'hello';
