@@ -1,0 +1,17 @@
+
+> starter@1.0.0 e2e:base /home/cwang/comp431/hw6
+> mocha --opts e2e/mocha.opts e2e/*.spec.js "--reporter" "xunit"
+
+<testsuite name="Mocha Tests" tests="11" failures="0" errors="0" skipped="0" timestamp="Wed, 05 Apr 2017 18:03:27 GMT" time="57.297">
+<testcase classname="Testing articles end-to-end" name="create a new article and validate it appears in the feed" time="1.383"/>
+<testcase classname="Testing articles end-to-end" name="edit an article and validate the article text has changed" time="2.768"/>
+<testcase classname="Testing articles end-to-end" name="search for &quot;Only One Article Like This&quot; and verify one article shows and verify the author" time="1.527"/>
+<testcase classname="Testing authentication end-to-end" name="should log in as test user" time="9.511"/>
+<testcase classname="Testing authentication end-to-end" name="should register a new user" time="1.768"/>
+<testcase classname="Testing following end-to-end" name="follow and unfollow the user &quot;Follower&quot;, and verify the count each time" time="3.099"/>
+<testcase classname="Testing profile end-to-end" name="update the status headline and verify the change" time="2.004"/>
+<testcase classname="Testing profile end-to-end" name="navigate to profile view, update user's email and verify" time="1.572"/>
+<testcase classname="Testing profile end-to-end" name="navigate to profile view, update user's zipcode and verify" time="1.375"/>
+<testcase classname="Testing profile end-to-end" name="navigate to profile view, update user's password and verify" time="1.483"/>
+<testcase classname="shutdown" name="now" time="0.118"/>
+</testsuite>

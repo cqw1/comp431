@@ -1,0 +1,75 @@
+[
+    {
+        "id": 0,
+        "title": "Article Title",
+        "author": "John Smith",
+        "date": "02/02/2017",
+        "text": "one two three four",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/000080_Navy_Blue_Square.svg/600px-000080_Navy_Blue_Square.svg.png"
+    },
+    {
+        "id": 1,
+        "title": "A Title for an Article",
+        "author": "Bob Smith",
+        "date": "02/02/2017",
+        "text": "two three four five",
+        "image": ""
+    },
+    {
+        "id": 2,
+        "title": "Title of an Article",
+        "author": "Bob Smith",
+        "date": "02/02/2017",
+        "text": "two three four five",
+        "text": "three four five six",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/000080_Navy_Blue_Square.svg/600px-000080_Navy_Blue_Square.svg.png"
+    },
+    {
+        "id": 3,
+        "title": "Article's Title",
+        "author": "John Bob",
+        "date": "02/02/2017",
+        "text": "four five six seven",
+        "image": ""
+    },
+    {
+        "id": 4,
+        "title": "Title",
+        "author": "Johnny Bobby",
+        "date": "02/02/2017",
+        "text": "five six seven eight",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/000080_Navy_Blue_Square.svg/600px-000080_Navy_Blue_Square.svg.png"
+    },
+    {
+        "id": 5,
+        "title": "Article: Title",
+        "author": "Jill Jack",
+        "date": "02/02/2017",
+        "text": "six seven eight nine",
+        "image": ""
+    },
+    {
+        "id": 6,
+        "title": "The Name, a Title, of the Article",
+        "author": "Jill Smith",
+        "date": "02/02/2017",
+        "text": "seven eight nine ten",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/000080_Navy_Blue_Square.svg/600px-000080_Navy_Blue_Square.svg.png"
+    },
+    {
+        "id": 7,
+        "title": "Article - Title",
+        "author": "Susan Wright",
+        "date": "02/02/2017",
+        "text": "eight nine ten eleven",
+        "image": ""
+    },
+    {
+        "id": 8,
+        "title": "Article. Title.",
+        "author": "Bob Susan",
+        "date": "02/02/2017",
+        "text": "nine ten eleven twelve",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/000080_Navy_Blue_Square.svg/600px-000080_Navy_Blue_Square.svg.png"
+    }
+]
