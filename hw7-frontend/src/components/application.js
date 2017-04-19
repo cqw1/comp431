@@ -1,8 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { navigateProfile, navigateMain, navigateLanding } from '../actions'
-import { logoutUser } from './auth/authActions'
+import { 
+    navigateProfile, 
+    navigateMain, 
+    navigateLanding, 
+} from '../actions'
+import { logoutUser, checkLoggedIn } from './auth/authActions'
 
 import Main from './main/main'
 import Profile from './profile/profile'
@@ -19,11 +23,19 @@ export const Pages = {
 // Root of application. Logic for single page application is here.
 export const Application = ({ 
     page,
+    isLoggedIn,
     logoutUser,
     navigateProfile,
     navigateMain,
     navigateLanding,
+    checkLoggedIn,
 }) => {
+
+    checkLoggedIn();
+    if (isLoggedIn && page == Pages.LANDING) {
+        page = Pages.MAIN;
+    }
+
 
     const _onLogoutClick = () => {
         logoutUser();
@@ -104,8 +116,10 @@ export const Application = ({
 export default connect(
     (state) => ({ 
         page: state.navigationReducer.page,
+        isLoggedIn: state.authReducer.isLoggedIn,
     }),
     (dispatch) => ({ 
+        checkLoggedIn: () => dispatch(checkLoggedIn()),
         logoutUser: () => dispatch(logoutUser()),
         navigateProfile: () => dispatch(navigateProfile()),
         navigateMain: () => dispatch(navigateMain()),

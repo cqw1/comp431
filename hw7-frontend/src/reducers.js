@@ -39,6 +39,7 @@ export const authReducer = (state = {
     registrationErrors: {},
     errors: {},
     registrationSuccess: '',
+    isLoggedin: false,
 }, action) => {
     switch (action.type) {
         case AuthAction.LOGIN:
@@ -109,6 +110,11 @@ export const authReducer = (state = {
                     avatar: action.profile.avatar,
                 },
                 errors: {}
+            }
+        case AuthAction.CHECK_LOGGED_IN:
+            return { 
+                ...state, 
+                isLoggedIn: action.loggedIn
             }
         default:
             return state
