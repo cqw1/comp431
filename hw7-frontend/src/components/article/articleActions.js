@@ -114,6 +114,7 @@ export const postArticle = (text, image) => {
     if (text.length > 0 || image) {
         return (dispatch) => {
 
+            /*
             const fd = new FormData();
             fd.append('text', text);
             fd.append('image', image);
@@ -122,8 +123,17 @@ export const postArticle = (text, image) => {
 
             nonJSONResource('POST', 'article/', fd)
             .then(r => {
-                console.log('returned article');
-                console.log(r);
+                dispatch({
+                    type: ArticleAction.POST_ARTICLE,
+                    article: r.articles[0],
+                })
+
+                dispatch(showAlert('Posted article.', AlertType.SUCCESS));
+            })
+            */
+
+            resource('POST', 'article/', {text: text})
+            .then(r => {
                 dispatch({
                     type: ArticleAction.POST_ARTICLE,
                     article: r.articles[0],
@@ -182,8 +192,6 @@ export function updateComment(articleId, commentId, text) {
     return (dispatch) => {
         resource('PUT', 'articles/' + articleId, {text, commentId})
         .then(r => {
-            console.log('updateComment response');
-            console.log(r);
             dispatch({
                 type: ArticleAction.UPDATE_COMMENT,
                 article: r.articles[0],

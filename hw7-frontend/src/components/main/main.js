@@ -19,6 +19,8 @@ export const Main = ({
 }) => {
     let input;
 
+    console.log('profile.username:' + profile.username);
+
     const _updateHeadline = () => {
         updateHeadline(input.value);
         input.value = ''

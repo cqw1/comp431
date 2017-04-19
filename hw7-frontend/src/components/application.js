@@ -31,12 +31,6 @@ export const Application = ({
     checkLoggedIn,
 }) => {
 
-    checkLoggedIn();
-    if (isLoggedIn && page == Pages.LANDING) {
-        page = Pages.MAIN;
-    }
-
-
     const _onLogoutClick = () => {
         logoutUser();
         navigateLanding();
@@ -104,6 +98,11 @@ export const Application = ({
         );
 
     } else { 
+        checkLoggedIn();
+        if (isLoggedIn) {
+            navigateMain();
+        }
+
         return(
             <div> 
                 <Landing />

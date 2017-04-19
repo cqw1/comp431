@@ -114,7 +114,11 @@ export const authReducer = (state = {
         case AuthAction.CHECK_LOGGED_IN:
             return { 
                 ...state, 
-                isLoggedIn: action.loggedIn
+                isLoggedIn: action.isLoggedIn,
+                profile: {
+                    ... state.profile,
+                    username: action.username
+                }
             }
         default:
             return state
@@ -382,6 +386,14 @@ export const mainReducer = (state = {
                 errors: {},
                 following: [],
             };
+        case AuthAction.CHECK_LOGGED_IN:
+            return { 
+                ...state, 
+                profile: {
+                    ... state.profile,
+                    username: action.username
+                }
+            }
         case MainAction.GET_HEADLINE:
             return { 
                 ...state, 

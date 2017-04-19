@@ -334,16 +334,14 @@ export function register(profile) {
 
 export const checkLoggedIn = () => (dispatch) => {
     resource('GET', 'checkLoggedIn').then(r => {
-        console.log('checkLoggedIn');
-        console.log(r);
-
         dispatch({
             type: AuthAction.CHECK_LOGGED_IN,
-            loggedIn: r.loggedIn
-        });
+            isLoggedIn: r.isLoggedIn,
+            username: r.username
+        })
     }).catch((err) => {
         console.log(err);
-        //dispatch(showAlert(err.toString()), AlertType.ERROR);
+        dispatch(showAlert(err.toString()), AlertType.ERROR);
     })
 }
 
