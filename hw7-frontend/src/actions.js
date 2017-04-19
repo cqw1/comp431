@@ -3,8 +3,7 @@ import { getArticles } from './components/article/articleActions.js'
 import { getProfile } from './components/auth/authActions'
 
 // Fetch wrapper
-//export const url = 'https://webdev-dummy.herokuapp.com'
-export const url = 'http://localhost:3000'
+export const url = 'https://intense-depths-37739.herokuapp.com'
 
 const resource = (method, endpoint, payload) => {
     const options =  {
