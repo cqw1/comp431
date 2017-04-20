@@ -3,6 +3,7 @@ import {
     nonJSONResource,
     getPrettyDate, 
     navigateMain, 
+    navigateLanding, 
 } from '../../actions.js'
 import { getHeadline, getAvatar, getFollowing } from '../main/mainActions.js'
 import { getArticles } from '../article/articleActions.js'
@@ -103,7 +104,7 @@ export function loginUser(username, password) {
                 valid
             })
 
-            dispatch(navigateMain())
+            dispatch(navigateMain());
         }).catch((err) => {
             valid = false;
             console.log(err);
@@ -132,6 +133,7 @@ export const logoutUser = () => (dispatch) => {
     })
 }
 
+// Alphanumerics, but cannot start with a number.
 function validateUsername(profile, registering) {
     const usernameValid = /^([a-zA-Z]+[a-zA-Z0-9]*)$/.test(profile.username);
     if (!profile.username && registering) {
@@ -143,6 +145,11 @@ function validateUsername(profile, registering) {
     return '';
 }
 
+/**
+ * Must only contain alphanumerics, periods, and underscores followed 
+ * by an @ symbol and letters with a period in the middle. Cannot start 
+ * with a number though.
+ */
 function validateEmail(profile, registering) {
     const emailValid = 
         /^([a-zA-Z0-9]+[a-zA-Z0-9\.\_]*\@[a-zA-Z]+\.[a-zA-Z]+)$/.test(
@@ -155,6 +162,7 @@ function validateEmail(profile, registering) {
     return '';
 }
 
+// Minimum age of 18 required.
 function validateDob(profile, registering) {
     if (registering) {
         if (!profile.dob) {
@@ -186,6 +194,7 @@ function validateDob(profile, registering) {
     return '';
 }
 
+// Must either be 5 digits, or 4 digits, hyphen, and 5 digits.
 function validateZipcode(profile, registering) {
     const zipcodeValid = /^(\d{5}(-\d{4})?)$/.test(profile.zipcode);
     if (!profile.zipcode && registering) {
@@ -197,6 +206,7 @@ function validateZipcode(profile, registering) {
     return '';
 }
 
+// Password and password confirmation must match.
 function validatePassword(profile, registering) {
     const passwordValid = profile.password == profile.passwordConfirmation;
     if (!(profile.password || profile.passwordConfirmation) && registering) {
@@ -332,16 +342,28 @@ export function register(profile) {
     }
 }
 
-export const checkLoggedIn = () => (dispatch) => {
-    resource('GET', 'checkLoggedIn').then(r => {
-        dispatch({
-            type: AuthAction.CHECK_LOGGED_IN,
-            isLoggedIn: r.isLoggedIn,
-            username: r.username
+export function checkLoggedIn() {
+    return (dispatch) => {
+        resource('GET', 'checkLoggedIn')
+        .then(r => {
+            if (r.isLoggedIn) {
+                // If logged in, navigate to main and save username
+                dispatch({
+                    type: AuthAction.CHECK_LOGGED_IN,
+                    isLoggedIn: r.isLoggedIn,
+                    username: r.username
+                })
+
+                dispatch(navigateMain());
+            } else {
+                // Go back to landing page
+                dispatch(navigateLanding());
+            }
+
+        }).catch((err) => {
+            console.log(err);
+            dispatch(showAlert(err.toString()), AlertType.ERROR);
         })
-    }).catch((err) => {
-        console.log(err);
-        dispatch(showAlert(err.toString()), AlertType.ERROR);
-    })
+    }
 }
 
