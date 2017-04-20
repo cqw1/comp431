@@ -1,0 +1,19 @@
+I honestly learned to use a lot of new technologies from this class, however I 
+don't think I have a good understanding of how they work. If I was asked to 
+extend some of our projects and add more functionality, I would be hard-pressed 
+to do so because I don't fundamentally understand how all of it connects 
+together. 
+
+I also found the in-class assignments to be tough, often requiring 2-3 hours of 
+work beyond class. I understand that it's good to exercise your knowledge of 
+the material you just learned, but this was often stressful on the Tuesdays 
+before homeworks were due. I really liked how the in-classes were a part of 
+future assignments though. This was motivating and helped us understand the 
+assignment a little more before we started them.
+
+Also, I believe that counting demerits separately can be harmful to the assignments grades. I agree that we should have DRY code, have proper comments, and the other "common sense," good-coding practices. However, it seems that we can only be taken points off for that, and not rewarded. If I complete all the functionality and requirements of an assignment, but accrue enough demerits that I get a 0, then that seems unfair. However, if everything was counted as a requirement (e.g., having good comments is 5/100 of the possible points to earn) then I could still get a 20 for having functionality, but no comments. I believe all the expectations should be kept - not that you should get rid of demerits themselves - but they should all be counted as possible earnable points. So a grade out of 400, rather than 100 for requirements, and -300 for demerits. If that makes sense?
+
+One last thing that is kind of small, the usage of field names were inconsistent in the later assignments. For example, headline and status were used interchangeably, as well as img/picture/avatar. This often led to a little confusion for me because I wasn't sure if these were different fields? And it also made integrating example code with APIs more work because we had to adjust the field names each time they changed.
+
+
+Overall, I did appreciate the class and I do think I came out of it understanding some web technologies better. Or even just exposing me to new names that I can go look up later. I also appreciated the enthusiasm you had for it and the help you provided all the students whenever they asked. Thank you!
