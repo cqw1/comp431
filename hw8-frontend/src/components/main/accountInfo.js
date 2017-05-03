@@ -14,7 +14,7 @@ export const AccountInfo = ({
     return (
         <div className='media'>
             <div className='media-left'>
-                <img className='media-object' src={avatar} />
+                <img className='media-object hundred' src={avatar} />
             </div>
             <div className='media-body'>
                 <h3> 

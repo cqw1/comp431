@@ -117,8 +117,6 @@ export const postArticle = (text, image) => {
             const fd = new FormData();
             fd.append('text', text);
             fd.append('image', image);
-            console.log('fd');
-            console.log(fd);
 
             nonJSONResource('POST', 'article/', fd)
             .then(r => {

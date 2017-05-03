@@ -3,8 +3,7 @@ import { getArticles } from './components/article/articleActions.js'
 import { getProfile } from './components/auth/authActions'
 
 // Fetch wrapper
-//export const url = 'https://intense-depths-37739.herokuapp.com'
-export const url = 'http://localhost:3000';
+export const url = 'https://cqw1-comp431-hw8.herokuapp.com'
 
 const resource = (method, endpoint, payload) => {
     const options =  {
@@ -46,32 +45,6 @@ const nonJSONResource = (method, endpoint, payload) => {
                 console.error(`${method} ${endpoint} ${r.statusText}`)
                 throw new Error(r.statusText)
             }
-        })
-}
-
-export function sendGetHeadlines() {
-    console.log('sendGetHeadlines');
-
-    const options =  {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json' 
-        } 
-    }
-
-    return fetch('http://localhost:3000/headlines', options)
-        .then(r => {
-            if (r.status === 200) {
-                return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
-            } else {
-                // useful for debugging, but remove in production
-                //console.error(`${method} ${endpoint} ${r.statusText}`)
-                console.error(`${r.statusText}`)
-                throw new Error(r.statusText)
-            }
-        }).then(body => {
-            console.log(body);
         })
 }
 

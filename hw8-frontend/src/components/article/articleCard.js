@@ -53,7 +53,7 @@ export const ArticleCard = ({
         <div className='panel panel-default media article-card'> 
             {article.img &&
                 <div className='media-left'>
-                    <img className='media-object' src={article.img} />
+                    <img className='media-object hundred' src={article.img} />
                 </div>
             }
 

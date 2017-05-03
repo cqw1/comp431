@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { updateProfile, updateAvatar } from '../auth/authActions'
+import {url} from '../../actions'
 
 // Page displays profile information and allows user to update information.
 export const Profile = ({
@@ -69,7 +70,7 @@ export const Profile = ({
                                 onChange={(e) => {_handleAvatarChange(e);}} />
                         </td>
                         <td>
-                            <img src={profile.avatar} />
+                            <img className='hundred' src={profile.avatar} />
                         </td>
                     </tr>
                     <tr>
@@ -175,7 +176,7 @@ export const Profile = ({
                 </tbody>
             </table>
 
-            <div className='text-align-center'>
+            <div className='text-align-center padding-bottom-5px'>
                 <button 
                     id='update-profile-btn' 
                     className='btn btn-primary' 

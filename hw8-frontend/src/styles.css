@@ -2,7 +2,7 @@ body {
     padding: 30px 50px 0px 50px;
 }
 
-img {
+.hundred {
     width: 100px;
     height: 100px;
 }
@@ -132,4 +132,7 @@ table td {
 
 .glyphicon-remove {
     cursor: pointer;
+}
+
+.google-img {
 }

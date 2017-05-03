@@ -100,15 +100,6 @@ export const Application = ({
     } else { 
         checkLoggedIn();
 
-        /*
-        console.log('isLoggedIn: ' + isLoggedIn);
-        console.log('page: ' + page);
-
-        if (isLoggedIn) {
-            navigateMain();
-        }
-        */
-
         return(
             <div> 
                 <Landing />
