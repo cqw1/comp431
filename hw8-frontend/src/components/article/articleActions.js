@@ -114,7 +114,6 @@ export const postArticle = (text, image) => {
     if (text.length > 0 || image) {
         return (dispatch) => {
 
-            /*
             const fd = new FormData();
             fd.append('text', text);
             fd.append('image', image);
@@ -130,8 +129,8 @@ export const postArticle = (text, image) => {
 
                 dispatch(showAlert('Posted article.', AlertType.SUCCESS));
             })
-            */
 
+            /*
             resource('POST', 'article/', {text: text})
             .then(r => {
                 dispatch({
@@ -141,6 +140,7 @@ export const postArticle = (text, image) => {
 
                 dispatch(showAlert('Posted article.', AlertType.SUCCESS));
             })
+            */
         }
     }
 }

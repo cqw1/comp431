@@ -55,6 +55,7 @@ export const ArticleCreation = ({
                         postArticle(textarea.value, image);
                         textarea.value = '';
                         imageInput.value = null;
+                        image = null;
                 }}>
                     Post
                 </button>
