@@ -4,6 +4,7 @@ import { getProfile } from './components/auth/authActions'
 
 // Fetch wrapper
 export const url = 'https://cqw1-comp431-hw8.herokuapp.com'
+//export const url = 'http://localhost:3000'
 
 const resource = (method, endpoint, payload) => {
     const options =  {
